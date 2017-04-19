@@ -12,6 +12,7 @@ public class POI {
     private String  longitude;
     private String  address;
     private String  zip;
+    private String  tags;
 
     public int getId() {
         return id;
@@ -41,6 +42,10 @@ public class POI {
         return location_id;
     }
 
+    public String getTags() {
+        return tags;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -59,6 +64,10 @@ public class POI {
 
     public void setLocation_id(String location_id) {
         this.location_id = location_id;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
     }
 
     @Override

@@ -35,6 +35,8 @@ public class ApplicationStore extends Application {
 
     private static List<POI> mPOIList = new ArrayList<>();
 
+    private static final String POI_STRING = "POIString";
+
     @Override
     public void onCreate() {
         mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -42,10 +44,25 @@ public class ApplicationStore extends Application {
         mAppContext = getApplicationContext();
     }
 
+    public static String getPOIString() {
+        return mPreferences.getString(POI_STRING, "");
+    }
+
+    public static void setPOIString(String poiString) {
+        mEditor.putString(POI_STRING, poiString);
+        mEditor.commit();
+    }
+
     public static List<POI> getPOIList(Activity callingActivity) {
+        // If cache exists, use it right away and update it in the background.
         if (mPOIList.size() == 0) {
-            getPOIListFromServer(callingActivity);
+            String poiString = getPOIString();
+            if (poiString.isEmpty() == false) {
+                Gson gson = new Gson();
+                mPOIList.addAll(Arrays.asList(gson.fromJson(poiString, POI[].class)));
+            }
         }
+        getPOIListFromServer(callingActivity);
         return mPOIList;
     }
 
@@ -57,6 +74,9 @@ public class ApplicationStore extends Application {
                     public void onResponse(String response) {
                         Gson gson = new Gson();
                         mPOIList.addAll(Arrays.asList(gson.fromJson(response, POI[].class)));
+                        // Also cache it away.
+                        String poiString = gson.toJson(mPOIList);
+                        setPOIString(poiString);
                     }
                 },
                 new Response.ErrorListener() {

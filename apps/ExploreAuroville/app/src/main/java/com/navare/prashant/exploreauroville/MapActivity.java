@@ -7,19 +7,22 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.gson.Gson;
 import com.navare.prashant.exploreauroville.model.POI;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private LatLngBounds mRouteBound;
     private static List<POI> mPOIList = new ArrayList<>();
+    private static List<POI> mPOIListToShow = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +32,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        mPOIList = ApplicationStore.getPOIList(this);
     }
 
 
@@ -45,11 +49,41 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        // For now, show all markers
+        mPOIListToShow.addAll(mPOIList);
+        showMarkersOnMap();
+    }
+
+    public void showAuroville() {
         // Add a marker in Auroville and move the camera
         LatLng auroville = new LatLng(12.0053, 79.8129);
-        mMap.addMarker(new MarkerOptions().position(auroville).title("Marker in Auroville"));
+        mMap.addMarker(new MarkerOptions().position(auroville).title(getString(R.string.auroville)));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(auroville));
+    }
 
-        mPOIList = ApplicationStore.getPOIList(this);
+    public void showMarkersOnMap() {
+        LatLngBounds.Builder mapBoundsBuilder = new LatLngBounds.Builder();
+
+        for (POI currentPOI : mPOIListToShow) {
+            LatLng poiLatLng = new LatLng(Double.valueOf(currentPOI.getLatitude()), Double.valueOf(currentPOI.getLongitude()));
+            Marker poiMarker = mMap.addMarker(new MarkerOptions()
+                    .position(poiLatLng)
+                    .draggable(false)
+                    .title(currentPOI.getName())
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+            mapBoundsBuilder.include(poiLatLng);
+        }
+        if (mPOIListToShow.size() > 0) {
+            mRouteBound = mapBoundsBuilder.build();
+            mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
+                @Override
+                public void onMapLoaded() {
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(mRouteBound, 40));
+                }
+            });
+        }
+        else {
+            showAuroville();
+        }
     }
 }

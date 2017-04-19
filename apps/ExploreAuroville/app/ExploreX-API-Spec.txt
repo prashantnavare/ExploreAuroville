@@ -1,0 +1,56 @@
+1.
+Get POI list for a location.
+
+GET /api/explorex/v1/poi?location=auroville HTTP/1.1
+
+Success Response:200
+[
+    {
+        "id": 2,
+        "name": "Future School",
+        "location_id": "1",
+        "latitude": "12.012354",
+        "longitude": "79.816276",
+        "address": "Transformatio, Auroville",
+        "zip": "605101",
+        "tags": "Future School, education, igcse, school",
+    },
+    {
+        "id": 3,
+        "name": "Town Hall",
+        "location_id": "1",
+        "latitude": "12.009636",
+        "longitude": "79.811019",
+        "address": "Auroville",
+        "zip": "605101",
+        "tags": "administration, financial services, auroville radio, housing service",
+    },
+    {
+        "id": 4,
+        "name": "Matrimandir",
+        "location_id": "1",
+        "latitude": "12.006991",
+        "longitude": "79.810708",
+        "address": "Auroville",
+        "zip": "605101",
+        "tags": "meditation",
+    },
+    {
+        "id": 5,
+        "name": "Solar Kitchen",
+        "location_id": "1",
+        "latitude": "12.001513",
+        "longitude": "79.810354",
+        "address": "Auroville",
+        "zip": "605101",
+        "tags": "food, lunch, dinner, vegetarian",
+    }
+]
+
+HTTP Status 200: 1.0
+
+Failure Response:
+
+400 : Type parameter missing
+400 : Invalid type
+
