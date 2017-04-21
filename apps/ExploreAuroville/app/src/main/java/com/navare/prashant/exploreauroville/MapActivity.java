@@ -2,6 +2,12 @@ package com.navare.prashant.exploreauroville;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -21,8 +27,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
     private GoogleMap mMap;
     private LatLngBounds mRouteBound;
-    private static List<POI> mPOIList = new ArrayList<>();
     private static List<POI> mPOIListToShow = new ArrayList<>();
+    private static List<POI> mPOIListAll = new ArrayList<>();
+    private DelayAutoCompleteTextView   mAutocompleteTV;
+    private ImageView                   mAutocompleteClearIV;
+    private Integer THRESHOLD = 1;
+    private String mTagSearchString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +42,56 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        mPOIList = ApplicationStore.getPOIList(this);
+
+        // Build the POI List for this location
+        mPOIListAll = ApplicationStore.getPOIList(this);
+
+        mAutocompleteClearIV = (ImageView) findViewById(R.id.autocomplete_clear);
+
+        mAutocompleteTV = (DelayAutoCompleteTextView) findViewById(R.id.autocomplete);
+        mAutocompleteTV.setThreshold(THRESHOLD);
+        mAutocompleteTV.setAdapter(new TagAutoCompleteAdapter(this)); // 'this' is Activity instance
+
+        mAutocompleteTV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                mTagSearchString = (String) adapterView.getItemAtPosition(position);
+                mAutocompleteTV.setText(mTagSearchString);
+                mPOIListToShow = ApplicationStore.getPOIListContaining(mTagSearchString);
+                showMarkersOnMap();
+            }
+        });
+
+        mAutocompleteTV.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() > 0) {
+                    mAutocompleteClearIV.setVisibility(View.VISIBLE);
+                }
+                else {
+                    mAutocompleteClearIV.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        mAutocompleteClearIV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAutocompleteTV.setText("");
+                mMap.clear();
+                showAuroville();
+            }
+        });
     }
 
 
@@ -49,16 +108,14 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // For now, show all markers
-        mPOIListToShow.addAll(mPOIList);
-        showMarkersOnMap();
+        showAuroville();
     }
 
     public void showAuroville() {
         // Add a marker in Auroville and move the camera
         LatLng auroville = new LatLng(12.0053, 79.8129);
         mMap.addMarker(new MarkerOptions().position(auroville).title(getString(R.string.auroville)));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(auroville));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(auroville, 14));
     }
 
     public void showMarkersOnMap() {

@@ -5,6 +5,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -18,7 +19,12 @@ import com.navare.prashant.exploreauroville.util.VolleyProvider;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
+import java.util.TreeSet;
 
 /**
  * Created by prashant on 16-Apr-17.
@@ -34,6 +40,8 @@ public class ApplicationStore extends Application {
     private static Context mAppContext;
 
     private static List<POI> mPOIList = new ArrayList<>();
+    private static boolean mbPOIListUpdated = false;
+    private static TreeSet<String> mTagSet = new TreeSet<>();
 
     private static final String POI_STRING = "POIString";
 
@@ -60,13 +68,53 @@ public class ApplicationStore extends Application {
             if (poiString.isEmpty() == false) {
                 Gson gson = new Gson();
                 mPOIList.addAll(Arrays.asList(gson.fromJson(poiString, POI[].class)));
+                createTagSet();
             }
         }
         getPOIListFromServer(callingActivity);
         return mPOIList;
     }
 
+    private static void createTagSet() {
+        if (mTagSet.isEmpty()) {
+            for (POI poi : mPOIList) {
+                String allTagsString = poi.getTags();
+                String[] tagStringArray = allTagsString.split(",");
+                for (String tagString : tagStringArray) {
+                    mTagSet.add(tagString.trim().toLowerCase());
+                }
+            }
+        }
+    }
+
+    public static List<String> getTagListContaining(String queryString) {
+        String lcQuesryString = queryString.toLowerCase();
+        List<String> tagList = new ArrayList<>();
+        for (String tagString : mTagSet) {
+            if (tagString.contains(lcQuesryString)) {
+                tagList.add(tagString);
+            }
+        }
+        return  tagList;
+    }
+
+    public static List<POI> getPOIListContaining(String queryString) {
+        String lcQuesryString = queryString.toLowerCase();
+        List<POI> poiList = new ArrayList<>();
+        for (POI poi : mPOIList) {
+            if (poi.getTags() != null) {
+                if (poi.getTags().toLowerCase().contains(lcQuesryString)) {
+                    poiList.add(poi);
+                }
+            }
+        }
+        return  poiList;
+    }
+
     private static void getPOIListFromServer(final Activity callingActivity) {
+        if (mbPOIListUpdated) {
+            return;
+        }
         CustomRequest citiesRequest = new CustomRequest(Request.Method.GET, ApplicationStore.POI_URL, "",
                 new Response.Listener<String>() {
 
@@ -77,6 +125,8 @@ public class ApplicationStore extends Application {
                         // Also cache it away.
                         String poiString = gson.toJson(mPOIList);
                         setPOIString(poiString);
+                        createTagSet();
+                        mbPOIListUpdated = true;
                     }
                 },
                 new Response.ErrorListener() {
