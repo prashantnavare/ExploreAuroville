@@ -67,6 +67,8 @@
         android:id="@+id/listview_events"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@+id/datepicker_ll" />
+        android:layout_below="@+id/datepicker_ll"
+        android:divider="@null"
+        />
 
 </RelativeLayout>
