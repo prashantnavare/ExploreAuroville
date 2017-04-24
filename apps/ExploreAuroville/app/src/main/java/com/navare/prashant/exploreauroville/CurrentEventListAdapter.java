@@ -85,7 +85,14 @@ public class CurrentEventListAdapter extends BaseAdapter {
         CurrentEvent ce = mEventListToShow.get(position);
         viewHolder.name.setText(ce.getName());
         // TODO: format the dates
-        viewHolder.timing.setText("TODO");
+        Calendar fromCal = Calendar.getInstance();
+        fromCal.setTimeInMillis(ce.getFrom_date());
+        Calendar toCal = Calendar.getInstance();
+        toCal.setTimeInMillis(ce.getTo_date());
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        String timingString = sdf.format(fromCal.getTime());
+        timingString += " -- " + sdf.format(toCal.getTime());
+        viewHolder.timing.setText(timingString);
         viewHolder.location.setText(ce.getLocation());
         viewHolder.description.setText(ce.getDescription());
 
