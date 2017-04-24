@@ -54,3 +54,55 @@ Failure Response:
 400 : Type parameter missing
 400 : Invalid type
 
+2.
+Get current event list for a location.
+
+GET /api/explorex/v1/events?location=auroville&from=abc&to=xyz HTTP/1.1
+
+Success Response:200
+[
+    {
+        "id": 2,
+        "name": "Live Jazz",
+        "location": "Solitude Farm",
+        "from_date": 1492965840283,
+        "to_date": 1492969440000,
+        "description": "Featuring bloo blah foo on drums!",
+        "tags": "music, jazz, food, drinks",
+    },
+    {
+        "id": 3,
+        "name": "Live R & B",
+        "location": "Annapurna Farm",
+        "from_date": 1493965840283,
+        "to_date": 1493969440000,
+        "description": "Featuring bloo blah foo on piano!",
+        "tags": "music, jazz, food, drinks",
+    },
+    {
+        "id": 4,
+        "name": "Yoga",
+        "location": "Pitanga",
+        "from_date": 1492965840283,
+        "to_date": 1492969440000,
+        "description": "Stretch yourself...",
+        "tags": "yoga, exercise, health",
+    },
+    {
+        "id": 9,
+        "name": "Russian Bells",
+        "location": "Pony Farm",
+        "from_date": 1494965840283,
+        "to_date": 1494969440000,
+        "description": "Featuring bloo blah foo on bells!",
+        "tags": "music, meditation, mellow",
+    }
+]
+
+HTTP Status 200: 1.0
+
+Failure Response:
+
+400 : Type parameter missing
+400 : Invalid type
+

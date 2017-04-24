@@ -34,6 +34,7 @@ public class ApplicationStore extends Application {
     public static final String BASE_URL = "http://192.168.1.104:5678";
     // API URLs
     public static final String POI_URL = ApplicationStore.BASE_URL + "/api/explorex/v1/poi";
+    public static final String GET_CURRENT_EVENTS_URL = ApplicationStore.BASE_URL + "/api/explorex/v1/events";
 
     private static SharedPreferences mPreferences;
     private static SharedPreferences.Editor mEditor;
@@ -44,6 +45,7 @@ public class ApplicationStore extends Application {
     private static TreeSet<String> mTagSet = new TreeSet<>();
 
     private static final String POI_STRING = "POIString";
+    public static int activeDatePicker = 0;
 
     @Override
     public void onCreate() {

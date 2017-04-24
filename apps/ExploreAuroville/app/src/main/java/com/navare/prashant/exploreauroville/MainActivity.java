@@ -8,11 +8,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import java.util.Calendar;
+import java.util.Date;
+
 public class MainActivity extends AppCompatActivity {
 
     GridView    mGridView;
     String[]    mTileText = new String[4];
-    int[]       mTileImage = {R.drawable.map_orange_96px, R.drawable.current_events_96px, R.drawable.user_yellow_96px, R.drawable.feedback_yellow_96px};
+    int[]       mTileImage = {R.drawable.map_72px, R.drawable.current_events_72px, R.drawable.user_72px, R.drawable.feedback_yellow_96px};
     Activity    mMyActivity;
 
     @Override
@@ -39,6 +42,10 @@ public class MainActivity extends AppCompatActivity {
                     case 0:
                         Intent routeIntent = new Intent(mMyActivity, MapActivity.class);
                         startActivity(routeIntent);
+                        break;
+                    case 1:
+                        Intent eventIntent = new Intent(mMyActivity, CurrentEventsActivity.class);
+                        startActivity(eventIntent);
                         break;
                 }
                         /*
@@ -67,3 +74,4 @@ public class MainActivity extends AppCompatActivity {
 
     }
 }
+

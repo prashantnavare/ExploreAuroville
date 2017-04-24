@@ -67,6 +67,50 @@ app.get('/api/explorex/v1/poi', function (req, res) {
     res.send(poiJson );
 });
 
+// 2.
+app.get('/api/explorex/v1/events', function (req, res) {
+    var eventsJson = '[\
+        {\
+            "id": 2,\
+            "name": "Live Jazz",\
+            "location": "Solitude Farm",\
+            "from_date": 1492965840283,\
+            "to_date": 1492969440000,\
+            "description": "Featuring bloo blah foo on drums!",\
+            "tags": "music, jazz, food, drinks"\
+        },\
+        {\
+            "id": 3,\
+            "name": "Live R & B",\
+            "location": "Annapurna Farm",\
+            "from_date": 1493965840283,\
+            "to_date": 1493969440000,\
+            "description": "Featuring bloo blah foo on piano!",\
+            "tags": "music, jazz, food, drinks"\
+        },\
+        {\
+            "id": 4,\
+            "name": "Yoga",\
+            "location": "Pitanga",\
+            "from_date": 1492965840283,\
+            "to_date": 1492969440000,\
+            "description": "Stretch yourself...",\
+            "tags": "yoga, exercise, health"\
+        },\
+        {\
+            "id": 9,\
+            "name": "Russian Bells",\
+            "location": "Pony Farm",\
+            "from_date": 1494965840283,\
+            "to_date": 1494969440000,\
+            "description": "Featuring bloo blah foo on bells!",\
+            "tags": "music, meditation, mellow"\
+        }\
+    ]';
+    console.log(req.rawBody);
+    res.send(eventsJson );
+});
+
 app.listen(5678, function () {
     console.log('listening on port 5678!');
 });

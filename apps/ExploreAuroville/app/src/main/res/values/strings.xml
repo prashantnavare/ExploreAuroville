@@ -9,4 +9,9 @@
     <string name="auroville">Auroville</string>
     <string name="search_input_hint">Search Points of Interest (e.g. food)</string>
     <string name="search_remove_button_txt">Clear</string>
+    <string name="search_current_events">Search by topic, location or event name</string>
+    <string name="from">  From</string>
+    <string name="to">  To</string>
+    <string name="invalid_calendar_filter">Date range must be selected.</string>
+    <string name="network_error">Network error.</string>
 </resources>
