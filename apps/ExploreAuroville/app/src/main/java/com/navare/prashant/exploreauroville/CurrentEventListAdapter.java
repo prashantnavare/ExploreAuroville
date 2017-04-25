@@ -3,12 +3,15 @@ package com.navare.prashant.exploreauroville;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,6 +49,7 @@ public class CurrentEventListAdapter extends BaseAdapter {
 
     public class ViewHolder{
 
+        RelativeLayout rl;
         TextView name;
         TextView timing;
         TextView location;
@@ -73,6 +77,7 @@ public class CurrentEventListAdapter extends BaseAdapter {
             viewHolder = new ViewHolder();
             view = inflater.inflate(R.layout.current_event_item, null);
             // Locate the TextViews in listview_item.xml
+            viewHolder.rl = (RelativeLayout) view.findViewById(R.id.rl);
             viewHolder.name = (TextView) view.findViewById(R.id.name);
             viewHolder.timing = (TextView) view.findViewById(R.id.timing);
             viewHolder.location = (TextView) view.findViewById(R.id.location);
@@ -83,14 +88,14 @@ public class CurrentEventListAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) view.getTag();
         }
         // Set the results into TextViews
-        CurrentEvent ce = mEventListToShow.get(position);
+        CurrentEvent currentEvent = mEventListToShow.get(position);
 
-        viewHolder.name.setText(ce.getName());
+        viewHolder.name.setText(currentEvent.getName());
 
         Calendar fromCal = Calendar.getInstance();
-        fromCal.setTimeInMillis(ce.getFrom_date());
+        fromCal.setTimeInMillis(currentEvent.getFrom_date());
         Calendar toCal = Calendar.getInstance();
-        toCal.setTimeInMillis(ce.getTo_date());
+        toCal.setTimeInMillis(currentEvent.getTo_date());
         SimpleDateFormat sdfDay = new SimpleDateFormat("EEE, dd/MM/yyyy");
         String timingString = sdfDay.format(fromCal.getTime());
         SimpleDateFormat sdfTime = new SimpleDateFormat("hh:mm a");
@@ -98,12 +103,17 @@ public class CurrentEventListAdapter extends BaseAdapter {
         timingString += " -- " + sdfTime.format(toCal.getTime()) + ")";
         viewHolder.timing.setText(timingString);
 
-        POI poi = ApplicationStore.getPOI(ce.getPOI_id());
+        POI poi = ApplicationStore.getPOI(currentEvent.getPOI_id());
         if (poi != null) {
             viewHolder.location.setText(poi.getName());
         }
 
-        viewHolder.description.setText(ce.getDescription());
+        viewHolder.description.setText(currentEvent.getDescription());
+
+        // If the event is in the past, gray it out
+        if (currentEvent.getFrom_date() < Calendar.getInstance().getTimeInMillis()) {
+            viewHolder.rl.setBackgroundColor(ContextCompat.getColor(mActivity, R.color.colorExpired));
+        }
 
         // Listen for ListView Item Click
         view.setOnClickListener(new View.OnClickListener() {
@@ -142,18 +152,6 @@ public class CurrentEventListAdapter extends BaseAdapter {
                     }
                 }
             }
-        }
-        notifyDataSetChanged();
-    }
-
-    // Filter on assignedDate
-    public void filterDate(Calendar fromCalendar, Calendar toCalendar){
-
-        if (fromCalendar == null || toCalendar ==  null){
-            mEventListToShow.addAll(mEventListAll);
-        }
-        else{
-            // TODO: Fire a query to the server with the fromDate and toDate
         }
         notifyDataSetChanged();
     }

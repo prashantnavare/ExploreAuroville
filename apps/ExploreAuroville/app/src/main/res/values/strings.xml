@@ -14,10 +14,11 @@
     <string name="from">  From</string>
     <string name="to">  To</string>
     <string name="invalid_calendar_filter">Date range must be selected.</string>
-    <string name="network_error">Network error.</string>
+    <string name="network_error">Network error : Please make sure you have Internet connectivity.</string>
     <string name="phone_hint">Your Phone Number</string>
     <string name="register_button">Register</string>
     <string name="register_for_events">Register For Events</string>
     <string name="empty_phone_no">Phone Number cannot be empty</string>
     <string name="less_digits_phone_no">Phone Number should have 10 digits.</string>
+    <string name="no_events_scheduled">There are no events scheduled.</string>
 </resources>

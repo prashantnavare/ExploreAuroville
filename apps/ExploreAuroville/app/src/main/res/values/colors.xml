@@ -8,6 +8,7 @@
     <color name="colorPrimaryText">#212121</color>
     <color name="colorSecondaryText">#757575</color>
     <color name="colorDivider">#BDBDBD</color>
+    <color name="colorExpired">#E0E0E0</color>
     <color name="windowBackground">#FDF9F2</color>
     <color name="navigationViewColor1">#CFDADE</color>
     <color name="navigationViewColor2">#AED684</color>

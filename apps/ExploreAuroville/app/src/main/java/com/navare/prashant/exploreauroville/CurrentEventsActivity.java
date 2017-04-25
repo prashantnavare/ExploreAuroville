@@ -2,6 +2,7 @@ package com.navare.prashant.exploreauroville;
 
 import android.app.Activity;
 import android.app.DialogFragment;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -52,7 +53,6 @@ public class CurrentEventsActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_current_events);
 
-        setTitle(getString(R.string.events_today));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mMyActivity = this;
@@ -113,26 +113,64 @@ public class CurrentEventsActivity extends AppCompatActivity {
 
                 if (mFromDateET.getText().toString().isEmpty() || mToDateET.getText().toString().isEmpty()){
                     Toast.makeText(mMyActivity, getResources().getString(R.string.invalid_calendar_filter),Toast.LENGTH_SHORT).show();
+                    return;
                 }
-                if (mAdapter != null)
-                    mAdapter.filterDate(mFromCalendar, mToCalendar);
+                mEventList.clear();
+                mAdapter = new CurrentEventListAdapter(mMyActivity, mEventList);
+                mListView.setAdapter(mAdapter);
+                getCurrentEvents(mFromCalendar.getTimeInMillis(), mToCalendar.getTimeInMillis(), false);
             }
         });
 
-        getCurrentEvents();
+        // Start with today's events
+        Calendar nowCalendar = Calendar.getInstance();
+        int year = nowCalendar.get(Calendar.YEAR);
+        int month = nowCalendar.get(Calendar.MONTH);
+        int day = nowCalendar.get(Calendar.DAY_OF_MONTH);
+        Calendar todayCalendar = Calendar.getInstance();
+        Calendar tomorrowCalendar = Calendar.getInstance();
+        todayCalendar.clear();
+        todayCalendar.set(year, month, day);
+        tomorrowCalendar.clear();
+        tomorrowCalendar.set(year, month, day+1);
+
+        getCurrentEvents(todayCalendar.getTimeInMillis(), tomorrowCalendar.getTimeInMillis(), true);
     }
 
-    private void getCurrentEvents() {
-        // TODO: Add the fromDate and toDate logic
-        String getEventsURL = ApplicationStore.GET_CURRENT_EVENTS_URL + "&phone=" + ApplicationStore.getPhoneNumber() + "&from=xyz&to=abc";
+    private void getCurrentEvents(long fromDate, long toDate, boolean bToday) {
+        final ProgressDialog progressDialog = new ProgressDialog(mMyActivity);
+        progressDialog.setTitle("Retrieving Events");
+        if (bToday) {
+            setTitle(getString(R.string.events_today));
+            progressDialog.setMessage("Please wait while we retrieve today's events...");
+        }
+        else {
+            mMyActivity.setTitle(getString(R.string.events));
+            progressDialog.setMessage("Please wait while we retrieve your requested events...");
+        }
+        progressDialog.show();
+
+        String getEventsURL = ApplicationStore.GET_CURRENT_EVENTS_URL;
+        getEventsURL += "&phone=" + ApplicationStore.getPhoneNumber();
+        getEventsURL += "&from=" + String.valueOf(fromDate);
+        getEventsURL += "&to=" + String.valueOf(toDate);
         CustomRequest getEventsRequest = new CustomRequest(Request.Method.GET, getEventsURL, "",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         Gson gson = new Gson();
-                        mEventList = Arrays.asList(gson.fromJson(response, CurrentEvent[].class));
+                        mEventList.addAll(Arrays.asList(gson.fromJson(response, CurrentEvent[].class)));
                         mAdapter = new CurrentEventListAdapter(mMyActivity, mEventList);
                         mListView.setAdapter(mAdapter);
+                        if (mEventList.isEmpty()) {
+                            Toast.makeText(mMyActivity, getResources().getString(R.string.no_events_scheduled),Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            // Show the number of events in the title
+                            String newTitle = mMyActivity.getTitle() + " (" + String.valueOf(mEventList.size()) + ")";
+                            mMyActivity.setTitle(newTitle);
+                        }
+                        progressDialog.cancel();
                     }
                 },
                 new Response.ErrorListener() {
@@ -145,6 +183,7 @@ public class CurrentEventsActivity extends AppCompatActivity {
                                 errorMsg = new String(error.networkResponse.data);
                         }
                         Toast.makeText(mMyActivity, errorMsg, Toast.LENGTH_LONG).show();
+                        progressDialog.cancel();
                     }
                 }){};
 
