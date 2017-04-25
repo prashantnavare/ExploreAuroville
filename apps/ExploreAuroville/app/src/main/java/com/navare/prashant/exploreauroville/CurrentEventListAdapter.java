@@ -17,6 +17,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.navare.prashant.exploreauroville.model.CurrentEvent;
+import com.navare.prashant.exploreauroville.model.POI;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -83,17 +84,25 @@ public class CurrentEventListAdapter extends BaseAdapter {
         }
         // Set the results into TextViews
         CurrentEvent ce = mEventListToShow.get(position);
+
         viewHolder.name.setText(ce.getName());
-        // TODO: format the dates
+
         Calendar fromCal = Calendar.getInstance();
         fromCal.setTimeInMillis(ce.getFrom_date());
         Calendar toCal = Calendar.getInstance();
         toCal.setTimeInMillis(ce.getTo_date());
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-        String timingString = sdf.format(fromCal.getTime());
-        timingString += " -- " + sdf.format(toCal.getTime());
+        SimpleDateFormat sdfDay = new SimpleDateFormat("EEE, dd/MM/yyyy");
+        String timingString = sdfDay.format(fromCal.getTime());
+        SimpleDateFormat sdfTime = new SimpleDateFormat("hh:mm a");
+        timingString += " (" + sdfTime.format(fromCal.getTime());
+        timingString += " -- " + sdfTime.format(toCal.getTime()) + ")";
         viewHolder.timing.setText(timingString);
-        viewHolder.location.setText(ce.getLocation());
+
+        POI poi = ApplicationStore.getPOI(ce.getPOI_id());
+        if (poi != null) {
+            viewHolder.location.setText(poi.getName());
+        }
+
         viewHolder.description.setText(ce.getDescription());
 
         // Listen for ListView Item Click
@@ -120,9 +129,17 @@ public class CurrentEventListAdapter extends BaseAdapter {
         {
             for (CurrentEvent event : mEventListAll)
             {
-                if (event.getName().toLowerCase(Locale.getDefault()).contains(charText) || event.getLocation().toLowerCase(Locale.getDefault()).contains(charText) || event.getDescription().toLowerCase(Locale.getDefault()).contains(charText))
+                if (event.getName().toLowerCase(Locale.getDefault()).contains(charText) || event.getTags().toLowerCase(Locale.getDefault()).contains(charText) || event.getDescription().toLowerCase(Locale.getDefault()).contains(charText))
                 {
                     mEventListToShow.add(event);
+                }
+                else {
+                    POI poi = ApplicationStore.getPOI(event.getId());
+                    if (poi != null) {
+                        if (poi.getName().toLowerCase(Locale.getDefault()).contains(charText)) {
+                            mEventListToShow.add(event);
+                        }
+                    }
                 }
             }
         }

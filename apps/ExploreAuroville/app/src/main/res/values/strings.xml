@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Explore Auroville</string>
-    <string name="current_events">Current Events</string>
+    <string name="events">Events</string>
+    <string name="events_today">Today\'s Events</string>
     <string name="map">Map</string>
     <string name="profile">Profile</string>
     <string name="feedback">Feedback</string>
@@ -14,4 +15,9 @@
     <string name="to">  To</string>
     <string name="invalid_calendar_filter">Date range must be selected.</string>
     <string name="network_error">Network error.</string>
+    <string name="phone_hint">Your Phone Number</string>
+    <string name="register_button">Register</string>
+    <string name="register_for_events">Register For Events</string>
+    <string name="empty_phone_no">Phone Number cannot be empty</string>
+    <string name="less_digits_phone_no">Phone Number should have 10 digits.</string>
 </resources>

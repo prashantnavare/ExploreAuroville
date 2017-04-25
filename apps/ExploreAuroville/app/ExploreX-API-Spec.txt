@@ -106,3 +106,20 @@ Failure Response:
 400 : Type parameter missing
 400 : Invalid type
 
+3.
+Register Phone
+
+POST /api/explorex/v1/phone HTTP/1.1
+Cache-Control: no-cache
+Content-Type: application/x-www-form-urlencoded
+
+phone=9163512067
+
+
+Success Response:
+HTTP Status 200. Response Body: ‘success’
+
+Failure Response:
+HTTP Status 500: ExploreX System Error
+HTTP Status 400:Invalid Phone Number
+

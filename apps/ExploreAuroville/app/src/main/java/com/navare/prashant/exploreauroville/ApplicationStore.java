@@ -3,9 +3,11 @@ package com.navare.prashant.exploreauroville;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.telephony.TelephonyManager;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -20,10 +22,12 @@ import com.navare.prashant.exploreauroville.util.VolleyProvider;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 import java.util.TreeSet;
 
 /**
@@ -31,20 +35,25 @@ import java.util.TreeSet;
  */
 
 public class ApplicationStore extends Application {
-    public static final String BASE_URL = "http://192.168.5.47:5678";
+    public static final String BASE_URL = "http://192.168.1.104:5678";
+    public static final String LOCATION_PARAM = "?location=auroville";
     // API URLs
-    public static final String POI_URL = ApplicationStore.BASE_URL + "/api/explorex/v1/poi";
-    public static final String GET_CURRENT_EVENTS_URL = ApplicationStore.BASE_URL + "/api/explorex/v1/events";
+    public static final String PHONE_REGISTER_URL = BASE_URL + "/api/explorex/v1/phone";
+    public static final String POI_URL = BASE_URL + "/api/explorex/v1/poi" + LOCATION_PARAM;
+    public static final String GET_CURRENT_EVENTS_URL = BASE_URL + "/api/explorex/v1/events" + LOCATION_PARAM;
 
-    private static SharedPreferences mPreferences;
+    private static SharedPreferences        mPreferences;
     private static SharedPreferences.Editor mEditor;
-    private static Context mAppContext;
+    private static Context                  mAppContext;
 
-    private static List<POI> mPOIList = new ArrayList<>();
-    private static boolean mbPOIListUpdated = false;
-    private static TreeSet<String> mTagSet = new TreeSet<>();
+    private static Map<Integer, POI>    mPOIMap = new HashMap<>();
+    private static List<POI>            mPOIList = new ArrayList<>();
+    private static boolean              mbPOIListUpdated = false;
+    private static TreeSet<String>      mTagSet = new TreeSet<>();
 
     private static final String POI_STRING = "POIString";
+    private static final String PHONE_NUMBER_STRING = "PhoneNumber";
+
     public static int activeDatePicker = 0;
 
     @Override
@@ -63,6 +72,15 @@ public class ApplicationStore extends Application {
         mEditor.commit();
     }
 
+    public static String getPhoneNumber() {
+        return mPreferences.getString(PHONE_NUMBER_STRING, "");
+    }
+
+    public static void setPhoneNumber(String phoneNumber) {
+        mEditor.putString(PHONE_NUMBER_STRING, phoneNumber);
+        mEditor.commit();
+    }
+
     public static List<POI> getPOIList(Activity callingActivity) {
         // If cache exists, use it right away and update it in the background.
         if (mPOIList.size() == 0) {
@@ -70,11 +88,19 @@ public class ApplicationStore extends Application {
             if (poiString.isEmpty() == false) {
                 Gson gson = new Gson();
                 mPOIList.addAll(Arrays.asList(gson.fromJson(poiString, POI[].class)));
+                createPOIMap();
                 createTagSet();
             }
         }
         getPOIListFromServer(callingActivity);
         return mPOIList;
+    }
+
+    private static void createPOIMap() {
+        mPOIMap.clear();
+        for (POI poi : mPOIList) {
+            mPOIMap.put(poi.getId(), poi);
+        }
     }
 
     private static void createTagSet() {
@@ -127,6 +153,7 @@ public class ApplicationStore extends Application {
                         // Also cache it away.
                         String poiString = gson.toJson(mPOIList);
                         setPOIString(poiString);
+                        createPOIMap();
                         createTagSet();
                         mbPOIListUpdated = true;
                     }
@@ -144,6 +171,13 @@ public class ApplicationStore extends Application {
         requestQueue.add(citiesRequest);
     }
 
+    public static POI getPOI(int poiID) {
+        return mPOIMap.get(poiID);
+    }
+
+    public static void doVersionCheck(Activity callingActivity) {
+        // TODO: Implement this
+    }
 
 }
 

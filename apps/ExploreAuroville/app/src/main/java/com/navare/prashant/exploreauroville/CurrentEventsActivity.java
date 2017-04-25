@@ -2,6 +2,7 @@ package com.navare.prashant.exploreauroville;
 
 import android.app.Activity;
 import android.app.DialogFragment;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -48,9 +49,10 @@ public class CurrentEventsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_current_events);
 
-        setTitle(getString(R.string.current_events));
+        setTitle(getString(R.string.events_today));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mMyActivity = this;
@@ -122,7 +124,7 @@ public class CurrentEventsActivity extends AppCompatActivity {
 
     private void getCurrentEvents() {
         // TODO: Add the fromDate and toDate logic
-        String getEventsURL = ApplicationStore.GET_CURRENT_EVENTS_URL + "?from=xyz&to=abc";
+        String getEventsURL = ApplicationStore.GET_CURRENT_EVENTS_URL + "&phone=" + ApplicationStore.getPhoneNumber() + "&from=xyz&to=abc";
         CustomRequest getEventsRequest = new CustomRequest(Request.Method.GET, getEventsURL, "",
                 new Response.Listener<String>() {
                     @Override

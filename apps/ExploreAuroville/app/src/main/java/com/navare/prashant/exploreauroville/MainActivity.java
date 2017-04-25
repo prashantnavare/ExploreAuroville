@@ -25,8 +25,14 @@ public class MainActivity extends AppCompatActivity {
 
         mMyActivity = this;
 
+        // Check for a newer version
+        ApplicationStore.doVersionCheck(mMyActivity);
+
+        // Build the POI List for this location
+        ApplicationStore.getPOIList(this);
+
         mTileText[0]=getString(R.string.map);
-        mTileText[1]=getString(R.string.current_events);
+        mTileText[1]=getString(R.string.events);
         mTileText[2]=getString(R.string.profile);
         mTileText[3]=getString(R.string.feedback);
 
@@ -44,8 +50,15 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(routeIntent);
                         break;
                     case 1:
-                        Intent eventIntent = new Intent(mMyActivity, CurrentEventsActivity.class);
-                        startActivity(eventIntent);
+                        String phoneNumber = ApplicationStore.getPhoneNumber();
+                        if (phoneNumber.isEmpty()) {
+                            Intent registerPhoneActivity = new Intent(mMyActivity, RegisterPhoneActivity.class);
+                            startActivity(registerPhoneActivity);
+                        }
+                        else {
+                            Intent eventIntent = new Intent(mMyActivity, CurrentEventsActivity.class);
+                            startActivity(eventIntent);
+                        }
                         break;
                 }
                         /*

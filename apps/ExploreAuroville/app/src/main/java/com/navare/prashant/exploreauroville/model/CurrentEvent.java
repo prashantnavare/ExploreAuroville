@@ -7,7 +7,7 @@ package com.navare.prashant.exploreauroville.model;
 public class CurrentEvent {
     private int id;
     private String name;
-    private String location;
+    private int poi_id;
     private long from_date;
     private long to_date;
     private String description;
@@ -21,8 +21,8 @@ public class CurrentEvent {
         return name;
     }
 
-    public String getLocation() {
-        return location;
+    public int getPOI_id() {
+        return poi_id;
     }
 
     public long getFrom_date() {

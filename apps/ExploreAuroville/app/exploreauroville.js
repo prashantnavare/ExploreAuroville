@@ -73,7 +73,7 @@ app.get('/api/explorex/v1/events', function (req, res) {
         {\
             "id": 2,\
             "name": "Live Jazz",\
-            "location": "Solitude Farm",\
+            "poi_id": 2,\
             "from_date": 1492965840283,\
             "to_date": 1492969440000,\
             "description": "Featuring bloo blah foo on drums!",\
@@ -82,7 +82,7 @@ app.get('/api/explorex/v1/events', function (req, res) {
         {\
             "id": 3,\
             "name": "Live R & B",\
-            "location": "Annapurna Farm",\
+            "poi_id": 3,\
             "from_date": 1493965840283,\
             "to_date": 1493969440000,\
             "description": "Featuring bloo blah foo on piano!",\
@@ -91,7 +91,7 @@ app.get('/api/explorex/v1/events', function (req, res) {
         {\
             "id": 4,\
             "name": "Yoga",\
-            "location": "Pitanga",\
+            "poi_id": 4,\
             "from_date": 1492965840283,\
             "to_date": 1492969440000,\
             "description": "Stretch yourself...",\
@@ -100,7 +100,7 @@ app.get('/api/explorex/v1/events', function (req, res) {
         {\
             "id": 9,\
             "name": "Russian Bells",\
-            "location": "Pony Farm",\
+            "poi_id": 5,\
             "from_date": 1494965840283,\
             "to_date": 1494969440000,\
             "description": "Featuring bloo blah foo on bells!",\
@@ -110,6 +110,14 @@ app.get('/api/explorex/v1/events', function (req, res) {
     console.log(req.rawBody);
     res.send(eventsJson );
 });
+
+// 3.
+app.post('/api/explorex/v1/phone', function (req, res) {
+    console.log(req.rawBody);
+    console.log(req.body);
+    res.status(200).send("success" );
+});
+
 
 app.listen(5678, function () {
     console.log('listening on port 5678!');
