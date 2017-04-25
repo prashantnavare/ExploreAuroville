@@ -35,12 +35,12 @@ import java.util.Locale;
  */
 
 public class CurrentEventListAdapter extends BaseAdapter {
-    Activity mActivity;
+    CurrentEventsActivity mActivity;
     LayoutInflater inflater;
     private List<CurrentEvent> mEventListToShow = new ArrayList<>();
     private List<CurrentEvent> mEventListAll = new ArrayList<>();
 
-    public CurrentEventListAdapter(Activity activity, List<CurrentEvent> eventList){
+    public CurrentEventListAdapter(CurrentEventsActivity activity, List<CurrentEvent> eventList){
         this.mActivity = activity;
         this.mEventListToShow.addAll(eventList);
         inflater=LayoutInflater.from(mActivity);
@@ -154,5 +154,6 @@ public class CurrentEventListAdapter extends BaseAdapter {
             }
         }
         notifyDataSetChanged();
+        mActivity.showNewCount(mEventListToShow.size());
     }
 }

@@ -45,7 +45,8 @@ public class CurrentEventsActivity extends AppCompatActivity {
     public final static String      toPickerTag = "toDatePicker";
     private ImageButton             mDateFilterButton;
 
-    private Activity                mMyActivity;
+    private boolean                 mbToday = true;
+    private CurrentEventsActivity   mMyActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,6 +139,7 @@ public class CurrentEventsActivity extends AppCompatActivity {
     }
 
     private void getCurrentEvents(long fromDate, long toDate, boolean bToday) {
+        mbToday = bToday;
         final ProgressDialog progressDialog = new ProgressDialog(mMyActivity);
         progressDialog.setTitle("Retrieving Events");
         if (bToday) {
@@ -205,5 +207,17 @@ public class CurrentEventsActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp(){
         finish();
         return true;
+    }
+
+    public void showNewCount(int newCount) {
+        if (mbToday) {
+            String newTitle = getString(R.string.events_today) + " (" + String.valueOf(newCount) + ")";
+            mMyActivity.setTitle(newTitle);
+        }
+        else {
+            String newTitle = getString(R.string.events) + " (" + String.valueOf(newCount) + ")";
+            mMyActivity.setTitle(newTitle);
+        }
+
     }
 }
