@@ -127,6 +127,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                     .position(poiLatLng)
                     .draggable(false)
                     .title(currentPOI.getName())
+                    .snippet(currentPOI.getDescription())
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
             mapBoundsBuilder.include(poiLatLng);
         }

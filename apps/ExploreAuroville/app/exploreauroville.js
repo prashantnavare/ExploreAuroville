@@ -30,6 +30,7 @@ app.get('/api/explorex/v1/poi', function (req, res) {
             "longitude": "79.816276",\
             "address": "Transformatio, Auroville",\
             "zip": "605101",\
+            "description": "Best School in AV",\
             "tags": "Future School, education, igcse, school"\
         },\
         {\
@@ -40,6 +41,7 @@ app.get('/api/explorex/v1/poi', function (req, res) {
             "longitude": "79.811019",\
             "address": "Auroville",\
             "zip": "605101",\
+            "description": "Where bureaucracy lives...",\
             "tags": "administration, financial services, auroville radio, housing service"\
         },\
         {\
@@ -50,6 +52,7 @@ app.get('/api/explorex/v1/poi', function (req, res) {
             "longitude": "79.810708",\
             "address": "Auroville",\
             "zip": "605101",\
+            "description": "The golden egg...",\
             "tags": "meditation"\
         },\
         {\
@@ -60,6 +63,7 @@ app.get('/api/explorex/v1/poi', function (req, res) {
             "longitude": "79.810354",\
             "address": "Auroville",\
             "zip": "605101",\
+            "description": "Uses gas...",\
             "tags": "food, lunch, dinner, vegetarian"\
         }\
     ]';

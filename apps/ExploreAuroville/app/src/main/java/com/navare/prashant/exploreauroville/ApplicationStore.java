@@ -111,6 +111,8 @@ public class ApplicationStore extends Application {
                 for (String tagString : tagStringArray) {
                     mTagSet.add(tagString.trim().toLowerCase());
                 }
+                // Also add the poi name as a tag
+                mTagSet.add(poi.getName().toLowerCase());
             }
         }
     }
@@ -134,6 +136,9 @@ public class ApplicationStore extends Application {
                 if (poi.getTags().toLowerCase().contains(lcQuesryString)) {
                     poiList.add(poi);
                 }
+                else if (poi.getName().toLowerCase().contains(lcQuesryString)) {
+                    poiList.add(poi);
+                }
             }
         }
         return  poiList;
@@ -149,7 +154,11 @@ public class ApplicationStore extends Application {
                     @Override
                     public void onResponse(String response) {
                         Gson gson = new Gson();
-                        mPOIList.addAll(Arrays.asList(gson.fromJson(response, POI[].class)));
+                        List<POI> poiListFromServer = Arrays.asList(gson.fromJson(response, POI[].class));
+                        if (poiListFromServer.size() > 0) {
+                            mPOIList.clear();
+                            mPOIList.addAll(Arrays.asList(gson.fromJson(response, POI[].class)));
+                        }
                         // Also cache it away.
                         String poiString = gson.toJson(mPOIList);
                         setPOIString(poiString);
