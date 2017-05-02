@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">ExploreX Admin</string>
+    <string name="username">Username</string>
+    <string name="delete">Delete</string>
+    <string name="password">Password</string>
+    <string name="forgot_password"><u><b><i>Forgot Password</i></b></u></string>
+    <string name="login_btn">Login</string>
+    <string name="signup_btn">Create New Account</string>
+    <string name="empty_username">User name cannot be empty.</string>
+    <string name="empty_password">Password cannot be empty.</string>
+    <string name="network_error">Network error : Please make sure you have Internet connectivity.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
