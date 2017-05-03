@@ -1,4 +1,4 @@
-package com.navare.prashant.exploreauroville.util;
+package com.navare.prashant.shared.util;
 
 import android.content.Context;
 

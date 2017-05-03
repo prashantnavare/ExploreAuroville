@@ -1,8 +1,4 @@
-package com.navare.prashant.exploreauroville.util;
-
-import android.app.Activity;
-import android.content.Intent;
-import android.widget.Toast;
+package com.navare.prashant.shared.util;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;

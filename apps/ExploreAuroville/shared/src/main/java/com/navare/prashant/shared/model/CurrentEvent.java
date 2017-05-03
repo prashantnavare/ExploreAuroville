@@ -1,4 +1,4 @@
-package com.navare.prashant.exploreauroville.model;
+package com.navare.prashant.shared.model;
 
 /**
  * Created by prashant on 23-Apr-17.

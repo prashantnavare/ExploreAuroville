@@ -1,4 +1,4 @@
-package com.navare.prashant.exploreauroville.model;
+package com.navare.prashant.shared.model;
 
 /**
  * Created by prashant on 17-Apr-17.
@@ -12,6 +12,7 @@ public class POI {
     private String  longitude;
     private String  address;
     private String  zip;
+    private String website;
     private String  description;
     private String  tags;
 
@@ -39,6 +40,10 @@ public class POI {
         return zip;
     }
 
+    public String getWebsite() {
+        return website;
+    }
+
     public String getLocation_id() {
         return location_id;
     }
@@ -49,6 +54,10 @@ public class POI {
 
     public String getTags() {
         return tags;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setName(String name) {
@@ -73,6 +82,10 @@ public class POI {
 
     public void setZip(String zip) {
         this.zip = zip;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
     }
 
     public void setDescription(String description) {
