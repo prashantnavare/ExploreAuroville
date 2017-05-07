@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -27,21 +28,21 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.RowViewHol
 
     public class RowViewHolder extends RecyclerView.ViewHolder {
         public TextView mEventNameTextView, mEventTimeTextView;
-        public ImageButton mDeleteButton;
+        public Button mDeleteButton;
 
 
         public RowViewHolder(View view) {
             super(view);
             mEventNameTextView = (TextView) view.findViewById(R.id.eventName);
             mEventTimeTextView = (TextView) view.findViewById(R.id.eventTime);
-            mDeleteButton = (ImageButton) view.findViewById(R.id.delete_btn);
+            mDeleteButton = (Button) view.findViewById(R.id.delete_btn);
             mRelativeLayout = (RelativeLayout) view.findViewById(R.id.ll_layout);
 
             mDeleteButton.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
-                    Log.i("HomeAdapter.java", "route settings button position "+getAdapterPosition());
+                    Log.i("EventsAdapter.java", "event position "+getAdapterPosition());
                     mEventsFragment.deleteEvent(mEventList.get(getAdapterPosition()));
                 }
             });

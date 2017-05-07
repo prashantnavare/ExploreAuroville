@@ -1,17 +1,207 @@
 package com.navare.prashant.explorexadmin;
 
+import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.google.gson.Gson;
+import com.navare.prashant.shared.model.CurrentEvent;
+import com.navare.prashant.shared.model.POI;
+import com.navare.prashant.shared.util.CustomRequest;
+import com.navare.prashant.shared.util.VolleyProvider;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeSet;
 
 /**
  * Created by prashant on 30-Apr-17.
  */
 
 public class ApplicationStore extends Application {
+    private static final String AUTH_TOKEN = "AuthToken";
+    public static final String EXISTING_EVENT_STRING = "ExistingEventString";
+
+
     public static final String BASE_URL = "http://192.168.1.104:5678";
+    public static final String LOCATION_PARAM = "?location=auroville";
+
     // API URLs
     public static final String VERSION_URL = ApplicationStore.BASE_URL + "/api/explorex/v1/admin/version?type=android";
     public static final String LOGIN_URL = ApplicationStore.BASE_URL + "/api/explorex/v1/admin/login";
     public static final String SIGNUP_URL = ApplicationStore.BASE_URL + "/api/explorex/v1/admin/signup";
     public static final String FORGOT_PASSWORD_URL = ApplicationStore.BASE_URL + "/api/explorex/v1/admin/forgot";
     public static final String RESET_PASSWORD_URL = ApplicationStore.BASE_URL + "/api/explorex/v1/admin/reset";
+    public static final String POI_URL = BASE_URL + "/api/explorex/v1/poi" + LOCATION_PARAM;
+    public static final String GET_CURRENT_EVENTS_URL = BASE_URL + "/api/explorex/v1/admin/events" + LOCATION_PARAM;
+    public static final String EVENT_URL = ApplicationStore.BASE_URL + "/api/explorex/v1/admin/event";
+
+    private static SharedPreferences mPreferences;
+    private static SharedPreferences.Editor mEditor;
+    private static Context mAppContext;
+
+    private static Map<Integer, POI> mPOIMap = new HashMap<>();
+    private static List<POI> mPOIList = new ArrayList<>();
+    private static boolean              mbPOIListUpdated = false;
+    private static TreeSet<String> mTagSet = new TreeSet<>();
+
+    private static final String POI_STRING = "POIString";
+    private static final String PHONE_NUMBER_STRING = "PhoneNumber";
+
+    private static CurrentEvent mCurrentEvent = null;
+
+    @Override
+    public void onCreate() {
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mEditor = mPreferences.edit();
+        mAppContext = getApplicationContext();
+    }
+
+    public static String getPOIString() {
+        return mPreferences.getString(POI_STRING, "");
+    }
+
+    public static void setPOIString(String poiString) {
+        mEditor.putString(POI_STRING, poiString);
+        mEditor.commit();
+    }
+
+    public static String getPhoneNumber() {
+        return mPreferences.getString(PHONE_NUMBER_STRING, "");
+    }
+
+    public static void setPhoneNumber(String phoneNumber) {
+        mEditor.putString(PHONE_NUMBER_STRING, phoneNumber);
+        mEditor.commit();
+    }
+
+    public static List<POI> getPOIList(Activity callingActivity) {
+        // If cache exists, use it right away and update it in the background.
+        if (mPOIList.size() == 0) {
+            String poiString = getPOIString();
+            if (poiString.isEmpty() == false) {
+                Gson gson = new Gson();
+                mPOIList.addAll(Arrays.asList(gson.fromJson(poiString, POI[].class)));
+                createPOIMap();
+                createTagSet();
+            }
+        }
+        getPOIListFromServer(callingActivity);
+        return mPOIList;
+    }
+
+    private static void createPOIMap() {
+        mPOIMap.clear();
+        for (POI poi : mPOIList) {
+            mPOIMap.put(poi.getId(), poi);
+        }
+    }
+
+    private static void createTagSet() {
+        if (mTagSet.isEmpty()) {
+            for (POI poi : mPOIList) {
+                String allTagsString = poi.getTags();
+                String[] tagStringArray = allTagsString.split(",");
+                for (String tagString : tagStringArray) {
+                    mTagSet.add(tagString.trim().toLowerCase());
+                }
+                // Also add the poi name as a tag
+                mTagSet.add(poi.getName().toLowerCase());
+            }
+        }
+    }
+
+    public static List<String> getTagListContaining(String queryString) {
+        String lcQuesryString = queryString.toLowerCase();
+        List<String> tagList = new ArrayList<>();
+        for (String tagString : mTagSet) {
+            if (tagString.contains(lcQuesryString)) {
+                tagList.add(tagString);
+            }
+        }
+        return  tagList;
+    }
+
+    public static List<POI> getPOIListContaining(String queryString) {
+        String lcQuesryString = queryString.toLowerCase();
+        List<POI> poiList = new ArrayList<>();
+        for (POI poi : mPOIList) {
+            if (poi.getTags() != null) {
+                if (poi.getTags().toLowerCase().contains(lcQuesryString)) {
+                    poiList.add(poi);
+                }
+                else if (poi.getName().toLowerCase().contains(lcQuesryString)) {
+                    poiList.add(poi);
+                }
+            }
+        }
+        return  poiList;
+    }
+
+    private static void getPOIListFromServer(final Activity callingActivity) {
+        if (mbPOIListUpdated) {
+            return;
+        }
+        CustomRequest poiRequest = new CustomRequest(Request.Method.GET, ApplicationStore.POI_URL, "",
+                new Response.Listener<String>() {
+
+                    @Override
+                    public void onResponse(String response) {
+                        Gson gson = new Gson();
+                        List<POI> poiListFromServer = Arrays.asList(gson.fromJson(response, POI[].class));
+                        if (poiListFromServer.size() > 0) {
+                            mPOIList.clear();
+                            mPOIList.addAll(Arrays.asList(gson.fromJson(response, POI[].class)));
+                        }
+                        // Also cache it away.
+                        String poiString = gson.toJson(mPOIList);
+                        setPOIString(poiString);
+                        createPOIMap();
+                        createTagSet();
+                        mbPOIListUpdated = true;
+                    }
+                },
+                new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        String errorMsg = callingActivity.getString(R.string.unable_to_get_poi_list);
+                        Toast.makeText(callingActivity, errorMsg, Toast.LENGTH_LONG).show();
+                    }
+                }){};
+
+        RequestQueue requestQueue = VolleyProvider.getQueue(mAppContext);
+        requestQueue.add(poiRequest);
+    }
+
+    public static POI getPOI(int poiID) {
+        return mPOIMap.get(poiID);
+    }
+
+    public static String getAuthToken() {
+        return mPreferences.getString(AUTH_TOKEN, "");
+    }
+
+    public static void setAuthToken(String authToken) {
+        mEditor.putString(AUTH_TOKEN, authToken);
+        mEditor.commit();
+    }
+
+    public static void setCurrentEvent(CurrentEvent currentEvent) {
+        mCurrentEvent = currentEvent;
+    }
+
+    public static CurrentEvent getCurrentEvent() {
+        return mCurrentEvent;
+    }
 }

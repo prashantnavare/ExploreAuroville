@@ -70,6 +70,9 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         doVersionCheck();
+
+        // kickstart the POI retrieval
+        ApplicationStore.getPOIList(mMyActivity);
     }
 
     private void doVersionCheck() {
