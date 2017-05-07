@@ -3,11 +3,8 @@ package com.navare.prashant.exploreauroville;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.telephony.TelephonyManager;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -15,18 +12,14 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
-import com.navare.prashant.exploreauroville.model.POI;
-import com.navare.prashant.exploreauroville.util.CustomRequest;
-import com.navare.prashant.exploreauroville.util.VolleyProvider;
+import com.navare.prashant.shared.model.POI;
+import com.navare.prashant.shared.util.CustomRequest;
+import com.navare.prashant.shared.util.VolleyProvider;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 import java.util.TreeSet;
 

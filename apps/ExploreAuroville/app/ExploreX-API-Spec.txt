@@ -123,3 +123,96 @@ Failure Response:
 HTTP Status 500: ExploreX System Error
 HTTP Status 400:Invalid Phone Number
 
+4.
+Login to an account. This API issues a JWT token if the login is successful. The token is sent back as the response header X-Token .
+
+POST /api/explorex/v1/admin/login HTTP/1.1
+Cache-Control: no-cache
+Content-Type: application/x-www-form-urlencoded
+
+username=John11&password=John11
+
+Success Response:
+
+HTTP Status 200: success
+
+HTTP Response Header field:
+X-Token:
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjcsInJvbGVfaWQiOiIzIiwiaWF0IjoxNDg3MjkxNTQzLCJleHAiOjE0ODcyOTI0NDN9.OtPYs5ByYcyKbuHIGpjV_PqmXRU9XYLml8_yIKrHR2A
+
+Failure Response:
+
+400: Username missing
+400: Password missing
+401: Incorrect Username or Password
+500: ExploreX System Error
+
+5.
+Get current event list for a given location & poi.
+
+GET /api/explorex/v1/events?location=auroville&poiid=0&from=abc&to=xyz HTTP/1.1
+
+Success Response:200
+[
+    {
+        "id": 2,
+        "name": "Live Jazz",
+        "location": "Solitude Farm",
+        "from_date": 1492965840283,
+        "to_date": 1492969440000,
+        "description": "Featuring bloo blah foo on drums!",
+        "tags": "music, jazz, food, drinks",
+    },
+    {
+        "id": 3,
+        "name": "Live R & B",
+        "location": "Annapurna Farm",
+        "from_date": 1493965840283,
+        "to_date": 1493969440000,
+        "description": "Featuring bloo blah foo on piano!",
+        "tags": "music, jazz, food, drinks",
+    },
+    {
+        "id": 4,
+        "name": "Yoga",
+        "location": "Pitanga",
+        "from_date": 1492965840283,
+        "to_date": 1492969440000,
+        "description": "Stretch yourself...",
+        "tags": "yoga, exercise, health",
+    },
+    {
+        "id": 9,
+        "name": "Russian Bells",
+        "location": "Pony Farm",
+        "from_date": 1494965840283,
+        "to_date": 1494969440000,
+        "description": "Featuring bloo blah foo on bells!",
+        "tags": "music, meditation, mellow",
+    }
+]
+
+HTTP Status 200: 1.0
+
+Failure Response:
+
+400 : required parameter missing
+
+6.
+Delete Event.
+DELETE /api/explorexl/v1/admin/event?eventid=4 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZV9pZCI6IjIiLCJpYXQiOjE0ODgwMDExNTMsImV4cCI6MTQ4ODAwMjA1M30.trhbSRSnCw92iixBETJobmjj7ian1OzcCNNzyiZxoGo
+Cache-Control: no-cache
+Content-Type: application/x-www-form-urlencoded
+
+Success Response:
+200:success
+
+Failure Response:
+403: Forbidden
+401: Invalid Token
+500: ExploreX System Error
+404: Event Not Found
+400: Missing event Id
+
+

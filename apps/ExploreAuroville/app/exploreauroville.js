@@ -122,6 +122,80 @@ app.post('/api/explorex/v1/phone', function (req, res) {
     res.status(200).send("success" );
 });
 
+//4.
+app.post('/api/explorex/v1/admin/login', function (req, res) {
+    console.log(req.rawBody);
+    res.setHeader("X-Token","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjcsInJvbGVfaWQiOiIzIiwiaWF0IjoxNDg3MjkxNTQzLCJleHAiOjE0ODcyOTI0NDN9.OtPYs5ByYcyKbuHIGpjV_PqmXRU9XYLml8_yIKrHR2A");
+    let loginJson = {"superadmin": true};
+    res.status(200).send(loginJson);
+    // res.status(401).send("invalid token" );
+});
+
+// 5.
+app.get('/api/explorex/v1/admin/events', function (req, res) {
+    var eventsJson = '[\
+        {\
+            "id": 2,\
+            "name": "Live Jazz",\
+            "poi_id": 2,\
+            "from_date": 1492965840283,\
+            "to_date": 1492969440000,\
+            "description": "Featuring bloo blah foo on drums!",\
+            "tags": "music, jazz, food, drinks"\
+        },\
+        {\
+            "id": 3,\
+            "name": "Live R & B",\
+            "poi_id": 2,\
+            "from_date": 1493965840283,\
+            "to_date": 1493969440000,\
+            "description": "Featuring bloo blah foo on piano!",\
+            "tags": "music, jazz, food, drinks"\
+        },\
+        {\
+            "id": 4,\
+            "name": "Yoga",\
+            "poi_id": 2,\
+            "from_date": 1492965840283,\
+            "to_date": 1492969440000,\
+            "description": "Stretch yourself...",\
+            "tags": "yoga, exercise, health"\
+        },\
+        {\
+            "id": 9,\
+            "name": "Russian Bells",\
+            "poi_id": 2,\
+            "from_date": 1494965840283,\
+            "to_date": 1494969440000,\
+            "description": "Featuring bloo blah foo on bells!",\
+            "tags": "music, meditation, mellow"\
+        }\
+    ]';
+    console.log(req.rawBody);
+    res.send(eventsJson );
+});
+
+// 6.
+app.delete('/api/explorex/v1/admin/event', function (req, res) {
+    console.log(req.rawBody);
+    //console.log("Auth : " + req.get('Authorization'));
+    res.status(200).send("success" );
+});
+
+// 6.
+app.put('/api/explorex/v1/admin/event', function (req, res) {
+    console.log(req.rawBody);
+    //console.log("Auth : " + req.get('Authorization'));
+    res.status(200).send("success" );
+});
+
+// 6.
+app.post('/api/explorex/v1/admin/event', function (req, res) {
+    console.log(req.rawBody);
+    //console.log("Auth : " + req.get('Authorization'));
+    res.status(200).send("success" );
+});
+
 
 app.listen(5678, function () {
     console.log('listening on port 5678!');

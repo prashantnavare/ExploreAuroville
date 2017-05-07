@@ -1,9 +1,7 @@
 package com.navare.prashant.exploreauroville;
 
-import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -19,9 +17,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
-import com.navare.prashant.exploreauroville.model.CurrentEvent;
-import com.navare.prashant.exploreauroville.util.CustomRequest;
-import com.navare.prashant.exploreauroville.util.VolleyProvider;
+import com.navare.prashant.shared.model.CurrentEvent;
+import com.navare.prashant.shared.util.CustomRequest;
+import com.navare.prashant.shared.util.VolleyProvider;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
