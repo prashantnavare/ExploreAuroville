@@ -40,4 +40,32 @@ public class CurrentEvent {
     public String getTags() {
         return tags;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPoi_id(int poi_id) {
+        this.poi_id = poi_id;
+    }
+
+    public void setFrom_date(long from_date) {
+        this.from_date = from_date;
+    }
+
+    public void setTo_date(long to_date) {
+        this.to_date = to_date;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
 }
