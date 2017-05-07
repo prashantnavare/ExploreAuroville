@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.navare.prashant.explorexadmin.POIFragment">
+    tools:context="com.navare.prashant.explorexadmin.CityFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView

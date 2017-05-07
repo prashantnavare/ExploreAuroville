@@ -25,7 +25,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.navare.prashant.shared.model.CurrentEvent;
-import com.navare.prashant.shared.model.POI;
+import com.navare.prashant.shared.model.Location;
 import com.navare.prashant.shared.util.CustomRequest;
 import com.navare.prashant.shared.util.VolleyProvider;
 
@@ -49,7 +49,7 @@ public class EventsFragment extends Fragment {
     private FloatingActionButton mNewEventButton;
     private static RecyclerView mRecyclerView;
     protected static EventsAdapter mAdapter;
-    private Spinner mPOISpinner;
+    private Spinner mLocationSpinner;
 
     private static List<CurrentEvent> mEventList = new ArrayList<>();
     private static Activity mMyActivity;
@@ -61,21 +61,21 @@ public class EventsFragment extends Fragment {
         mAdapter = new EventsAdapter(this, mEventList);
         mMyActivity = getActivity();
 
-        mPOISpinner = (Spinner) rootView.findViewById(R.id.poi_spinner);
-        mPOISpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mLocationSpinner = (Spinner) rootView.findViewById(R.id.location_spinner);
+        mLocationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                POI poi = (POI) mPOISpinner.getSelectedItem();
-                updateEvents(poi);
+                Location location = (Location) mLocationSpinner.getSelectedItem();
+                updateEvents(location);
             }
 
             public void onNothingSelected(AdapterView<?> adapterView) {
                 return;
             }
         });
-        List<POI> poiList = ApplicationStore.getPOIList(mMyActivity);
-        ArrayAdapter<POI> poiDataAdapter = new ArrayAdapter<>(mMyActivity, android.R.layout.simple_spinner_item, poiList);
-        poiDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mPOISpinner.setAdapter(poiDataAdapter);
+        List<Location> locationList = ApplicationStore.getLocationList(mMyActivity);
+        ArrayAdapter<Location> locationDataAdapter = new ArrayAdapter<>(mMyActivity, android.R.layout.simple_spinner_item, locationList);
+        locationDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mLocationSpinner.setAdapter(locationDataAdapter);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -97,18 +97,18 @@ public class EventsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        POI poi = (POI) mPOISpinner.getSelectedItem();
-        updateEvents(poi);
+        Location location = (Location) mLocationSpinner.getSelectedItem();
+        updateEvents(location);
     }
 
-    private void updateEvents(POI poi) {
+    private void updateEvents(Location location) {
         final ProgressDialog progressDialog = new ProgressDialog(mMyActivity);
         progressDialog.setTitle("Retrieving Events");
-        progressDialog.setMessage("Please wait while we retrieve events for " + poi.getName()+ "...");
+        progressDialog.setMessage("Please wait while we retrieve events for " + location.getName()+ "...");
         progressDialog.show();
 
         String getEventsURL = ApplicationStore.GET_CURRENT_EVENTS_URL;
-        getEventsURL += "&poiid=" + poi.getId();
+        getEventsURL += "&locationid=" + location.getId();
 
         // get next 10 days of events
         Calendar nowCalendar = Calendar.getInstance();

@@ -10,17 +10,17 @@ import android.view.ViewGroup;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link POIFragment#newInstance} factory method to
+ * Use the {@link CityFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class POIFragment extends Fragment {
+public class CityFragment extends Fragment {
 
-    public POIFragment() {
+    public CityFragment() {
         // Required empty public constructor
     }
 
-    public static POIFragment newInstance() {
-        POIFragment fragment = new POIFragment();
+    public static CityFragment newInstance() {
+        CityFragment fragment = new CityFragment();
         return fragment;
     }
 
@@ -33,7 +33,7 @@ public class POIFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_poi, container, false);
+        return inflater.inflate(R.layout.fragment_city, container, false);
     }
 
 }

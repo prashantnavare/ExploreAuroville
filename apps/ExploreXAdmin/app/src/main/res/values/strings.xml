@@ -9,7 +9,7 @@
     <string name="empty_username">User name cannot be empty.</string>
     <string name="empty_password">Password cannot be empty.</string>
     <string name="network_error">Network error : Please make sure you have Internet connectivity.</string>
-    <string name="unable_to_get_poi_list">Unable to get the list of points of interest.</string>
+    <string name="unable_to_get_location_list">Unable to get the list of points of interest.</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

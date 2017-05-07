@@ -3,14 +3,11 @@ package com.navare.prashant.explorexadmin;
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
@@ -23,26 +20,21 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.navare.prashant.shared.model.CurrentEvent;
-import com.navare.prashant.shared.model.POI;
+import com.navare.prashant.shared.model.Location;
 import com.navare.prashant.shared.util.CustomRequest;
 import com.navare.prashant.shared.util.VolleyProvider;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 public class EventDetailsActivity extends AppCompatActivity {
 
     private EditText        mEventNameET;
-    private Spinner         mPOISpinner;
-    private static EditText        mDateET;
+    private Spinner         mLocationSpinner;
+    private static EditText mDateET;
     private DialogFragment  mDateFragment;
     private EditText        mStartTimeET;
     private EditText        mEndTimeET;
@@ -50,7 +42,7 @@ public class EventDetailsActivity extends AppCompatActivity {
     private EditText        mEventTagsET;
     private ImageButton     mSaveButton;
 
-    private List<POI>       mPOIList;
+    private List<Location> mLocationList;
 
     private Activity mMyActivity;
     private boolean  mbExistingEvent = false;
@@ -88,7 +80,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mEventNameET = (EditText) findViewById(R.id.event_name_et);
-        initPOISpinner();
+        initLocationSpinner();
         mDateET = (EditText) findViewById(R.id.date_et);
         mDateFragment = new DatePickerFragment();
 
@@ -174,7 +166,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         if (mbExistingEvent) {
             setTitle(getString(R.string.modify_event));
             mEventNameET.setText(mEvent.getName());
-            setPOISpinnerSelection();
+            setLocationSpinnerSelection();
 
             Calendar dateCalendar = Calendar.getInstance();
             dateCalendar.setTimeInMillis(mEvent.getFrom_date());
@@ -193,28 +185,28 @@ public class EventDetailsActivity extends AppCompatActivity {
         }
     }
 
-    private void setPOISpinnerSelection() {
-        // Set the POI spinner selection to the event's poi
-        boolean bPOIExists = false;
+    private void setLocationSpinnerSelection() {
+        // Set the Location spinner selection to the event's Location
+        boolean LocationExists = false;
         int currentPos;
-        for (currentPos = 0; currentPos < mPOISpinner.getAdapter().getCount(); currentPos++) {
-            POI currentPOI = (POI) mPOISpinner.getItemAtPosition(currentPos);
-            if (currentPOI.getId() == mEvent.getPOI_id()) {
-                bPOIExists = true;
+        for (currentPos = 0; currentPos < mLocationSpinner.getAdapter().getCount(); currentPos++) {
+            Location currentLocation = (Location) mLocationSpinner.getItemAtPosition(currentPos);
+            if (currentLocation.getId() == mEvent.getLocation_id()) {
+                LocationExists = true;
                 break;
             }
         }
-        if (bPOIExists) {
-            mPOISpinner.setSelection(currentPos);
+        if (LocationExists) {
+            mLocationSpinner.setSelection(currentPos);
         }
     }
 
-    private void initPOISpinner(){
-        mPOISpinner = (Spinner) findViewById(R.id.poi_spinner);
-        List<POI> poiList = ApplicationStore.getPOIList(mMyActivity);
-        final ArrayAdapter<POI> poiAdapter = new ArrayAdapter<>(mMyActivity, android.R.layout.simple_spinner_item, poiList);
-        poiAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mPOISpinner.setAdapter(poiAdapter);
+    private void initLocationSpinner(){
+        mLocationSpinner = (Spinner) findViewById(R.id.location_spinner);
+        List<Location> locationList = ApplicationStore.getLocationList(mMyActivity);
+        final ArrayAdapter<Location> locationAdapter = new ArrayAdapter<>(mMyActivity, android.R.layout.simple_spinner_item, locationList);
+        locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mLocationSpinner.setAdapter(locationAdapter);
     }
 
     private boolean isUIValidated() {
@@ -239,7 +231,7 @@ public class EventDetailsActivity extends AppCompatActivity {
 
     private void updateEventFromUI() {
         mEvent.setName(mEventNameET.getText().toString());
-        mEvent.setPoi_id(((POI)mPOISpinner.getSelectedItem()).getId());
+        mEvent.setLocation_id(((Location) mLocationSpinner.getSelectedItem()).getId());
 
         String dateString = mDateET.getText().toString();
         SimpleDateFormat sdfDay = new SimpleDateFormat("EEE, dd/MM/yyyy");
