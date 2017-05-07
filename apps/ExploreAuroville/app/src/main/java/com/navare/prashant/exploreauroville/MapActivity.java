@@ -17,7 +17,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.navare.prashant.shared.model.POI;
+import com.navare.prashant.shared.model.Location;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +26,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
     private GoogleMap mMap;
     private LatLngBounds mRouteBound;
-    private static List<POI> mPOIListToShow = new ArrayList<>();
-    private static List<POI> mPOIListAll = new ArrayList<>();
+    private static List<Location> mLocationListToShow = new ArrayList<>();
+    private static List<Location> mLocationListAll = new ArrayList<>();
     private DelayAutoCompleteTextView   mAutocompleteTV;
     private ImageView                   mAutocompleteClearIV;
     private Integer THRESHOLD = 1;
@@ -42,8 +42,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        // Build the POI List for this location
-        mPOIListAll = ApplicationStore.getPOIList(this);
+        // Build the Location List for this location
+        mLocationListAll = ApplicationStore.getLocationList(this);
 
         mAutocompleteClearIV = (ImageView) findViewById(R.id.autocomplete_clear);
 
@@ -56,7 +56,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 mTagSearchString = (String) adapterView.getItemAtPosition(position);
                 mAutocompleteTV.setText(mTagSearchString);
-                mPOIListToShow = ApplicationStore.getPOIListContaining(mTagSearchString);
+                mLocationListToShow = ApplicationStore.getLocationListContaining(mTagSearchString);
                 showMarkersOnMap();
             }
         });
@@ -120,17 +120,17 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     public void showMarkersOnMap() {
         LatLngBounds.Builder mapBoundsBuilder = new LatLngBounds.Builder();
 
-        for (POI currentPOI : mPOIListToShow) {
-            LatLng poiLatLng = new LatLng(Double.valueOf(currentPOI.getLatitude()), Double.valueOf(currentPOI.getLongitude()));
-            Marker poiMarker = mMap.addMarker(new MarkerOptions()
-                    .position(poiLatLng)
+        for (Location currentLocation : mLocationListToShow) {
+            LatLng locationLatLng = new LatLng(Double.valueOf(currentLocation.getLatitude()), Double.valueOf(currentLocation.getLongitude()));
+            Marker locationMarker = mMap.addMarker(new MarkerOptions()
+                    .position(locationLatLng)
                     .draggable(false)
-                    .title(currentPOI.getName())
-                    .snippet(currentPOI.getDescription())
+                    .title(currentLocation.getName())
+                    .snippet(currentLocation.getDescription())
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-            mapBoundsBuilder.include(poiLatLng);
+            mapBoundsBuilder.include(locationLatLng);
         }
-        if (mPOIListToShow.size() > 0) {
+        if (mLocationListToShow.size() > 0) {
             mRouteBound = mapBoundsBuilder.build();
             mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
                 @Override

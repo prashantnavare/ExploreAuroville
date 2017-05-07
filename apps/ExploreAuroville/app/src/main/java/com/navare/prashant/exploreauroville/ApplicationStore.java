@@ -12,7 +12,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
-import com.navare.prashant.shared.model.POI;
+import com.navare.prashant.shared.model.Location;
 import com.navare.prashant.shared.util.CustomRequest;
 import com.navare.prashant.shared.util.VolleyProvider;
 
@@ -29,22 +29,22 @@ import java.util.TreeSet;
 
 public class ApplicationStore extends Application {
     public static final String BASE_URL = "http://192.168.1.104:5678";
-    public static final String LOCATION_PARAM = "?location=auroville";
+    public static final String CITY_PARAM = "?cityid=0";
     // API URLs
     public static final String PHONE_REGISTER_URL = BASE_URL + "/api/explorex/v1/phone";
-    public static final String POI_URL = BASE_URL + "/api/explorex/v1/poi" + LOCATION_PARAM;
-    public static final String GET_CURRENT_EVENTS_URL = BASE_URL + "/api/explorex/v1/events" + LOCATION_PARAM;
+    public static final String LOCATION_URL = BASE_URL + "/api/explorex/v1/location" + CITY_PARAM;
+    public static final String GET_CURRENT_EVENTS_URL = BASE_URL + "/api/explorex/v1/events" + CITY_PARAM;
 
     private static SharedPreferences        mPreferences;
     private static SharedPreferences.Editor mEditor;
     private static Context                  mAppContext;
 
-    private static Map<Integer, POI>    mPOIMap = new HashMap<>();
-    private static List<POI>            mPOIList = new ArrayList<>();
-    private static boolean              mbPOIListUpdated = false;
+    private static Map<Integer, Location> mLocationMap = new HashMap<>();
+    private static List<Location> mLocationList = new ArrayList<>();
+    private static boolean mbLocationListUpdated = false;
     private static TreeSet<String>      mTagSet = new TreeSet<>();
 
-    private static final String POI_STRING = "POIString";
+    private static final String LOCATION_STRING = "LocationString";
     private static final String PHONE_NUMBER_STRING = "PhoneNumber";
 
     public static int activeDatePicker = 0;
@@ -56,12 +56,12 @@ public class ApplicationStore extends Application {
         mAppContext = getApplicationContext();
     }
 
-    public static String getPOIString() {
-        return mPreferences.getString(POI_STRING, "");
+    public static String getLocationString() {
+        return mPreferences.getString(LOCATION_STRING, "");
     }
 
-    public static void setPOIString(String poiString) {
-        mEditor.putString(POI_STRING, poiString);
+    public static void setLocationString(String locationString) {
+        mEditor.putString(LOCATION_STRING, locationString);
         mEditor.commit();
     }
 
@@ -74,38 +74,38 @@ public class ApplicationStore extends Application {
         mEditor.commit();
     }
 
-    public static List<POI> getPOIList(Activity callingActivity) {
+    public static List<Location> getLocationList(Activity callingActivity) {
         // If cache exists, use it right away and update it in the background.
-        if (mPOIList.size() == 0) {
-            String poiString = getPOIString();
-            if (poiString.isEmpty() == false) {
+        if (mLocationList.size() == 0) {
+            String locationString = getLocationString();
+            if (locationString.isEmpty() == false) {
                 Gson gson = new Gson();
-                mPOIList.addAll(Arrays.asList(gson.fromJson(poiString, POI[].class)));
-                createPOIMap();
-                createTagSet();
+                mLocationList.addAll(Arrays.asList(gson.fromJson(locationString, Location[].class)));
+                createLocationMap();
+                createLocationTagSet();
             }
         }
-        getPOIListFromServer(callingActivity);
-        return mPOIList;
+        getLocationListFromServer(callingActivity);
+        return mLocationList;
     }
 
-    private static void createPOIMap() {
-        mPOIMap.clear();
-        for (POI poi : mPOIList) {
-            mPOIMap.put(poi.getId(), poi);
+    private static void createLocationMap() {
+        mLocationMap.clear();
+        for (Location location : mLocationList) {
+            mLocationMap.put(location.getId(), location);
         }
     }
 
-    private static void createTagSet() {
+    private static void createLocationTagSet() {
         if (mTagSet.isEmpty()) {
-            for (POI poi : mPOIList) {
-                String allTagsString = poi.getTags();
+            for (Location location : mLocationList) {
+                String allTagsString = location.getTags();
                 String[] tagStringArray = allTagsString.split(",");
                 for (String tagString : tagStringArray) {
                     mTagSet.add(tagString.trim().toLowerCase());
                 }
-                // Also add the poi name as a tag
-                mTagSet.add(poi.getName().toLowerCase());
+                // Also add the location name as a tag
+                mTagSet.add(location.getName().toLowerCase());
             }
         }
     }
@@ -121,50 +121,50 @@ public class ApplicationStore extends Application {
         return  tagList;
     }
 
-    public static List<POI> getPOIListContaining(String queryString) {
+    public static List<Location> getLocationListContaining(String queryString) {
         String lcQuesryString = queryString.toLowerCase();
-        List<POI> poiList = new ArrayList<>();
-        for (POI poi : mPOIList) {
-            if (poi.getTags() != null) {
-                if (poi.getTags().toLowerCase().contains(lcQuesryString)) {
-                    poiList.add(poi);
+        List<Location> locationList = new ArrayList<>();
+        for (Location location : mLocationList) {
+            if (location.getTags() != null) {
+                if (location.getTags().toLowerCase().contains(lcQuesryString)) {
+                    locationList.add(location);
                 }
-                else if (poi.getName().toLowerCase().contains(lcQuesryString)) {
-                    poiList.add(poi);
+                else if (location.getName().toLowerCase().contains(lcQuesryString)) {
+                    locationList.add(location);
                 }
             }
         }
-        return  poiList;
+        return locationList;
     }
 
-    private static void getPOIListFromServer(final Activity callingActivity) {
-        if (mbPOIListUpdated) {
+    private static void getLocationListFromServer(final Activity callingActivity) {
+        if (mbLocationListUpdated) {
             return;
         }
-        CustomRequest citiesRequest = new CustomRequest(Request.Method.GET, ApplicationStore.POI_URL, "",
+        CustomRequest citiesRequest = new CustomRequest(Request.Method.GET, ApplicationStore.LOCATION_URL, "",
                 new Response.Listener<String>() {
 
                     @Override
                     public void onResponse(String response) {
                         Gson gson = new Gson();
-                        List<POI> poiListFromServer = Arrays.asList(gson.fromJson(response, POI[].class));
-                        if (poiListFromServer.size() > 0) {
-                            mPOIList.clear();
-                            mPOIList.addAll(Arrays.asList(gson.fromJson(response, POI[].class)));
+                        List<Location> locationListFromServer = Arrays.asList(gson.fromJson(response, Location[].class));
+                        if (locationListFromServer.size() > 0) {
+                            mLocationList.clear();
+                            mLocationList.addAll(Arrays.asList(gson.fromJson(response, Location[].class)));
                         }
                         // Also cache it away.
-                        String poiString = gson.toJson(mPOIList);
-                        setPOIString(poiString);
-                        createPOIMap();
-                        createTagSet();
-                        mbPOIListUpdated = true;
+                        String locationString = gson.toJson(mLocationList);
+                        setLocationString(locationString);
+                        createLocationMap();
+                        createLocationTagSet();
+                        mbLocationListUpdated = true;
                     }
                 },
                 new Response.ErrorListener() {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        String errorMsg = callingActivity.getString(R.string.unable_to_get_poi_list);
+                        String errorMsg = callingActivity.getString(R.string.unable_to_get_location_list);
                         Toast.makeText(callingActivity, errorMsg, Toast.LENGTH_LONG).show();
                     }
                 }){};
@@ -173,8 +173,8 @@ public class ApplicationStore extends Application {
         requestQueue.add(citiesRequest);
     }
 
-    public static POI getPOI(int poiID) {
-        return mPOIMap.get(poiID);
+    public static Location getLocation(int locationID) {
+        return mLocationMap.get(locationID);
     }
 
     public static void doVersionCheck(Activity callingActivity) {

@@ -6,9 +6,9 @@
     <string name="profile">Profile</string>
     <string name="feedback">Feedback</string>
     <string name="title_activity_map">Map</string>
-    <string name="unable_to_get_poi_list">Unable to get the list of points of interest.</string>
+    <string name="unable_to_get_location_list">Unable to get the list of locations.</string>
     <string name="auroville">Auroville</string>
-    <string name="search_input_hint">Search Points of Interest (e.g. food)</string>
+    <string name="search_input_hint">Search locations by name or topic (e.g. food)</string>
     <string name="search_remove_button_txt">Clear</string>
     <string name="search_current_events">Search by topic, location or event name</string>
     <string name="from">  From</string>

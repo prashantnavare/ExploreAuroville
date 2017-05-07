@@ -20,12 +20,12 @@ app.use(bodyParser.urlencoded({ verify: rawBodySaver, extended: true }));
 app.use(bodyParser.raw({ verify: rawBodySaver, type: '*/*' }));
 
 // 1.
-app.get('/api/explorex/v1/poi', function (req, res) {
-    var poiJson = '[\
+app.get('/api/explorex/v1/location', function (req, res) {
+    var locationJson = '[\
         {\
             "id": 2,\
             "name": "Future School",\
-            "location_id": "1",\
+            "city_id": "1",\
             "latitude": "12.012354",\
             "longitude": "79.816276",\
             "address": "Transformatio, Auroville",\
@@ -36,7 +36,7 @@ app.get('/api/explorex/v1/poi', function (req, res) {
         {\
             "id": 3,\
             "name": "Town Hall",\
-            "location_id": "1",\
+            "city_id": "1",\
             "latitude": "12.009636",\
             "longitude": "79.811019",\
             "address": "Auroville",\
@@ -47,7 +47,7 @@ app.get('/api/explorex/v1/poi', function (req, res) {
         {\
             "id": 4,\
             "name": "Matrimandir",\
-            "location_id": "1",\
+            "city_id": "1",\
             "latitude": "12.006991",\
             "longitude": "79.810708",\
             "address": "Auroville",\
@@ -58,7 +58,7 @@ app.get('/api/explorex/v1/poi', function (req, res) {
         {\
             "id": 5,\
             "name": "Solar Kitchen",\
-            "location_id": "1",\
+            "city_id": "1",\
             "latitude": "12.001513",\
             "longitude": "79.810354",\
             "address": "Auroville",\
@@ -68,7 +68,7 @@ app.get('/api/explorex/v1/poi', function (req, res) {
         }\
     ]';
     console.log(req.rawBody);
-    res.send(poiJson );
+    res.send(locationJson );
 });
 
 // 2.
@@ -77,7 +77,7 @@ app.get('/api/explorex/v1/events', function (req, res) {
         {\
             "id": 2,\
             "name": "Live Jazz",\
-            "poi_id": 2,\
+            "location_id": 2,\
             "from_date": 1492965840283,\
             "to_date": 1492969440000,\
             "description": "Featuring bloo blah foo on drums!",\
@@ -86,7 +86,7 @@ app.get('/api/explorex/v1/events', function (req, res) {
         {\
             "id": 3,\
             "name": "Live R & B",\
-            "poi_id": 3,\
+            "location_id": 3,\
             "from_date": 1493965840283,\
             "to_date": 1493969440000,\
             "description": "Featuring bloo blah foo on piano!",\
@@ -95,7 +95,7 @@ app.get('/api/explorex/v1/events', function (req, res) {
         {\
             "id": 4,\
             "name": "Yoga",\
-            "poi_id": 4,\
+            "location_id": 4,\
             "from_date": 1492965840283,\
             "to_date": 1492969440000,\
             "description": "Stretch yourself...",\
@@ -104,7 +104,7 @@ app.get('/api/explorex/v1/events', function (req, res) {
         {\
             "id": 9,\
             "name": "Russian Bells",\
-            "poi_id": 5,\
+            "location_id": 5,\
             "from_date": 1494965840283,\
             "to_date": 1494969440000,\
             "description": "Featuring bloo blah foo on bells!",\
@@ -137,7 +137,7 @@ app.get('/api/explorex/v1/admin/events', function (req, res) {
         {\
             "id": 2,\
             "name": "Live Jazz",\
-            "poi_id": 2,\
+            "location_id": 2,\
             "from_date": 1492965840283,\
             "to_date": 1492969440000,\
             "description": "Featuring bloo blah foo on drums!",\
@@ -146,7 +146,7 @@ app.get('/api/explorex/v1/admin/events', function (req, res) {
         {\
             "id": 3,\
             "name": "Live R & B",\
-            "poi_id": 2,\
+            "location_id": 2,\
             "from_date": 1493965840283,\
             "to_date": 1493969440000,\
             "description": "Featuring bloo blah foo on piano!",\
@@ -155,7 +155,7 @@ app.get('/api/explorex/v1/admin/events', function (req, res) {
         {\
             "id": 4,\
             "name": "Yoga",\
-            "poi_id": 2,\
+            "location_id": 2,\
             "from_date": 1492965840283,\
             "to_date": 1492969440000,\
             "description": "Stretch yourself...",\
@@ -164,7 +164,7 @@ app.get('/api/explorex/v1/admin/events', function (req, res) {
         {\
             "id": 9,\
             "name": "Russian Bells",\
-            "poi_id": 2,\
+            "location_id": 2,\
             "from_date": 1494965840283,\
             "to_date": 1494969440000,\
             "description": "Featuring bloo blah foo on bells!",\

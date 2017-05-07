@@ -8,7 +8,7 @@ Success Response:200
     {
         "id": 2,
         "name": "Future School",
-        "location_id": "1",
+        "city_id": "1",
         "latitude": "12.012354",
         "longitude": "79.816276",
         "address": "Transformatio, Auroville",
@@ -18,7 +18,7 @@ Success Response:200
     {
         "id": 3,
         "name": "Town Hall",
-        "location_id": "1",
+        "city_id": "1",
         "latitude": "12.009636",
         "longitude": "79.811019",
         "address": "Auroville",
@@ -28,7 +28,7 @@ Success Response:200
     {
         "id": 4,
         "name": "Matrimandir",
-        "location_id": "1",
+        "city_id": "1",
         "latitude": "12.006991",
         "longitude": "79.810708",
         "address": "Auroville",
@@ -38,7 +38,7 @@ Success Response:200
     {
         "id": 5,
         "name": "Solar Kitchen",
-        "location_id": "1",
+        "city_id": "1",
         "latitude": "12.001513",
         "longitude": "79.810354",
         "address": "Auroville",

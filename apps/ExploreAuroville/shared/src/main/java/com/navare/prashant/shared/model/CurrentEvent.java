@@ -7,7 +7,7 @@ package com.navare.prashant.shared.model;
 public class CurrentEvent {
     private int id;
     private String name;
-    private int poi_id;
+    private int location_id;
     private long from_date;
     private long to_date;
     private String description;
@@ -21,8 +21,8 @@ public class CurrentEvent {
         return name;
     }
 
-    public int getPOI_id() {
-        return poi_id;
+    public int getLocation_id() {
+        return location_id;
     }
 
     public long getFrom_date() {
@@ -49,8 +49,8 @@ public class CurrentEvent {
         this.name = name;
     }
 
-    public void setPoi_id(int poi_id) {
-        this.poi_id = poi_id;
+    public void setLocation_id(int location_id) {
+        this.location_id = location_id;
     }
 
     public void setFrom_date(long from_date) {

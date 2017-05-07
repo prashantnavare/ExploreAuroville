@@ -10,7 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.navare.prashant.shared.model.CurrentEvent;
-import com.navare.prashant.shared.model.POI;
+import com.navare.prashant.shared.model.Location;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -91,9 +91,9 @@ public class CurrentEventListAdapter extends BaseAdapter {
         timingString += " -- " + sdfTime.format(toCal.getTime()) + ")";
         viewHolder.timing.setText(timingString);
 
-        POI poi = ApplicationStore.getPOI(currentEvent.getPOI_id());
-        if (poi != null) {
-            viewHolder.location.setText(poi.getName());
+        Location location = ApplicationStore.getLocation(currentEvent.getLocation_id());
+        if (location != null) {
+            viewHolder.location.setText(location.getName());
         }
 
         viewHolder.description.setText(currentEvent.getDescription());
@@ -132,9 +132,9 @@ public class CurrentEventListAdapter extends BaseAdapter {
                     mEventListToShow.add(event);
                 }
                 else {
-                    POI poi = ApplicationStore.getPOI(event.getId());
-                    if (poi != null) {
-                        if (poi.getName().toLowerCase(Locale.getDefault()).contains(charText)) {
+                    Location location = ApplicationStore.getLocation(event.getId());
+                    if (location != null) {
+                        if (location.getName().toLowerCase(Locale.getDefault()).contains(charText)) {
                             mEventListToShow.add(event);
                         }
                     }

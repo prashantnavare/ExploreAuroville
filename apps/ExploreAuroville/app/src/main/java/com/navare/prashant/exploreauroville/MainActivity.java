@@ -8,9 +8,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
-import java.util.Calendar;
-import java.util.Date;
-
 public class MainActivity extends AppCompatActivity {
 
     GridView    mGridView;
@@ -28,8 +25,8 @@ public class MainActivity extends AppCompatActivity {
         // Check for a newer version
         ApplicationStore.doVersionCheck(mMyActivity);
 
-        // Build the POI List for this location
-        ApplicationStore.getPOIList(this);
+        // Build the Location List for this location
+        ApplicationStore.getLocationList(this);
 
         mTileText[0]=getString(R.string.map);
         mTileText[1]=getString(R.string.events);
