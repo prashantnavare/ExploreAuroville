@@ -167,7 +167,7 @@ public class EventsFragment extends Fragment {
     public void deleteEvent(final CurrentEvent currentEvent) {
         new AlertDialog.Builder(mMyActivity)
                 .setTitle(mMyActivity.getString(R.string.delete_event))
-                .setMessage(mMyActivity.getString(R.string.delete_confirmation)+" "+ currentEvent.getName()+"?")
+                .setMessage(mMyActivity.getString(R.string.delete_event_confirmation)+" "+ currentEvent.getName()+"?")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // continue with delete

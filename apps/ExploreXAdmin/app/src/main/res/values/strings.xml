@@ -15,13 +15,17 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="poi">Point of Interest</string>
     <string name="delete_event">Delete Event</string>
-    <string name="delete_confirmation">Are you sure you want to delete the event</string>
+    <string name="delete_event_confirmation">Are you sure you want to delete the event</string>
     <string name="event_deleted">Event deleted.</string>
     <string name="event_delete_failed">Network error: Unable to delete event.</string>
+    <string name="delete_location">Delete Location</string>
+    <string name="delete_location_confirmation">Are you sure you want to delete the location</string>
+    <string name="location_deleted">Location deleted.</string>
+    <string name="location_delete_failed">Network error: Unable to delete location.</string>
     <string name="event_name">Event Name</string>
     <string name="event_location">Event Location</string>
     <string name="event_description">Event description</string>
-    <string name="tag_description">Search tags for this event...</string>
+    <string name="event_tag_description">Search tags for this event...</string>
     <string name="start_time">Start Time</string>
     <string name="end_time">End Time</string>
     <string name="from">From</string>
@@ -37,4 +41,11 @@
     <string name="event_end_time_missing">Event end time must be specified.</string>
     <string name="unable_to_save_event_info">Failed to save event information.</string>
     <string name="event_info_saved">Event information saved.</string>
+    <string name="location_name">Location Name</string>
+    <string name="location_description">Location description...</string>
+    <string name="location_tag_description">Search tags for this location...</string>
+    <string name="modify_location">Modify Location</string>
+    <string name="new_location">New Location</string>
+    <string name="location_name_missing">Location name must be specified.</string>
+    <string name="location_description_missing">Location description must be specified.</string>
 </resources>

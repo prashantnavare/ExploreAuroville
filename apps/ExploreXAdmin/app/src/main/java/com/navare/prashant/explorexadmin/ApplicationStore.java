@@ -31,7 +31,7 @@ import java.util.TreeSet;
 public class ApplicationStore extends Application {
     private static final String AUTH_TOKEN = "AuthToken";
     public static final String EXISTING_EVENT_STRING = "ExistingEventString";
-
+    public static final String EXISTING_LOCATION_STRING = "ExistingLocationString";
 
     public static final String BASE_URL = "http://192.168.1.104:5678";
     public static final String CITY_PARAM = "?cityid=0";
@@ -59,6 +59,7 @@ public class ApplicationStore extends Application {
     private static final String PHONE_NUMBER_STRING = "PhoneNumber";
 
     private static CurrentEvent mCurrentEvent = null;
+    private static Location mCurrentLocation = null;
 
     @Override
     public void onCreate() {
@@ -199,6 +200,14 @@ public class ApplicationStore extends Application {
 
     public static void setCurrentEvent(CurrentEvent currentEvent) {
         mCurrentEvent = currentEvent;
+    }
+
+    public static Location getCurrentLocation() {
+        return mCurrentLocation;
+    }
+
+    public static void setCurrentLocation(Location currentLocation) {
+        mCurrentLocation = currentLocation;
     }
 
     public static CurrentEvent getCurrentEvent() {
