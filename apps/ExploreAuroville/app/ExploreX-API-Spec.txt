@@ -1,7 +1,7 @@
 1.
-Get POI list for a location.
+Get Location list for a city.
 
-GET /api/explorex/v1/poi?location=auroville HTTP/1.1
+GET /api/explorex/v1/location?cityid=0 HTTP/1.1
 
 Success Response:200
 [
@@ -55,9 +55,9 @@ Failure Response:
 400 : Invalid type
 
 2.
-Get current event list for a location.
+Get current event list for a city, & duration.
 
-GET /api/explorex/v1/events?location=auroville&from=abc&to=xyz HTTP/1.1
+GET /api/explorex/v1/events?cityid=0&phone=1234567&from=abc&to=xyz HTTP/1.1
 
 Success Response:200
 [
@@ -133,8 +133,7 @@ Content-Type: application/x-www-form-urlencoded
 username=John11&password=John11
 
 Success Response:
-
-HTTP Status 200: success
+200:{"superadmin": true}
 
 HTTP Response Header field:
 X-Token:

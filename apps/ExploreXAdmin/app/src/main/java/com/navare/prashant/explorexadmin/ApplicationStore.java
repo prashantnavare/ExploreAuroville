@@ -60,6 +60,7 @@ public class ApplicationStore extends Application {
 
     private static CurrentEvent mCurrentEvent = null;
     private static Location mCurrentLocation = null;
+    private static boolean mbSuperAdmin = false;
 
     @Override
     public void onCreate() {
@@ -212,5 +213,13 @@ public class ApplicationStore extends Application {
 
     public static CurrentEvent getCurrentEvent() {
         return mCurrentEvent;
+    }
+
+    public static void setSuperAdmin(boolean bSuperAdmin) {
+        mbSuperAdmin = bSuperAdmin;
+    }
+
+    public static boolean isSuperAdmin() {
+        return mbSuperAdmin;
     }
 }

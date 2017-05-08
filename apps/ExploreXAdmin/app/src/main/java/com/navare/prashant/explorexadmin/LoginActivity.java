@@ -16,7 +16,9 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.google.gson.Gson;
 import com.navare.prashant.shared.util.CustomRequest;
+import com.navare.prashant.shared.util.LoginResponse;
 import com.navare.prashant.shared.util.VolleyProvider;
 
 import java.io.UnsupportedEncodingException;
@@ -67,6 +69,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void doVersionCheck() {
+        // TODO
         /*
         CustomRequest versionRequest = new CustomRequest(this, Request.Method.GET, ApplicationStore.VERSION_URL, "", "",
                 new Response.Listener<String>() {
@@ -107,6 +110,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void doForgotPassword() {
+        // TODO
         /*
         Intent forgorPasswordIntent = new Intent(LaunchActivity.this, ForgotPasswordActivity.class);
         startActivity(forgorPasswordIntent);
@@ -139,6 +143,14 @@ public class LoginActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        String authToken = mLoginRequest.getAuthToken();
+                        if (authToken != null && authToken.isEmpty() == false) {
+                            ApplicationStore.setAuthToken(authToken);
+                        }
+                        Gson gson = new Gson();
+                        LoginResponse loginResponse = gson.fromJson(response, LoginResponse.class);
+                        ApplicationStore.setSuperAdmin(loginResponse.isSuperadmin());
+
                         Intent tabIntent = new Intent(LoginActivity.this, TabActivity.class);
                         startActivity(tabIntent);
                         finish();

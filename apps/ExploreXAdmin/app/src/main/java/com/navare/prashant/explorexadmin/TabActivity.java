@@ -26,7 +26,8 @@ public class TabActivity extends AppCompatActivity {
      */
     private ViewPager mViewPager;
 
-    static final int NUM_TABS       = 3;
+    static final int NUM_TABS_SUPERADMIN = 3;
+    static final int NUM_TABS_REGULAR = 2;
     static final int EVENTS_TAB = 0;
     static final int LOCATION_TAB = 1;
     static final int CITY_TAB = 2;
@@ -91,7 +92,12 @@ public class TabActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             //total pages to show
-            return NUM_TABS;
+            if (ApplicationStore.isSuperAdmin()) {
+                return NUM_TABS_SUPERADMIN;
+            }
+            else {
+                return NUM_TABS_REGULAR;
+            }
         }
 
         @Override

@@ -98,30 +98,8 @@ public class LocationDetailsActivity extends AppCompatActivity {
         return true;
     }
 
-    private void updateEventFromUI() {
+    private void updateLocationFromUI() {
         mLocation.setName(mLocationNameET.getText().toString());
-        mLocation.setLocation_id(((Location) mLocationSpinner.getSelectedItem()).getId());
-
-        String dateString = mDateET.getText().toString();
-        SimpleDateFormat sdfDay = new SimpleDateFormat("EEE, dd/MM/yyyy");
-        Date eventDate = new Date();
-        try {
-            eventDate = sdfDay.parse(mDateET.getText().toString());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        Calendar eventFromCalendar = Calendar.getInstance();
-        eventFromCalendar.setTime(eventDate);
-        eventFromCalendar.set(Calendar.HOUR_OF_DAY, mStartHour);
-        eventFromCalendar.set(Calendar.MINUTE, mStartMinute);
-        mLocation.setFrom_date(eventFromCalendar.getTimeInMillis());
-
-        Calendar eventToCalendar = Calendar.getInstance();
-        eventToCalendar.setTime(eventDate);
-        eventToCalendar.set(Calendar.HOUR_OF_DAY, mEndHour);
-        eventToCalendar.set(Calendar.MINUTE, mEndMinute);
-        mLocation.setTo_date(eventToCalendar.getTimeInMillis());
-
         mLocation.setDescription(mLocationDescriptionET.getText().toString());
         mLocation.setTags(mLocationTagsET.getText().toString());
     }
@@ -130,7 +108,7 @@ public class LocationDetailsActivity extends AppCompatActivity {
         if (isUIValidated() == false) {
             return;
         }
-        updateEventFromUI();
+        updateLocationFromUI();
 
         int requestMethod = Request.Method.POST;
         if (mbExistingLocation) {
@@ -139,12 +117,12 @@ public class LocationDetailsActivity extends AppCompatActivity {
         Gson gson = new Gson();
         String requestBody = gson.toJson(mLocation);
 
-        CustomRequest eventRequest = new CustomRequest(requestMethod, ApplicationStore.EVENT_URL, requestBody, ApplicationStore.getAuthToken(),
+        CustomRequest locationRequest = new CustomRequest(requestMethod, ApplicationStore.LOCATION_URL, requestBody, ApplicationStore.getAuthToken(),
                 new Response.Listener<String>() {
 
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(mMyActivity, getString(R.string.event_info_saved), Toast.LENGTH_LONG).show();
+                        Toast.makeText(mMyActivity, getString(R.string.location_info_saved), Toast.LENGTH_LONG).show();
                         finish();
                     }
                 },
@@ -163,7 +141,7 @@ public class LocationDetailsActivity extends AppCompatActivity {
                 }){};
 
         RequestQueue requestQueue = VolleyProvider.getQueue(mMyActivity);
-        requestQueue.add(eventRequest);
+        requestQueue.add(locationRequest);
     }
 
     @Override

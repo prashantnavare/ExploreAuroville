@@ -17,6 +17,7 @@ import java.util.Map;
 public class CustomRequest extends StringRequest {
     private String mBody;
     private String mBearerToken;
+    private String mAuthToken;
     private String mBodyContentType;
     private Response.ErrorListener mErrorListener;
 
@@ -68,5 +69,15 @@ public class CustomRequest extends StringRequest {
     @Override
     protected String getParamsEncoding() {
         return "utf-8";
+    }
+
+    @Override
+    protected Response<String> parseNetworkResponse(NetworkResponse networkResponse) {
+        mAuthToken = networkResponse.headers.get("X-Token");
+        return super.parseNetworkResponse(networkResponse);
+    }
+
+    public String getAuthToken() {
+        return mAuthToken;
     }
 }

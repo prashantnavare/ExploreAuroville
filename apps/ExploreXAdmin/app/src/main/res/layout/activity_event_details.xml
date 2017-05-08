@@ -161,7 +161,7 @@
             android:layout_marginRight="8dp"
             android:textColor="@color/colorPrimaryText"
             android:textColorHint="@color/colorDivider"
-            android:hint="@string/tag_description"
+            android:hint="@string/event_tag_description"
             android:gravity="top|left"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"

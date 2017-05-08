@@ -42,10 +42,11 @@
     <string name="unable_to_save_event_info">Failed to save event information.</string>
     <string name="event_info_saved">Event information saved.</string>
     <string name="location_name">Location Name</string>
-    <string name="location_description">Location description...</string>
-    <string name="location_tag_description">Search tags for this location...</string>
+    <string name="location_description">Location Description</string>
+    <string name="location_tags">Search tags for this location</string>
     <string name="modify_location">Modify Location</string>
     <string name="new_location">New Location</string>
     <string name="location_name_missing">Location name must be specified.</string>
     <string name="location_description_missing">Location description must be specified.</string>
+    <string name="location_info_saved">Location information saved.</string>
 </resources>

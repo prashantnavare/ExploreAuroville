@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ExploreAuroville.iml" filepath="$PROJECT_DIR$/ExploreAuroville.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ExploreXAdmin.iml" filepath="$PROJECT_DIR$/ExploreXAdmin.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/shared/shared.iml" filepath="$PROJECT_DIR$/shared/shared.iml" />
     </modules>
