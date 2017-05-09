@@ -42,7 +42,8 @@ public class ApplicationStore extends Application {
     public static final String SIGNUP_URL = ApplicationStore.BASE_URL + "/api/explorex/v1/admin/signup";
     public static final String FORGOT_PASSWORD_URL = ApplicationStore.BASE_URL + "/api/explorex/v1/admin/forgot";
     public static final String RESET_PASSWORD_URL = ApplicationStore.BASE_URL + "/api/explorex/v1/admin/reset";
-    public static final String LOCATION_URL = BASE_URL + "/api/explorex/v1/location" + CITY_PARAM;
+    public static final String GET_LOCATION_URL = BASE_URL + "/api/explorex/v1/location" + CITY_PARAM;
+    public static final String LOCATION_URL = BASE_URL + "/api/explorex/v1/admin/location";
     public static final String GET_CURRENT_EVENTS_URL = BASE_URL + "/api/explorex/v1/admin/events" + CITY_PARAM;
     public static final String EVENT_URL = ApplicationStore.BASE_URL + "/api/explorex/v1/admin/event";
 
@@ -154,7 +155,7 @@ public class ApplicationStore extends Application {
         if (mbLocationListUpdated) {
             return;
         }
-        CustomRequest locationRequest = new CustomRequest(Request.Method.GET, ApplicationStore.LOCATION_URL, "",
+        CustomRequest locationRequest = new CustomRequest(Request.Method.GET, ApplicationStore.GET_LOCATION_URL, "",
                 new Response.Listener<String>() {
 
                     @Override

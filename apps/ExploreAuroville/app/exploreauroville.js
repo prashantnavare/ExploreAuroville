@@ -178,24 +178,45 @@ app.get('/api/explorex/v1/admin/events', function (req, res) {
 // 6.
 app.delete('/api/explorex/v1/admin/event', function (req, res) {
     console.log(req.rawBody);
-    //console.log("Auth : " + req.get('Authorization'));
+    console.log("Auth : " + req.get('Authorization'));
     res.status(200).send("success" );
 });
 
-// 6.
-app.put('/api/explorex/v1/admin/event', function (req, res) {
-    console.log(req.rawBody);
-    //console.log("Auth : " + req.get('Authorization'));
-    res.status(200).send("success" );
-});
-
-// 6.
+// 7.
 app.post('/api/explorex/v1/admin/event', function (req, res) {
     console.log(req.rawBody);
-    //console.log("Auth : " + req.get('Authorization'));
+    console.log("Auth : " + req.get('Authorization'));
     res.status(200).send("success" );
 });
 
+// 8.
+app.put('/api/explorex/v1/admin/event', function (req, res) {
+    console.log(req.rawBody);
+    console.log("Auth : " + req.get('Authorization'));
+    res.status(200).send("success" );
+});
+
+
+// 9.
+app.delete('/api/explorex/v1/admin/location', function (req, res) {
+    console.log(req.rawBody);
+    console.log("Auth : " + req.get('Authorization'));
+    res.status(200).send("success" );
+});
+
+// 10.
+app.post('/api/explorex/v1/admin/location', function (req, res) {
+    console.log(req.rawBody);
+    console.log("Auth : " + req.get('Authorization'));
+    res.status(200).send("success" );
+});
+
+// 11.
+app.put('/api/explorex/v1/admin/location', function (req, res) {
+    console.log(req.rawBody);
+    console.log("Auth : " + req.get('Authorization'));
+    res.status(200).send("success" );
+});
 
 app.listen(5678, function () {
     console.log('listening on port 5678!');

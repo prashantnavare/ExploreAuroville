@@ -147,9 +147,10 @@ Failure Response:
 500: ExploreX System Error
 
 5.
-Get current event list for a given location & poi.
+Get current event list for a given location & time duration.
 
-GET /api/explorex/v1/events?location=auroville&poiid=0&from=abc&to=xyz HTTP/1.1
+GET /api/explorex/v1/admin/events?cityid=0&locationid=1&from=abc&to=xyz HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZV9pZCI6IjIiLCJpYXQiOjE0ODgwMDExNTMsImV4cCI6MTQ4ODAwMjA1M30.trhbSRSnCw92iixBETJobmjj7ian1OzcCNNzyiZxoGo
 
 Success Response:200
 [
@@ -214,4 +215,125 @@ Failure Response:
 404: Event Not Found
 400: Missing event Id
 
+7.
+Create new event
 
+POST /api/explorex/v1/admin/event HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTQsInJvbGVfaWQiOm51bGwsImlhdCI6MTQ4NjI3MzgwMCwiZXhwIjoxNDg2Mjc0NzAwfQ.LMBBB_1eOuIQ8vyYb04HhkOHRiS1lhw2l6KLUEOnGSQ
+Content-Type: application/json
+{
+    "name": "Russian Bells",
+    "location_id": 2,
+    "from_date": 1494965840283,
+    "to_date": 1494969440000,
+    "description": "Featuring bloo blah foo on bells!",
+    "tags": "music, meditation, mellow",
+}
+
+Success Response:
+200
+
+Failure Response:
+403: Forbidden
+401: Invalid Token
+500: ExploreX System Error
+400:Event XXX Missing
+
+8.
+Modify existing event
+
+PUT /api/explorex/v1/admin/event HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTQsInJvbGVfaWQiOm51bGwsImlhdCI6MTQ4NjI3MzgwMCwiZXhwIjoxNDg2Mjc0NzAwfQ.LMBBB_1eOuIQ8vyYb04HhkOHRiS1lhw2l6KLUEOnGSQ
+Content-Type: application/json
+{
+    "id": 9,
+    "name": "Russian Bells",
+    "location_id": 2,
+    "from_date": 1494965840283,
+    "to_date": 1494969440000,
+    "description": "Featuring bloo blah foo on bells!",
+    "tags": "music, meditation, mellow",
+}
+
+Success Response:
+200
+
+Failure Response:
+403: Forbidden
+401: Invalid Token
+500: ExploreX System Error
+404: Not Found
+400:Event XXX Missing
+
+9.
+Delete Location.
+DELETE /api/explorexl/v1/admin/location?locationid=4 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZV9pZCI6IjIiLCJpYXQiOjE0ODgwMDExNTMsImV4cCI6MTQ4ODAwMjA1M30.trhbSRSnCw92iixBETJobmjj7ian1OzcCNNzyiZxoGo
+Cache-Control: no-cache
+Content-Type: application/x-www-form-urlencoded
+
+Success Response:
+200:success
+
+Failure Response:
+403: Forbidden
+401: Invalid Token
+500: ExploreX System Error
+404: Event Not Found
+400: Missing event Id
+
+10.
+Create new location
+
+POST /api/explorex/v1/admin/location HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTQsInJvbGVfaWQiOm51bGwsImlhdCI6MTQ4NjI3MzgwMCwiZXhwIjoxNDg2Mjc0NzAwfQ.LMBBB_1eOuIQ8vyYb04HhkOHRiS1lhw2l6KLUEOnGSQ
+Content-Type: application/json
+{
+    "name": "Pony Farm",
+    "city_id": 2,
+    "latitude": "xxxxx"
+    "longitude": "yyyyy"
+    "address": "abcd"
+    "zip": "605101"
+    "website": "www.texity.com"
+    "description": "Featuring bloo blah foo on bells!",
+    "tags": "music, meditation, mellow",
+}
+
+Success Response:
+200
+
+Failure Response:
+403: Forbidden
+401: Invalid Token
+500: ExploreX System Error
+400:Event XXX Missing
+
+11.
+Modify existing location
+
+PUT /api/explorex/v1/admin/location HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTQsInJvbGVfaWQiOm51bGwsImlhdCI6MTQ4NjI3MzgwMCwiZXhwIjoxNDg2Mjc0NzAwfQ.LMBBB_1eOuIQ8vyYb04HhkOHRiS1lhw2l6KLUEOnGSQ
+Content-Type: application/json
+{
+    "id": 9,
+    "name": "Pony Farm",
+    "city_id": 2,
+    "latitude": "xxxxx"
+    "longitude": "yyyyy"
+    "address": "abcd"
+    "zip": "605101"
+    "website": "www.texity.com"
+    "description": "Featuring bloo blah foo on bells!",
+    "tags": "music, meditation, mellow",
+}
+
+Success Response:
+200
+
+Failure Response:
+403: Forbidden
+401: Invalid Token
+500: ExploreX System Error
+404: Not Found
+400:Event XXX Missing

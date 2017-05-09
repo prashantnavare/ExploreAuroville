@@ -124,7 +124,7 @@ public class EventsFragment extends Fragment {
         getEventsURL += "&from=" + String.valueOf(todayCalendar.getTimeInMillis());
         getEventsURL += "&to=" + String.valueOf(tenDayCalendar.getTimeInMillis());
 
-        CustomRequest getEventsRequest = new CustomRequest(Request.Method.GET, getEventsURL, "",
+        CustomRequest getEventsRequest = new CustomRequest(Request.Method.GET, getEventsURL, ApplicationStore.getAuthToken(),
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

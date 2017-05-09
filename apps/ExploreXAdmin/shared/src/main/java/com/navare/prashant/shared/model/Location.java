@@ -7,7 +7,7 @@ package com.navare.prashant.shared.model;
 public class Location {
     private int     id;
     private String  name;
-    private String  location_id;
+    private String  city_id;
     private String  latitude;
     private String  longitude;
     private String  address;
@@ -44,8 +44,8 @@ public class Location {
         return website;
     }
 
-    public String getLocation_id() {
-        return location_id;
+    public String getCity_id() {
+        return city_id;
     }
 
     public String getDescription() {
@@ -76,8 +76,8 @@ public class Location {
         this.address = address;
     }
 
-    public void setLocation_id(String location_id) {
-        this.location_id = location_id;
+    public void setCity_id(String city_id) {
+        this.city_id = city_id;
     }
 
     public void setZip(String zip) {
