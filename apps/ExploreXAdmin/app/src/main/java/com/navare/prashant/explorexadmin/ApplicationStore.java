@@ -65,6 +65,7 @@ public class ApplicationStore extends Application {
 
     @Override
     public void onCreate() {
+        super.onCreate();
         mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mEditor = mPreferences.edit();
         mAppContext = getApplicationContext();
