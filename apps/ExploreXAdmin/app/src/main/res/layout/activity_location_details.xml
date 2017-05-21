@@ -39,6 +39,72 @@
             />
 
         <EditText
+            android:id="@+id/latitude_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="4dp"
+            android:gravity="left"
+            android:textSize="12dp"
+            android:textColor="@color/colorPrimaryText"
+            android:singleLine="true"
+            />
+
+        <TextView
+            android:id="@+id/latitude_tv2"
+            android:text="@string/latitude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:textColor="@color/colorSecondaryText"
+            android:textSize="12dp"
+            />
+
+        <EditText
+            android:id="@+id/longitude_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="4dp"
+            android:gravity="left"
+            android:textSize="12dp"
+            android:textColor="@color/colorPrimaryText"
+            android:singleLine="true"
+            />
+
+        <TextView
+            android:id="@+id/longitude_tv2"
+            android:text="@string/longitude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:textColor="@color/colorSecondaryText"
+            android:textSize="12dp"
+            />
+
+        <EditText
+            android:id="@+id/website_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="4dp"
+            android:gravity="left"
+            android:textSize="12dp"
+            android:textColor="@color/colorPrimaryText"
+            android:singleLine="true"
+            />
+
+        <TextView
+            android:id="@+id/website_tv2"
+            android:text="@string/website"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:textColor="@color/colorSecondaryText"
+            android:textSize="12dp"
+            />
+
+        <EditText
             android:id="@+id/description_et"
             android:inputType="textMultiLine"
             android:lines="8"

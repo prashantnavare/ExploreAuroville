@@ -119,6 +119,14 @@ public class LoginActivity extends AppCompatActivity {
 
     private void login(){
 
+        // TODO: Delete this
+        ApplicationStore.setSuperAdmin(true);
+        Intent tabIntent = new Intent(LoginActivity.this, TabActivity.class);
+        startActivity(tabIntent);
+        finish();
+        return;
+
+/*
         String userName = ((EditText) findViewById(R.id.username)).getText().toString();
         String password = ((EditText) findViewById(R.id.password)).getText().toString();
         if (userName.isEmpty()) {
@@ -171,6 +179,7 @@ public class LoginActivity extends AppCompatActivity {
 
         RequestQueue requestQueue = VolleyProvider.getQueue(getApplicationContext());
         requestQueue.add(mLoginRequest);
+        */
     }
 
     private void signup(){

@@ -65,7 +65,8 @@ public class EventsFragment extends Fragment {
         mLocationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 Location location = (Location) mLocationSpinner.getSelectedItem();
-                updateEvents(location);
+                if (location != null)
+                    updateEvents(location);
             }
 
             public void onNothingSelected(AdapterView<?> adapterView) {
@@ -98,7 +99,8 @@ public class EventsFragment extends Fragment {
     public void onResume() {
         super.onResume();
         Location location = (Location) mLocationSpinner.getSelectedItem();
-        updateEvents(location);
+        if (location != null)
+            updateEvents(location);
     }
 
     private void updateEvents(Location location) {
@@ -107,8 +109,8 @@ public class EventsFragment extends Fragment {
         progressDialog.setMessage("Please wait while we retrieve events for " + location.getName()+ "...");
         progressDialog.show();
 
-        String getEventsURL = ApplicationStore.GET_CURRENT_EVENTS_URL;
-        getEventsURL += "&locationid=" + location.getId();
+        String getEventsURL = ApplicationStore.EVENT_URL;
+        getEventsURL += "?locationid=" + location.getId();
 
         // get next 10 days of events
         Calendar nowCalendar = Calendar.getInstance();

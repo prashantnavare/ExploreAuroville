@@ -49,4 +49,10 @@
     <string name="location_name_missing">Location name must be specified.</string>
     <string name="location_description_missing">Location description must be specified.</string>
     <string name="location_info_saved">Location information saved.</string>
+    <string name="latitude">Latitude</string>
+    <string name="longitude">Longitude</string>
+    <string name="address">Address</string>
+    <string name="website">Website</string>
+    <string name="latitude_missing">Must specify latitude.</string>
+    <string name="longitude_missing">Must specify longitude.</string>
 </resources>

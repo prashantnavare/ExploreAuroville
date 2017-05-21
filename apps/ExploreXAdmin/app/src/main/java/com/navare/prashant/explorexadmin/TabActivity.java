@@ -26,15 +26,12 @@ public class TabActivity extends AppCompatActivity {
      */
     private ViewPager mViewPager;
 
-    static final int NUM_TABS_SUPERADMIN = 3;
-    static final int NUM_TABS_REGULAR = 2;
+    static final int NUM_TABS = 2;
     static final int EVENTS_TAB = 0;
     static final int LOCATION_TAB = 1;
-    static final int CITY_TAB = 2;
 
     static final String EVENTS_TAB_TITLE = "EVENTS";
     static final String LOCATION_TAB_TITLE = "LOCATIONS";
-    static final String CITY_TAB_TITLE = "CITIES";
 
     private Activity mMyActivity;
 
@@ -84,7 +81,6 @@ public class TabActivity extends AppCompatActivity {
             switch (position) {
                 case EVENTS_TAB: return EventsFragment.newInstance();
                 case LOCATION_TAB: return LocationFragment.newInstance();
-                case CITY_TAB: return CityFragment.newInstance();
                 default: return EventsFragment.newInstance();
             }
         }
@@ -92,12 +88,7 @@ public class TabActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             //total pages to show
-            if (ApplicationStore.isSuperAdmin()) {
-                return NUM_TABS_SUPERADMIN;
-            }
-            else {
-                return NUM_TABS_REGULAR;
-            }
+            return NUM_TABS;
         }
 
         @Override
@@ -107,8 +98,6 @@ public class TabActivity extends AppCompatActivity {
                     return EVENTS_TAB_TITLE;
                 case LOCATION_TAB:
                     return LOCATION_TAB_TITLE;
-                case CITY_TAB:
-                    return CITY_TAB_TITLE;
             }
             return null;
         }

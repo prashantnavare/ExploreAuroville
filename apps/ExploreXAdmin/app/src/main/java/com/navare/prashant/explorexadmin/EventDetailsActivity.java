@@ -119,6 +119,8 @@ public class EventDetailsActivity extends AppCompatActivity {
                 mTimePicker = new TimePickerDialog(mMyActivity, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                        mStartHour = selectedHour;
+                        mStartMinute = selectedMinute;
                         mStartTimeET.setText(String.format("%02d:%02d", selectedHour, selectedMinute));
                     }
                 }, mStartHour, mStartMinute,false);//Yes 24 hour time
@@ -134,6 +136,8 @@ public class EventDetailsActivity extends AppCompatActivity {
                 mTimePicker = new TimePickerDialog(mMyActivity, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                        mEndHour = selectedHour;
+                        mEndMinute = selectedMinute;
                         mEndTimeET.setText(String.format("%02d:%02d", selectedHour, selectedMinute));
                     }
                 }, mEndHour, mEndMinute,false);//Yes 24 hour time

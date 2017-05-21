@@ -27,6 +27,9 @@ import java.util.List;
 
 public class LocationDetailsActivity extends AppCompatActivity {
     private EditText    mLocationNameET;
+    private EditText    mLatitudeET;
+    private EditText    mLongitudeET;
+    private EditText    mWebsiteET;
     private EditText    mLocationDescriptionET;
     private EditText    mLocationTagsET;
     private ImageButton mSaveButton;
@@ -59,6 +62,9 @@ public class LocationDetailsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mLocationNameET = (EditText) findViewById(R.id.location_name_et);
+        mLatitudeET = (EditText) findViewById(R.id.latitude_et);
+        mLongitudeET = (EditText) findViewById(R.id.longitude_et);
+        mWebsiteET = (EditText) findViewById(R.id.website_et);
         mLocationDescriptionET = (EditText) findViewById(R.id.description_et);
         mLocationTagsET = (EditText) findViewById(R.id.tags_et);
 
@@ -78,6 +84,9 @@ public class LocationDetailsActivity extends AppCompatActivity {
         if (mbExistingLocation) {
             setTitle(getString(R.string.modify_location));
             mLocationNameET.setText(mLocation.getName());
+            mLatitudeET.setText(mLocation.getLatitude());
+            mLongitudeET.setText(mLocation.getLongitude());
+            mWebsiteET.setText(mLocation.getWebsite());
             mLocationDescriptionET.setText(mLocation.getDescription());
             mLocationTagsET.setText(mLocation.getTags());
         }
@@ -91,6 +100,14 @@ public class LocationDetailsActivity extends AppCompatActivity {
             Toast.makeText(mMyActivity, getString(R.string.location_name_missing), Toast.LENGTH_LONG).show();
             return false;
         }
+        if (mLatitudeET.getText().toString().isEmpty()) {
+            Toast.makeText(mMyActivity, getString(R.string.latitude_missing), Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if (mLongitudeET.getText().toString().isEmpty()) {
+            Toast.makeText(mMyActivity, getString(R.string.longitude_missing), Toast.LENGTH_LONG).show();
+            return false;
+        }
         if (mLocationDescriptionET.getText().toString().isEmpty()) {
             Toast.makeText(mMyActivity, getString(R.string.location_description_missing), Toast.LENGTH_LONG).show();
             return false;
@@ -100,6 +117,9 @@ public class LocationDetailsActivity extends AppCompatActivity {
 
     private void updateLocationFromUI() {
         mLocation.setName(mLocationNameET.getText().toString());
+        mLocation.setLatitude(mLatitudeET.getText().toString());
+        mLocation.setLongitude(mLongitudeET.getText().toString());
+        mLocation.setWebsite(mWebsiteET.getText().toString());
         mLocation.setDescription(mLocationDescriptionET.getText().toString());
         mLocation.setTags(mLocationTagsET.getText().toString());
     }

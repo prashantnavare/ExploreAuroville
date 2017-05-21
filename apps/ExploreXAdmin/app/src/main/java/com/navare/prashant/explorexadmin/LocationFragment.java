@@ -95,7 +95,7 @@ public class LocationFragment extends Fragment {
         progressDialog.setMessage("Please wait while we retrieve locations...");
         progressDialog.show();
 
-        CustomRequest getLocationsRequest = new CustomRequest(Request.Method.GET, ApplicationStore.GET_LOCATION_URL, "",
+        CustomRequest getLocationsRequest = new CustomRequest(Request.Method.GET, ApplicationStore.LOCATION_URL, "",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
