@@ -8,8 +8,8 @@ public class CurrentEvent {
     private int id;
     private String name;
     private int location_id;
-    private long from_date;
-    private long to_date;
+    private String from_date;
+    private String to_date;
     private String description;
     private String tags;
 
@@ -26,11 +26,11 @@ public class CurrentEvent {
     }
 
     public long getFrom_date() {
-        return from_date;
+        return Long.valueOf(from_date);
     }
 
     public long getTo_date() {
-        return to_date;
+        return Long.valueOf(to_date);
     }
 
     public String getDescription() {
@@ -54,11 +54,11 @@ public class CurrentEvent {
     }
 
     public void setFrom_date(long from_date) {
-        this.from_date = from_date;
+        this.from_date = String.valueOf(from_date);
     }
 
     public void setTo_date(long to_date) {
-        this.to_date = to_date;
+        this.to_date = String.valueOf(to_date);
     }
 
     public void setDescription(String description) {
