@@ -42,7 +42,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        // Build the Location List for this location
+        // Build the Location List
         mLocationListAll = ApplicationStore.getLocationList(this);
 
         mAutocompleteClearIV = (ImageView) findViewById(R.id.autocomplete_clear);
@@ -88,7 +88,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             public void onClick(View v) {
                 mAutocompleteTV.setText("");
                 mMap.clear();
-                showAuroville();
+                mLocationListToShow = mLocationListAll;
+                showMarkersOnMap();
             }
         });
     }
@@ -107,7 +108,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        showAuroville();
+        mLocationListToShow = mLocationListAll;
+        showMarkersOnMap();
     }
 
     public void showAuroville() {

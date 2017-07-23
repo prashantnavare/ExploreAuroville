@@ -1,8 +1,11 @@
 from flask import Blueprint, request, jsonify, make_response
 from flask_restful import Api, Resource
-from models import db, CurrentEvent, Location
+from exploreXServer.models import db, CurrentEvent, Location, Phone
 from sqlalchemy.exc import SQLAlchemyError
 from marshmallow import ValidationError
+
+import pymysql
+pymysql.install_as_MySQLdb()
 
 #Initialize a Flask Blueprint for the admin API
 adminBluePrint = Blueprint('adminAPI', __name__)
@@ -13,10 +16,13 @@ adminApi = Api(adminBluePrint)
 class CurrentEventAPI(Resource):
 
     def get(self):
-        locationID = request.args.get('locationid', 0)
+        locationID = request.args.get('locationid', -1)
         fromDate = request.args.get('from', 0)
         toDate = request.args.get('to', 0)
-        currentEventList = CurrentEvent.query.filter(CurrentEvent.location_id == locationID).filter(CurrentEvent.from_date >= fromDate).filter(CurrentEvent.from_date <= toDate).order_by(CurrentEvent.from_date).all()
+        if locationID == -1: 
+            currentEventList = CurrentEvent.query.filter(CurrentEvent.from_date >= fromDate).filter(CurrentEvent.from_date <= toDate).order_by(CurrentEvent.from_date).all()
+        else:
+            currentEventList = CurrentEvent.query.filter(CurrentEvent.location_id == locationID).filter(CurrentEvent.from_date >= fromDate).filter(CurrentEvent.from_date <= toDate).order_by(CurrentEvent.from_date).all()
         jsonResults = []
         for currentEvent in currentEventList:
             currentEventData = {
@@ -103,8 +109,52 @@ class LocationAPI(Resource):
             respData.status_code = 403
             return respData
 
+
+class PhoneAPI(Resource):
+
+    def get(self):
+        phoneList = Phone.query.order_by(Phone.number).all()
+        jsonResults = []
+        for phone in phoneList:
+            phoneData = {
+                "id" : phone.id,
+                "number" : phone.number,
+                            }
+            jsonResults.append(phoneData)
+        return jsonResults
+
+    def post(self):
+        requestDict = request.get_json(force = True)
+        try:
+            newPhone = Phone(requestDict['number'])
+            newPhone.add(newPhone)
+            return newPhone.id, 201
+        except SQLAlchemyError as e:
+            db.session.rollback()
+            respData = jsonify({"error": str(e)})
+            respData.status_code = 403
+            return respData
+
+    def put(self):
+        requestDict = request.get_json(force = True)
+        try:
+            phoneID = requestDict['id']
+            phoneToBeUpdated = Phone.query.get_or_404(phoneID)
+            for key, value in requestDict.items():
+                setattr(phoneToBeUpdated, key, value)
+            phoneToBeUpdated.update()
+            return  "success"
+        except SQLAlchemyError as e:
+            db.session.rollback()
+            respData = jsonify({"error": str(e)})
+            respData.status_code = 403
+            return respData
+
+
+
 adminApi.add_resource(CurrentEventAPI, '/event')
 adminApi.add_resource(LocationAPI, '/location')
+adminApi.add_resource(PhoneAPI, '/phone')
 
 
 

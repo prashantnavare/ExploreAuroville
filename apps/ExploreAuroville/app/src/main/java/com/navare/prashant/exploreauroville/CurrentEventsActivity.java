@@ -151,8 +151,7 @@ public class CurrentEventsActivity extends AppCompatActivity {
         progressDialog.show();
 
         String getEventsURL = ApplicationStore.GET_CURRENT_EVENTS_URL;
-        getEventsURL += "&phone=" + ApplicationStore.getPhoneNumber();
-        getEventsURL += "&from=" + String.valueOf(fromDate);
+        getEventsURL += "?from=" + String.valueOf(fromDate);
         getEventsURL += "&to=" + String.valueOf(toDate);
         CustomRequest getEventsRequest = new CustomRequest(Request.Method.GET, getEventsURL, "",
                 new Response.Listener<String>() {

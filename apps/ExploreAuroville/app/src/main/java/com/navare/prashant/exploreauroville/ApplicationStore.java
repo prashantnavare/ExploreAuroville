@@ -28,12 +28,12 @@ import java.util.TreeSet;
  */
 
 public class ApplicationStore extends Application {
-    public static final String BASE_URL = "http://192.168.1.104:5678";
-    public static final String CITY_PARAM = "?cityid=0";
+    public static final String BASE_URL = "http://10.0.2.2:5678";
+
     // API URLs
-    public static final String PHONE_REGISTER_URL = BASE_URL + "/api/explorex/v1/phone";
-    public static final String LOCATION_URL = BASE_URL + "/api/explorex/v1/location" + CITY_PARAM;
-    public static final String GET_CURRENT_EVENTS_URL = BASE_URL + "/api/explorex/v1/events" + CITY_PARAM;
+    public static final String PHONE_REGISTER_URL = BASE_URL + "/api/explorex/v1/admin/phone";
+    public static final String LOCATION_URL = BASE_URL + "/api/explorex/v1/admin/location";
+    public static final String GET_CURRENT_EVENTS_URL = BASE_URL + "/api/explorex/v1/admin/event";
 
     private static SharedPreferences        mPreferences;
     private static SharedPreferences.Editor mEditor;

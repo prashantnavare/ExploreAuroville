@@ -114,3 +114,20 @@ class Location(db.Model, CRUD):
         self.description = description
         self.tags = tags
 
+class Phone(db.Model, CRUD):
+    """
+    Create a Phone table
+    """
+
+    __tablename__ = 'phones'
+
+    id = db.Column(db.Integer, primary_key=True)
+    number = db.Column(db.String(15), unique=True)
+
+    def __repr__(self):
+        return '<Phone: {}>'.format(self.name)
+
+    def __init__(self, number):
+        self.number = number
+
+

@@ -13,6 +13,8 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.google.gson.Gson;
+import com.navare.prashant.shared.model.Phone;
 import com.navare.prashant.shared.util.CustomRequest;
 import com.navare.prashant.shared.util.VolleyProvider;
 
@@ -42,7 +44,10 @@ public class RegisterPhoneActivity extends AppCompatActivity {
                     return;
                 }
 
-                String requestBody = "phone=" + mPhoneNumberET.getText().toString();
+                Phone phone = new Phone();
+                phone.setNumber(mPhoneNumberET.getText().toString());
+                Gson gson = new Gson();
+                String requestBody = gson.toJson(phone);
                 CustomRequest registerRequest = new CustomRequest(Request.Method.POST, ApplicationStore.PHONE_REGISTER_URL, requestBody,
                         new Response.Listener<String>() {
                             @Override

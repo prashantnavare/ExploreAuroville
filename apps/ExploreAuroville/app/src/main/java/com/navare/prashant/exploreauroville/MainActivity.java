@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         // Build the Location List for this location
         ApplicationStore.getLocationList(this);
 
-        mTileText[0]=getString(R.string.map);
+        mTileText[0]=getString(R.string.places);
         mTileText[1]=getString(R.string.events);
         mTileText[2]=getString(R.string.profile);
         mTileText[3]=getString(R.string.feedback);
