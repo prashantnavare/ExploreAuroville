@@ -164,11 +164,9 @@ public class CurrentEventsActivity extends AppCompatActivity {
                         if (mEventList.isEmpty()) {
                             Toast.makeText(mMyActivity, getResources().getString(R.string.no_events_scheduled),Toast.LENGTH_SHORT).show();
                         }
-                        else {
-                            // Show the number of events in the title
-                            String newTitle = mMyActivity.getTitle() + " (" + String.valueOf(mEventList.size()) + ")";
-                            mMyActivity.setTitle(newTitle);
-                        }
+                        // Show the number of events in the title
+                        String newTitle = mMyActivity.getTitle() + " (" + String.valueOf(mEventList.size()) + ")";
+                        mMyActivity.setTitle(newTitle);
                         progressDialog.cancel();
                     }
                 },
