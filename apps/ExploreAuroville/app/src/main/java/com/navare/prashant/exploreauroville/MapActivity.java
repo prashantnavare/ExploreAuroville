@@ -25,7 +25,7 @@ import java.util.List;
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback, ApplicationStore.LocationListCallback {
 
     private GoogleMap mMap;
-    private LatLngBounds mRouteBound;
+    private LatLngBounds mBoundsForAllLocations;
     private static List<Location> mLocationListToShow = new ArrayList<>();
     private static List<Location> mLocationListAll = new ArrayList<>();
     private DelayAutoCompleteTextView   mAutocompleteTV;
@@ -56,6 +56,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 mTagSearchString = (String) adapterView.getItemAtPosition(position);
                 mAutocompleteTV.setText(mTagSearchString);
+                mMap.clear();
                 mLocationListToShow = ApplicationStore.getLocationListContaining(mTagSearchString);
                 showMarkersOnMap();
             }
@@ -88,6 +89,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             public void onClick(View v) {
                 mAutocompleteTV.setText("");
                 mMap.clear();
+                initBoundsForAllLocations();
                 mLocationListToShow = mLocationListAll;
                 showMarkersOnMap();
             }
@@ -108,20 +110,30 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        initBoundsForAllLocations();
         mLocationListToShow = mLocationListAll;
         showMarkersOnMap();
     }
 
-    public void showAuroville() {
-        // Add a marker in Auroville and move the camera
-        LatLng auroville = new LatLng(12.0053, 79.8129);
-        mMap.addMarker(new MarkerOptions().position(auroville).title(getString(R.string.auroville)));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(auroville, 14));
+    private void initBoundsForAllLocations() {
+        LatLngBounds.Builder mapBoundsBuilder = new LatLngBounds.Builder();
+
+        for (Location currentLocation : mLocationListAll) {
+            LatLng locationLatLng = new LatLng(Double.valueOf(currentLocation.getLatitude()), Double.valueOf(currentLocation.getLongitude()));
+            mapBoundsBuilder.include(locationLatLng);
+        }
+        if (mLocationListAll.size() > 0) {
+            mBoundsForAllLocations = mapBoundsBuilder.build();
+            mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
+                @Override
+                public void onMapLoaded() {
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(mBoundsForAllLocations, 40));
+                }
+            });
+        }
     }
 
     public void showMarkersOnMap() {
-        LatLngBounds.Builder mapBoundsBuilder = new LatLngBounds.Builder();
-
         for (Location currentLocation : mLocationListToShow) {
             LatLng locationLatLng = new LatLng(Double.valueOf(currentLocation.getLatitude()), Double.valueOf(currentLocation.getLongitude()));
             Marker locationMarker = mMap.addMarker(new MarkerOptions()
@@ -130,19 +142,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                     .title(currentLocation.getName())
                     .snippet(currentLocation.getDescription())
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-            mapBoundsBuilder.include(locationLatLng);
-        }
-        if (mLocationListToShow.size() > 0) {
-            mRouteBound = mapBoundsBuilder.build();
-            mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
-                @Override
-                public void onMapLoaded() {
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(mRouteBound, 40));
-                }
-            });
-        }
-        else {
-            showAuroville();
         }
     }
 
