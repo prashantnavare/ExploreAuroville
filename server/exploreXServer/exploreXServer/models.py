@@ -17,50 +17,6 @@ class CRUD():
         db.session.delete(resource)
         return db.session.commit()
 
-class Admin(db.Model, CRUD):
-    """
-    Create a Admin table
-    """
-    __tablename__ = 'admins'
-    id = db.Column(db.Integer, primary_key=True)
-    eMail = db.Column(db.String(60), index=True, unique=True)
-    userName = db.Column(db.String(60), index=True, unique=True)
-    firstName = db.Column(db.String(60), index=True)
-    lastName = db.Column(db.String(60), index=True)
-    passwordHash = db.Column(db.String(128))
-    isSuperAdmin = db.Column(db.Boolean, default=False)
-
-    def __init__(self, eMail, userName, firstName, lastName, passwordHash, isSuperAdmin):
-        self.eMail = eMail
-        self.userName = userName
-        self.firstName = firstName
-        self.lastName = lastName
-        self.passwordHash = passwordHash
-        self.isSuperAdmin = isSuperAdmin
-
-    @property
-    def password(self):
-        """
-        Prevent pasword from being accessed
-        """
-        raise AttributeError('password is not a readable attribute.')
-
-    @password.setter
-    def password(self, password):
-        """
-        Set password to a hashed password
-        """
-        self.passwordHash = generate_password_hash(password)
-
-    def verify_password(self, password):
-        """
-        Check if hashed password matches actual password
-        """
-        return check_password_hash(self.passwordHash, password)
-
-    def __repr__(self):
-        return '<User: {}>'.format(self.userName)
-
 class CurrentEvent(db.Model, CRUD):
     """
     Create a CurrentEvent table
@@ -114,20 +70,20 @@ class Location(db.Model, CRUD):
         self.description = description
         self.tags = tags
 
-class Phone(db.Model, CRUD):
+class Feedback(db.Model, CRUD):
     """
-    Create a Phone table
+    Create a feedback table
     """
 
-    __tablename__ = 'phones'
+    __tablename__ = 'feedback'
 
     id = db.Column(db.Integer, primary_key=True)
-    number = db.Column(db.String(15), unique=True)
+    feedback = db.Column(db.String(300))
 
     def __repr__(self):
-        return '<Phone: {}>'.format(self.name)
+        return '<Feedback: {}>'.format(self.name)
 
-    def __init__(self, number):
-        self.number = number
+    def __init__(self, feedback):
+        self.feedback = feedback
 
 

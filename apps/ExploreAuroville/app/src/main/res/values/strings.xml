@@ -21,5 +21,10 @@
     <string name="empty_phone_no">Phone Number cannot be empty</string>
     <string name="less_digits_phone_no">Phone Number should have 10 digits.</string>
     <string name="no_events_scheduled">There are no events scheduled.</string>
-    <string name="places">Places</string>
+    <string name="places">Places To Visit</string>
+    <string name="menu_feedback">Feedback</string>
+    <string name="title_activity_feedback">Feedback</string>
+    <string name="to_exploreavteam">To: Explore Auroville Team</string>
+    <string name="feedback_successful">Thanks for your feedback.</string>
+    <string name="enter_feedback">Please enter your feedback</string>
 </resources>

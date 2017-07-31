@@ -1,18 +1,25 @@
 package com.navare.prashant.exploreauroville;
 
 import android.app.Activity;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ApplicationStore.LocationListCallback {
 
     GridView    mGridView;
-    String[]    mTileText = new String[4];
-    int[]       mTileImage = {R.drawable.map_72px, R.drawable.current_events_72px, R.drawable.user_72px, R.drawable.feedback_yellow_96px};
+    String[]    mTileText = new String[2];
+    int[]       mTileImage = {R.drawable.map_72px, R.drawable.current_events_72px};
     Activity    mMyActivity;
 
     @Override
@@ -30,8 +37,6 @@ public class MainActivity extends AppCompatActivity {
 
         mTileText[0]=getString(R.string.places);
         mTileText[1]=getString(R.string.events);
-        mTileText[2]=getString(R.string.profile);
-        mTileText[3]=getString(R.string.feedback);
 
         NavigationGridAdapter adapter = new NavigationGridAdapter(this, mTileText, mTileImage);
         mGridView =(GridView)findViewById(R.id.grid);
@@ -47,15 +52,8 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(routeIntent);
                         break;
                     case 1:
-                        String phoneNumber = ApplicationStore.getPhoneNumber();
-                        if (phoneNumber.isEmpty()) {
-                            Intent registerPhoneActivity = new Intent(mMyActivity, RegisterPhoneActivity.class);
-                            startActivity(registerPhoneActivity);
-                        }
-                        else {
-                            Intent eventIntent = new Intent(mMyActivity, CurrentEventsActivity.class);
-                            startActivity(eventIntent);
-                        }
+                        Intent eventIntent = new Intent(mMyActivity, CurrentEventsActivity.class);
+                        startActivity(eventIntent);
                         break;
                 }
                         /*
@@ -82,6 +80,37 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu_actions, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_feedback:
+                onFeedback();
+                return super.onOptionsItemSelected(item);
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void onFeedback() {
+        Intent feedbackIntent = new Intent(mMyActivity, FeedbackActivity.class);
+        startActivity(feedbackIntent);
+    }
+
+    @Override
+    public void locationListUpdated() {
+        // Do nothing
     }
 }
 

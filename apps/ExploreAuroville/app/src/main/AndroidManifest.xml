@@ -38,9 +38,13 @@
 
         <activity
             android:name=".MapActivity"
-            android:label="@string/title_activity_map" />
+            android:label="@string/title_activity_map"
+        />
         <activity android:name=".CurrentEventsActivity" />
-        <activity android:name=".RegisterPhoneActivity"></activity>
+        <activity
+            android:name=".FeedbackActivity"
+            android:label="@string/title_activity_feedback"
+        />
     </application>
 
 </manifest>

@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify, make_response
 from flask_restful import Api, Resource
-from exploreXServer.models import db, CurrentEvent, Location, Phone
+from exploreXServer.models import db, CurrentEvent, Location, Feedback
 from sqlalchemy.exc import SQLAlchemyError
 from marshmallow import ValidationError
 
@@ -18,7 +18,7 @@ class CurrentEventAPI(Resource):
     def get(self):
         locationID = request.args.get('locationid', -1)
         fromDate = request.args.get('from', 0)
-        toDate = request.args.get('to', 0)
+        toDate = request.args.get('to', 0xffffffffffffffff)
         if locationID == -1: 
             currentEventList = CurrentEvent.query.filter(CurrentEvent.from_date >= fromDate).filter(CurrentEvent.from_date <= toDate).order_by(CurrentEvent.from_date).all()
         else:
@@ -110,40 +110,25 @@ class LocationAPI(Resource):
             return respData
 
 
-class PhoneAPI(Resource):
+class FeedbackAPI(Resource):
 
     def get(self):
-        phoneList = Phone.query.order_by(Phone.number).all()
+        feedbackList = Feedback.query.order_by(Feedback.id).all()
         jsonResults = []
-        for phone in phoneList:
-            phoneData = {
-                "id" : phone.id,
-                "number" : phone.number,
+        for feedback in feedbackList:
+            feedbackData = {
+                "id" : feedback.id,
+                "feedback" : feedback.feedback,
                             }
-            jsonResults.append(phoneData)
+            jsonResults.append(feedbackData)
         return jsonResults
 
     def post(self):
         requestDict = request.get_json(force = True)
         try:
-            newPhone = Phone(requestDict['number'])
-            newPhone.add(newPhone)
-            return newPhone.id, 201
-        except SQLAlchemyError as e:
-            db.session.rollback()
-            respData = jsonify({"error": str(e)})
-            respData.status_code = 403
-            return respData
-
-    def put(self):
-        requestDict = request.get_json(force = True)
-        try:
-            phoneID = requestDict['id']
-            phoneToBeUpdated = Phone.query.get_or_404(phoneID)
-            for key, value in requestDict.items():
-                setattr(phoneToBeUpdated, key, value)
-            phoneToBeUpdated.update()
-            return  "success"
+            newFeedback = Feedback(requestDict['feedback'])
+            newFeedback.add(newFeedback)
+            return newFeedback.id, 201
         except SQLAlchemyError as e:
             db.session.rollback()
             respData = jsonify({"error": str(e)})
@@ -154,7 +139,7 @@ class PhoneAPI(Resource):
 
 adminApi.add_resource(CurrentEventAPI, '/event')
 adminApi.add_resource(LocationAPI, '/location')
-adminApi.add_resource(PhoneAPI, '/phone')
+adminApi.add_resource(FeedbackAPI, '/feedback')
 
 
 

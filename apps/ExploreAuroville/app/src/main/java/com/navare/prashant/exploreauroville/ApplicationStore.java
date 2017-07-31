@@ -34,6 +34,7 @@ public class ApplicationStore extends Application {
     public static final String PHONE_REGISTER_URL = BASE_URL + "/api/explorex/v1/admin/phone";
     public static final String LOCATION_URL = BASE_URL + "/api/explorex/v1/admin/location";
     public static final String GET_CURRENT_EVENTS_URL = BASE_URL + "/api/explorex/v1/admin/event";
+    public static final String FEEDBACK_URL = BASE_URL + "/api/explorex/v1/admin/feedback";
 
     private static SharedPreferences        mPreferences;
     private static SharedPreferences.Editor mEditor;
@@ -45,7 +46,6 @@ public class ApplicationStore extends Application {
     private static TreeSet<String>      mTagSet = new TreeSet<>();
 
     private static final String LOCATION_STRING = "LocationString";
-    private static final String PHONE_NUMBER_STRING = "PhoneNumber";
 
     public static int activeDatePicker = 0;
 
@@ -63,15 +63,6 @@ public class ApplicationStore extends Application {
 
     public static void setLocationString(String locationString) {
         mEditor.putString(LOCATION_STRING, locationString);
-        mEditor.commit();
-    }
-
-    public static String getPhoneNumber() {
-        return mPreferences.getString(PHONE_NUMBER_STRING, "");
-    }
-
-    public static void setPhoneNumber(String phoneNumber) {
-        mEditor.putString(PHONE_NUMBER_STRING, phoneNumber);
         mEditor.commit();
     }
 
@@ -138,10 +129,15 @@ public class ApplicationStore extends Application {
         return locationList;
     }
 
+    public interface LocationListCallback {
+        void locationListUpdated();
+    }
+
     private static void getLocationListFromServer(final Activity callingActivity) {
         if (mbLocationListUpdated) {
             return;
         }
+        final LocationListCallback locationListCallback = (LocationListCallback) callingActivity;
         CustomRequest citiesRequest = new CustomRequest(Request.Method.GET, ApplicationStore.LOCATION_URL, "",
                 new Response.Listener<String>() {
 
@@ -153,6 +149,7 @@ public class ApplicationStore extends Application {
                             mLocationList.clear();
                             mLocationList.addAll(Arrays.asList(gson.fromJson(response, Location[].class)));
                         }
+                        locationListCallback.locationListUpdated();
                         // Also cache it away.
                         String locationString = gson.toJson(mLocationList);
                         setLocationString(locationString);

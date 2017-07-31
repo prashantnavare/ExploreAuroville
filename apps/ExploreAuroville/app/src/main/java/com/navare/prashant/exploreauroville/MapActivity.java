@@ -22,7 +22,7 @@ import com.navare.prashant.shared.model.Location;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapActivity extends FragmentActivity implements OnMapReadyCallback, ApplicationStore.LocationListCallback {
 
     private GoogleMap mMap;
     private LatLngBounds mRouteBound;
@@ -144,5 +144,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         else {
             showAuroville();
         }
+    }
+
+    @Override
+    public void locationListUpdated() {
+        // for now do nothing.
     }
 }
