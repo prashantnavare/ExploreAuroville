@@ -64,6 +64,18 @@ class CurrentEventAPI(Resource):
             respData.status_code = 403
             return respData
 
+    def delete(self):
+        eventID = request.args.get('eventid')
+        try:
+            eventToBeDeleted = CurrentEvent.query.get_or_404(eventID)
+            eventToBeDeleted.delete(eventToBeDeleted)
+            return "success"
+        except SQLAlchemyError as e:
+            db.session.rollback()
+            respData = jsonify({"error": str(e)})
+            respData.status_code = 403
+            return respData
+
 class LocationAPI(Resource):
 
     def get(self):
@@ -108,6 +120,19 @@ class LocationAPI(Resource):
             respData = jsonify({"error": str(e)})
             respData.status_code = 403
             return respData
+
+    def delete(self):
+        locationID = request.args.get('locationid')
+        try:
+            locationToBeDeleted = Location.query.get_or_404(locationID)
+            locationToBeDeleted.delete(locationToBeDeleted)
+            return "success"
+        except SQLAlchemyError as e:
+            db.session.rollback()
+            respData = jsonify({"error": str(e)})
+            respData.status_code = 403
+            return respData
+
 
 
 class FeedbackAPI(Resource):
