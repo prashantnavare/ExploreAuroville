@@ -15,9 +15,15 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+
 public class MainActivity extends AppCompatActivity implements ApplicationStore.LocationListCallback {
 
-    GridView    mGridView;
+    private GridView    mGridView;
+    private AdView      mAdView;
+
     String[]    mTileText = new String[2];
     int[]       mTileImage = {R.drawable.map_72px, R.drawable.current_events_72px};
     Activity    mMyActivity;
@@ -79,6 +85,12 @@ public class MainActivity extends AppCompatActivity implements ApplicationStore.
 
             }
         });
+
+        // Ads initialization
+        MobileAds.initialize(this, "ca-app-pub-1181736027907915~9786968065");
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
     }
 
