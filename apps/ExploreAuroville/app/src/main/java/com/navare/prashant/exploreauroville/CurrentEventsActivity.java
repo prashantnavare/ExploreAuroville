@@ -16,6 +16,9 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.gson.Gson;
 import com.navare.prashant.shared.model.CurrentEvent;
 import com.navare.prashant.shared.util.CustomRequest;
@@ -45,6 +48,8 @@ public class CurrentEventsActivity extends AppCompatActivity {
 
     private boolean                 mbToday = true;
     private CurrentEventsActivity   mMyActivity;
+
+    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,6 +137,14 @@ public class CurrentEventsActivity extends AppCompatActivity {
         todayCalendar.set(year, month, day);
         tomorrowCalendar.clear();
         tomorrowCalendar.set(year, month, day+1);
+
+        // Ads initialization
+        MobileAds.initialize(this, "ca-app-pub-1181736027907915~9786968065");
+        mAdView = (AdView) findViewById(R.id.adView);
+        mAdView.setVisibility(View.VISIBLE);
+        mAdView.setBackgroundColor(0xff330000);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         getCurrentEvents(todayCalendar.getTimeInMillis(), tomorrowCalendar.getTimeInMillis(), true);
     }
