@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -24,7 +27,8 @@ import java.util.List;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback, ApplicationStore.LocationListCallback {
 
-    private GoogleMap mMap;
+    private GoogleMap   mMap;
+    private AdView      mAdView;
     private LatLngBounds mBoundsForAllLocations;
     private static List<Location> mLocationListToShow = new ArrayList<>();
     private static List<Location> mLocationListAll = new ArrayList<>();
@@ -94,6 +98,15 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 showMarkersOnMap();
             }
         });
+
+        // Ads initialization
+        MobileAds.initialize(this, "ca-app-pub-1181736027907915~9786968065");
+        mAdView = (AdView) findViewById(R.id.adView);
+        mAdView.setVisibility(View.VISIBLE);
+        mAdView.setBackgroundColor(0xff330000);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
     }
 
 
