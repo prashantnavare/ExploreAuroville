@@ -89,6 +89,8 @@ public class MainActivity extends AppCompatActivity implements ApplicationStore.
         // Ads initialization
         MobileAds.initialize(this, "ca-app-pub-1181736027907915~9786968065");
         mAdView = (AdView) findViewById(R.id.adView);
+        mAdView.setVisibility(View.VISIBLE);
+        mAdView.setBackgroundColor(0xff330000);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
