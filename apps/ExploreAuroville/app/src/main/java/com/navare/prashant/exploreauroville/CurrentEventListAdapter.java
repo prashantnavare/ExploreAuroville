@@ -123,17 +123,9 @@ public class CurrentEventListAdapter extends BaseAdapter {
         {
             for (CurrentEvent event : mEventListAll)
             {
-                if (event.getName().toLowerCase(Locale.getDefault()).contains(charText) || event.getTags().toLowerCase(Locale.getDefault()).contains(charText) || event.getDescription().toLowerCase(Locale.getDefault()).contains(charText))
+                if (event.getName().toLowerCase(Locale.getDefault()).contains(charText) || event.getTags().toLowerCase(Locale.getDefault()).contains(charText) || event.getDescription().toLowerCase(Locale.getDefault()).contains(charText) || event.getLocation().toLowerCase(Locale.getDefault()).contains(charText))
                 {
                     mEventListToShow.add(event);
-                }
-                else {
-                    Location location = ApplicationStore.getLocation(event.getId());
-                    if (location != null) {
-                        if (location.getName().toLowerCase(Locale.getDefault()).contains(charText)) {
-                            mEventListToShow.add(event);
-                        }
-                    }
                 }
             }
         }

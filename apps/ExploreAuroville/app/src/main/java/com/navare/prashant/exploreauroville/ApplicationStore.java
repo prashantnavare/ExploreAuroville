@@ -40,7 +40,6 @@ public class ApplicationStore extends Application {
     private static SharedPreferences.Editor mEditor;
     private static Context                  mAppContext;
 
-    private static Map<Integer, Location> mLocationMap = new HashMap<>();
     private static List<Location> mLocationList = new ArrayList<>();
     private static boolean mbLocationListUpdated = false;
     private static TreeSet<String>      mTagSet = new TreeSet<>();
@@ -83,7 +82,6 @@ public class ApplicationStore extends Application {
             if (locationString.isEmpty() == false) {
                 Gson gson = new Gson();
                 mLocationList.addAll(Arrays.asList(gson.fromJson(locationString, Location[].class)));
-                createLocationMap();
                 createLocationTagSet();
             }
         }
@@ -91,24 +89,16 @@ public class ApplicationStore extends Application {
         return mLocationList;
     }
 
-    private static void createLocationMap() {
-        mLocationMap.clear();
-        for (Location location : mLocationList) {
-            mLocationMap.put(location.getId(), location);
-        }
-    }
-
     private static void createLocationTagSet() {
-        if (mTagSet.isEmpty()) {
-            for (Location location : mLocationList) {
-                String allTagsString = location.getTags();
-                String[] tagStringArray = allTagsString.split(",");
-                for (String tagString : tagStringArray) {
-                    mTagSet.add(tagString.trim().toLowerCase());
-                }
-                // Also add the location name as a tag
-                mTagSet.add(location.getName().toLowerCase());
+        mTagSet.clear();
+        for (Location location : mLocationList) {
+            String allTagsString = location.getTags();
+            String[] tagStringArray = allTagsString.split(",");
+            for (String tagString : tagStringArray) {
+                mTagSet.add(tagString.trim().toLowerCase());
             }
+            // Also add the location name as a tag
+            mTagSet.add(location.getName().toLowerCase());
         }
     }
 
@@ -163,7 +153,6 @@ public class ApplicationStore extends Application {
                         // Also cache it away.
                         String locationString = gson.toJson(mLocationList);
                         setLocationString(locationString);
-                        createLocationMap();
                         createLocationTagSet();
                         mbLocationListUpdated = true;
                     }
@@ -179,10 +168,6 @@ public class ApplicationStore extends Application {
 
         RequestQueue requestQueue = VolleyProvider.getQueue(mAppContext);
         requestQueue.add(citiesRequest);
-    }
-
-    public static Location getLocation(int locationID) {
-        return mLocationMap.get(locationID);
     }
 
     public static void doVersionCheck(Activity callingActivity) {

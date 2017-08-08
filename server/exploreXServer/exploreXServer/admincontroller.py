@@ -1,6 +1,7 @@
 from flask import Flask, Blueprint, request, jsonify, make_response, render_template
 import csv
 import os
+import io
 from flask_restful import Api, Resource
 from exploreXServer.models import db, CurrentEvent, Location, Feedback
 from sqlalchemy.exc import SQLAlchemyError
@@ -188,7 +189,7 @@ def upload_locations_file():
 
         if file and allowed_file(file.filename):
             file.save(file.filename)
-            with open(file.filename, newline='') as csvfile:
+            with io.open(file.filename, newline='') as csvfile:
                 reader = csv.reader(csvfile)
                 for row in reader:
                     locationName = row[0]
@@ -240,7 +241,7 @@ def upload_events_file():
 
         if file and allowed_file(file.filename):
             file.save(file.filename)
-            with open(file.filename, newline='') as csvfile:
+            with io.open(file.filename, newline='') as csvfile:
                 reader = csv.reader(csvfile)
                 for row in reader:
                     print(row)
