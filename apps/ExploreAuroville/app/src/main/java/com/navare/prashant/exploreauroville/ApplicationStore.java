@@ -46,6 +46,7 @@ public class ApplicationStore extends Application {
     private static TreeSet<String>      mTagSet = new TreeSet<>();
 
     private static final String LOCATION_STRING = "LocationString";
+    private static final String AUROVILLIAN_STRING = "Aurovillian";
 
     public static int activeDatePicker = 0;
 
@@ -63,6 +64,15 @@ public class ApplicationStore extends Application {
 
     public static void setLocationString(String locationString) {
         mEditor.putString(LOCATION_STRING, locationString);
+        mEditor.commit();
+    }
+
+    public static boolean isAurovillian() {
+        return mPreferences.getBoolean(AUROVILLIAN_STRING, false);
+    }
+
+    public static void setAurovillian(boolean isAurovillian) {
+        mEditor.putBoolean(AUROVILLIAN_STRING, isAurovillian);
         mEditor.commit();
     }
 

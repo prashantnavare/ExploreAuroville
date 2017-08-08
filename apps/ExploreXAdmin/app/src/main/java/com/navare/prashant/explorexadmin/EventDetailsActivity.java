@@ -195,7 +195,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         int currentPos;
         for (currentPos = 0; currentPos < mLocationSpinner.getAdapter().getCount(); currentPos++) {
             Location currentLocation = (Location) mLocationSpinner.getItemAtPosition(currentPos);
-            if (currentLocation.getId() == mEvent.getLocation_id()) {
+            if (currentLocation.getName().equalsIgnoreCase(mEvent.getLocation())) {
                 LocationExists = true;
                 break;
             }
@@ -235,7 +235,7 @@ public class EventDetailsActivity extends AppCompatActivity {
 
     private void updateEventFromUI() {
         mEvent.setName(mEventNameET.getText().toString());
-        mEvent.setLocation_id(((Location) mLocationSpinner.getSelectedItem()).getId());
+        mEvent.setLocation(((Location) mLocationSpinner.getSelectedItem()).getName());
 
         String dateString = mDateET.getText().toString();
         SimpleDateFormat sdfDay = new SimpleDateFormat("EEE, dd/MM/yyyy");

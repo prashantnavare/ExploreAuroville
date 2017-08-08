@@ -110,7 +110,7 @@ public class EventsFragment extends Fragment {
         progressDialog.show();
 
         String getEventsURL = ApplicationStore.EVENT_URL;
-        getEventsURL += "?locationid=" + location.getId();
+        getEventsURL += "?location=" + location.getName();
 
         // get next 10 days of events
         Calendar nowCalendar = Calendar.getInstance();

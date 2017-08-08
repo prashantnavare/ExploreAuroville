@@ -25,6 +25,7 @@ import java.net.URLEncoder;
 public class FeedbackActivity extends AppCompatActivity {
 
     private EditText mFeedbackET;
+    private String magicPhrase = "iamaurovillian";
 
     private CustomRequest mFeedbackRequest;
 
@@ -41,38 +42,50 @@ public class FeedbackActivity extends AppCompatActivity {
         feedbackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isUIValidated() == false) {
-                    return;
-                }
-                Feedback feedback = new Feedback();
-                feedback.setFeedback(mFeedbackET.getText().toString());
-                Gson gson = new Gson();
-                String requestBody = gson.toJson(feedback);
-                mFeedbackRequest = new CustomRequest(Request.Method.POST, ApplicationStore.FEEDBACK_URL, requestBody,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                mFeedbackET.getText().clear();
-                                Toast.makeText(FeedbackActivity.this, getString(R.string.feedback_successful), Toast.LENGTH_LONG).show();
-                            }
-                        },
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                String errorMsg = getString(R.string.network_error);
-                                if (error.networkResponse != null) {
-                                    int statusCode = error.networkResponse.statusCode;
-                                    if (error.networkResponse.data != null)
-                                        errorMsg = new String(error.networkResponse.data);
-                                }
-                                Toast.makeText(FeedbackActivity.this, errorMsg, Toast.LENGTH_LONG).show();
-                            }
-                        }){};
-
-                RequestQueue requestQueue = VolleyProvider.getQueue(getApplicationContext());
-                requestQueue.add(mFeedbackRequest);
+                handleFeedback();
             }
         });
+    }
+
+    private void handleFeedback() {
+        if (isUIValidated() == false) {
+            return;
+        }
+        String feedBackString = mFeedbackET.getText().toString();
+        String feedBackStringTrimmed = feedBackString.replaceAll("\\s","");
+        if (feedBackStringTrimmed.equalsIgnoreCase(magicPhrase)) {
+            // Turn off the ads and return.
+            ApplicationStore.setAurovillian(true);
+            Toast.makeText(FeedbackActivity.this, getString(R.string.ads_turned_off), Toast.LENGTH_LONG).show();
+            return;
+        }
+        Feedback feedback = new Feedback();
+        feedback.setFeedback(feedBackString);
+        Gson gson = new Gson();
+        String requestBody = gson.toJson(feedback);
+        mFeedbackRequest = new CustomRequest(Request.Method.POST, ApplicationStore.FEEDBACK_URL, requestBody,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        mFeedbackET.getText().clear();
+                        Toast.makeText(FeedbackActivity.this, getString(R.string.feedback_successful), Toast.LENGTH_LONG).show();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        String errorMsg = getString(R.string.network_error);
+                        if (error.networkResponse != null) {
+                            int statusCode = error.networkResponse.statusCode;
+                            if (error.networkResponse.data != null)
+                                errorMsg = new String(error.networkResponse.data);
+                        }
+                        Toast.makeText(FeedbackActivity.this, errorMsg, Toast.LENGTH_LONG).show();
+                    }
+                }){};
+
+        RequestQueue requestQueue = VolleyProvider.getQueue(getApplicationContext());
+        requestQueue.add(mFeedbackRequest);
     }
 
     private boolean isUIValidated() {

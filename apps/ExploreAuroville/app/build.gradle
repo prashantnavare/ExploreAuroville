@@ -28,7 +28,7 @@ dependencies {
 
     compile project(path: ':shared')
     compile 'com.android.support:appcompat-v7:26.0.0'
-    compile 'com.google.android.gms:play-services:10.2.6'
+    compile 'com.google.android.gms:play-services-maps:10.2.6'
     compile 'com.google.android.gms:play-services-ads:10.2.6'
     compile 'com.google.code.gson:gson:2.4'
     compile 'com.android.volley:volley:1.0.0'

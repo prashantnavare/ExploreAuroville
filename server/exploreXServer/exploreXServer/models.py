@@ -25,23 +25,23 @@ class CurrentEvent(db.Model, CRUD):
     __tablename__ = 'currentevents'
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(60), unique=True)
+    name = db.Column(db.Text)
     from_date = db.Column(db.BigInteger)
     to_date = db.Column(db.BigInteger)
     description = db.Column(db.Text)
     tags = db.Column(db.Text)
-    location_id = db.Column(db.Integer, db.ForeignKey('locations.id'))
+    location = db.Column(db.Text)
 
     def __repr__(self):
         return '<CurrentEvent: {}>'.format(self.name)
 
-    def __init__(self, name, from_date, to_date, description, tags, location_id):
+    def __init__(self, name, from_date, to_date, description, tags, location):
         self.name = name
         self.from_date = from_date
         self.to_date = to_date
         self.description = description
         self.tags = tags
-        self.location_id = location_id
+        self.location = location
 
 class Location(db.Model, CRUD):
     """
@@ -51,13 +51,12 @@ class Location(db.Model, CRUD):
     __tablename__ = 'locations'
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(60), unique=True)
+    name = db.Column(db.Text)
     latitude = db.Column(db.String(60))
     longitude = db.Column(db.String(60))
     website = db.Column(db.String(60))
     description = db.Column(db.String(300))
     tags = db.Column(db.String(300))
-    currentevents = db.relationship('CurrentEvent', backref='location', lazy='dynamic')
 
     def __repr__(self):
         return '<Location: {}>'.format(self.name)
@@ -78,7 +77,7 @@ class Feedback(db.Model, CRUD):
     __tablename__ = 'feedback'
 
     id = db.Column(db.Integer, primary_key=True)
-    feedback = db.Column(db.String(300))
+    feedback = db.Column(db.Text)
 
     def __repr__(self):
         return '<Feedback: {}>'.format(self.name)

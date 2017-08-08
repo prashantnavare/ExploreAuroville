@@ -49,6 +49,7 @@
     <Folder Include="exploreXServer\templates\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="exploreXServer\templates\uploadLocations.html" />
     <Content Include="requirements.txt" />
     <Content Include="exploreXServer\static\content\bootstrap.css" />
     <Content Include="exploreXServer\static\content\bootstrap.min.css" />

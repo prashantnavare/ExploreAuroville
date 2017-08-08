@@ -91,11 +91,7 @@ public class CurrentEventListAdapter extends BaseAdapter {
         timingString += " -- " + sdfTime.format(toCal.getTime()) + ")";
         viewHolder.timing.setText(timingString);
 
-        Location location = ApplicationStore.getLocation(currentEvent.getLocation_id());
-        if (location != null) {
-            viewHolder.location.setText(location.getName());
-        }
-
+        viewHolder.location.setText(currentEvent.getLocation());
         viewHolder.description.setText(currentEvent.getDescription());
 
         // If the event is in the past, gray it out
