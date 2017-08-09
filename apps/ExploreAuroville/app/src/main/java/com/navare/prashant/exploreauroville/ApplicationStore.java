@@ -31,10 +31,10 @@ public class ApplicationStore extends Application {
     public static final String BASE_URL = "http://10.0.2.2:5678";
 
     // API URLs
-    public static final String PHONE_REGISTER_URL = BASE_URL + "/api/explorex/v1/admin/phone";
     public static final String LOCATION_URL = BASE_URL + "/api/explorex/v1/admin/location";
     public static final String GET_CURRENT_EVENTS_URL = BASE_URL + "/api/explorex/v1/admin/event";
     public static final String FEEDBACK_URL = BASE_URL + "/api/explorex/v1/admin/feedback";
+    public static final String PURGE_EVENTS_URL = BASE_URL + "/api/explorex/v1/admin/purgeEvents";
 
     private static SharedPreferences        mPreferences;
     private static SharedPreferences.Editor mEditor;

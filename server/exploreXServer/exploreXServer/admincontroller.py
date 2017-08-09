@@ -164,9 +164,24 @@ class FeedbackAPI(Resource):
             respData.status_code = 403
             return respData
 
+class PurgeEventAPI(Resource):
+
+    def delete(self):
+        cutoffTime = request.args.get('cutofftime', 0)
+        try:
+            numEvents = CurrentEvent.query.filter(CurrentEvent.from_date < cutoffTime).delete(synchronize_session='fetch')
+            print('Events Deleted = ', numEvents)
+            return "success"
+        except SQLAlchemyError as e:
+            db.session.rollback()
+            respData = jsonify({"error": str(e)})
+            respData.status_code = 403
+            return respData
+
 adminApi.add_resource(CurrentEventAPI, '/event')
 adminApi.add_resource(LocationAPI, '/location')
 adminApi.add_resource(FeedbackAPI, '/feedback')
+adminApi.add_resource(PurgeEventAPI, '/purgeEvents')
 
 app.config['ALLOWED_EXTENSIONS'] = set(['csv'])
 # For a given file, return whether it's an allowed type or not

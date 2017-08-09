@@ -14,10 +14,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+import com.google.gson.Gson;
+import com.navare.prashant.shared.model.CurrentEvent;
+import com.navare.prashant.shared.util.CustomRequest;
+import com.navare.prashant.shared.util.VolleyProvider;
+
+import java.util.Arrays;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity implements ApplicationStore.LocationListCallback {
 
@@ -94,6 +106,8 @@ public class MainActivity extends AppCompatActivity implements ApplicationStore.
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
+        // purge older events in the background
+        purgeOldEvents();
     }
 
     @Override
@@ -125,6 +139,43 @@ public class MainActivity extends AppCompatActivity implements ApplicationStore.
     @Override
     public void locationListUpdated() {
         // Do nothing
+    }
+
+    private void purgeOldEvents() {
+        // Purge all events scheduled before today
+        Calendar nowCalendar = Calendar.getInstance();
+        int year = nowCalendar.get(Calendar.YEAR);
+        int month = nowCalendar.get(Calendar.MONTH);
+        int day = nowCalendar.get(Calendar.DAY_OF_MONTH);
+        Calendar todayCalendar = Calendar.getInstance();
+        todayCalendar.clear();
+        todayCalendar.set(year, month, day);
+
+        String purgeEventsURL = ApplicationStore.PURGE_EVENTS_URL;
+        purgeEventsURL += "?cutofftime=" + String.valueOf(todayCalendar.getTimeInMillis());
+        CustomRequest purgeEventsRequest = new CustomRequest(Request.Method.DELETE, purgeEventsURL, "",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Do nothing
+                        int foo = 1;
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        String errorMsg = getString(R.string.network_error);
+                        if (error.networkResponse != null) {
+                            int statusCode = error.networkResponse.statusCode;
+                            if (error.networkResponse.data != null)
+                                errorMsg = new String(error.networkResponse.data);
+                        }
+                        Toast.makeText(mMyActivity, errorMsg, Toast.LENGTH_LONG).show();
+                    }
+                }){};
+
+        RequestQueue requestQueue = VolleyProvider.getQueue(getApplicationContext());
+        requestQueue.add(purgeEventsRequest);
     }
 }
 
