@@ -24,7 +24,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.navare.prashant.shared.model.Location;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback, ApplicationStore.LocationListCallback {
 
@@ -37,6 +39,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     private ImageView                   mAutocompleteClearIV;
     private Integer THRESHOLD = 1;
     private String mTagSearchString;
+    private static Map<Marker,Location> mMarkerMap=new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,10 +134,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
+                ApplicationStore.setCurrentLocation(mMarkerMap.get(marker));
                 Intent intent = new Intent(MapActivity.this, LocationDetailActivity.class);
                 startActivity(intent);
             }
-        });    }
+        });
+    }
 
     private void initBoundsForAllLocations() {
         LatLngBounds.Builder mapBoundsBuilder = new LatLngBounds.Builder();
@@ -155,6 +160,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     }
 
     public void showMarkersOnMap() {
+        mMarkerMap.clear();
         for (Location currentLocation : mLocationListToShow) {
             LatLng locationLatLng = new LatLng(Double.valueOf(currentLocation.getLatitude()), Double.valueOf(currentLocation.getLongitude()));
             Marker locationMarker = mMap.addMarker(new MarkerOptions()
@@ -163,6 +169,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                     .title(currentLocation.getName())
                     .snippet(currentLocation.getDescription())
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+            mMarkerMap.put(locationMarker, currentLocation);
         }
     }
 

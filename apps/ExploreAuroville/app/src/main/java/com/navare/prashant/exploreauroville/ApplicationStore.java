@@ -49,6 +49,8 @@ public class ApplicationStore extends Application {
 
     public static int activeDatePicker = 0;
 
+    private static Location mCurrentLocation;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -64,6 +66,14 @@ public class ApplicationStore extends Application {
     public static void setLocationString(String locationString) {
         mEditor.putString(LOCATION_STRING, locationString);
         mEditor.commit();
+    }
+
+    public static Location getCurrentLocation() {
+        return mCurrentLocation;
+    }
+
+    public static void setCurrentLocation(Location location) {
+        mCurrentLocation = location;
     }
 
     public static boolean isAurovillian() {
