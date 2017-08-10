@@ -1,5 +1,6 @@
 package com.navare.prashant.exploreauroville;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -126,7 +127,14 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         initBoundsForAllLocations();
         mLocationListToShow = mLocationListAll;
         showMarkersOnMap();
-    }
+
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                Intent intent = new Intent(MapActivity.this, LocationDetailActivity.class);
+                startActivity(intent);
+            }
+        });    }
 
     private void initBoundsForAllLocations() {
         LatLngBounds.Builder mapBoundsBuilder = new LatLngBounds.Builder();

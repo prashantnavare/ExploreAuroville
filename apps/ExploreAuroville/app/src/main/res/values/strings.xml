@@ -29,4 +29,5 @@
     <string name="enter_feedback">Please enter your feedback</string>
     <string name="ads_turned_off">Thank you. Your ads have been turned off.</string>
     <string name="ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="title_activity_location_detail">Location Details</string>
 </resources>
