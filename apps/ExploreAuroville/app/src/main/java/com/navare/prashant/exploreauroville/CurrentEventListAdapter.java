@@ -106,6 +106,7 @@ public class CurrentEventListAdapter extends BaseAdapter {
             public void onClick(View arg0) {
                 // Send single item click data to SingleItemView Class
                 Log.i("CurrentEventListAdapter", "Selected event "+ mEventListToShow.get(position).getName());
+                mActivity.showEventDetails(mEventListToShow.get(position));
             }
         });
 

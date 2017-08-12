@@ -30,4 +30,6 @@
     <string name="ads_turned_off">Thank you. Your ads have been turned off.</string>
     <string name="ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
     <string name="title_activity_location_detail">Location Details</string>
+    <string name="title_activity_event_detail">Event Details</string>
+    <string name="click_me_for_details">Click me for more details...</string>
 </resources>

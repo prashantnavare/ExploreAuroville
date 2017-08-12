@@ -66,8 +66,8 @@ public class MainActivity extends AppCompatActivity implements ApplicationStore.
                                     int position, long id) {
                 switch(position){
                     case 0:
-                        Intent routeIntent = new Intent(mMyActivity, MapActivity.class);
-                        startActivity(routeIntent);
+                        Intent mapIntent = new Intent(mMyActivity, MapActivity.class);
+                        startActivity(mapIntent);
                         break;
                     case 1:
                         Intent eventIntent = new Intent(mMyActivity, CurrentEventsActivity.class);

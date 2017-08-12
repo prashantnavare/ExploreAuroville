@@ -12,6 +12,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
+import com.navare.prashant.shared.model.CurrentEvent;
 import com.navare.prashant.shared.model.Location;
 import com.navare.prashant.shared.util.CustomRequest;
 import com.navare.prashant.shared.util.VolleyProvider;
@@ -47,9 +48,12 @@ public class ApplicationStore extends Application {
     private static final String LOCATION_STRING = "LocationString";
     private static final String AUROVILLIAN_STRING = "Aurovillian";
 
+    public static final String SPECIFIC_LOCATION_STRING = "SpecificLocation";
+
     public static int activeDatePicker = 0;
 
     private static Location mCurrentLocation;
+    private static CurrentEvent mCurrentEvent;
 
     @Override
     public void onCreate() {
@@ -74,6 +78,14 @@ public class ApplicationStore extends Application {
 
     public static void setCurrentLocation(Location location) {
         mCurrentLocation = location;
+    }
+
+    public static CurrentEvent getCurrentEvent() {
+        return mCurrentEvent;
+    }
+
+    public static void setCurrentEvent(CurrentEvent event) {
+        mCurrentEvent = event;
     }
 
     public static boolean isAurovillian() {

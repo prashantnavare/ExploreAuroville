@@ -2,6 +2,7 @@ package com.navare.prashant.exploreauroville;
 
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -226,6 +227,12 @@ public class CurrentEventsActivity extends AppCompatActivity {
             String newTitle = getString(R.string.events) + " (" + String.valueOf(newCount) + ")";
             mMyActivity.setTitle(newTitle);
         }
+    }
+
+    public void showEventDetails(CurrentEvent event) {
+        ApplicationStore.setCurrentEvent(event);
+        Intent intent = new Intent(CurrentEventsActivity.this, EventDetailActivity.class);
+        startActivity(intent);
 
     }
 }

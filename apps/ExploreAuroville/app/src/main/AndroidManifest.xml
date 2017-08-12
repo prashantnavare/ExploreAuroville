@@ -52,6 +52,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.navare.prashant.exploreauroville.MapActivity" />
         </activity>
+        <activity
+            android:name=".EventDetailActivity"
+            android:label="@string/title_activity_event_detail"
+            android:parentActivityName=".CurrentEventsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.navare.prashant.exploreauroville.CurrentEventsActivity" />
+        </activity>
     </application>
 
 </manifest>

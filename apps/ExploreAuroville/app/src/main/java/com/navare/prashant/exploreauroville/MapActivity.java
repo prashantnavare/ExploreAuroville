@@ -40,6 +40,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     private Integer THRESHOLD = 1;
     private String mTagSearchString;
     private static Map<Marker,Location> mMarkerMap=new HashMap<>();
+    private boolean mbSpecificLocationToShow = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,8 +129,17 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         mMap = googleMap;
 
         initBoundsForAllLocations();
-        mLocationListToShow = mLocationListAll;
-        showMarkersOnMap();
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            String locationToShow = bundle.getString(ApplicationStore.SPECIFIC_LOCATION_STRING);
+            mAutocompleteTV.setText(locationToShow);
+            mLocationListToShow = ApplicationStore.getLocationListContaining(locationToShow);
+            showMarkersOnMap();
+        }
+        else {
+            mLocationListToShow = mLocationListAll;
+            showMarkersOnMap();
+        }
 
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
@@ -161,13 +171,14 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
     public void showMarkersOnMap() {
         mMarkerMap.clear();
+        String snippetMsg = getString(R.string.click_me_for_details);
         for (Location currentLocation : mLocationListToShow) {
             LatLng locationLatLng = new LatLng(Double.valueOf(currentLocation.getLatitude()), Double.valueOf(currentLocation.getLongitude()));
             Marker locationMarker = mMap.addMarker(new MarkerOptions()
                     .position(locationLatLng)
                     .draggable(false)
                     .title(currentLocation.getName())
-                    .snippet(currentLocation.getDescription())
+                    .snippet(snippetMsg)
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
             mMarkerMap.put(locationMarker, currentLocation);
         }

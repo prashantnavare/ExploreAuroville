@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.navare.prashant.exploreauroville.LocationDetailActivity">
+    tools:context="com.navare.prashant.exploreauroville.EventDetailActivity">
 
     <TextView
         android:id="@+id/nameTag"
@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
         android:layout_marginTop="30dp"
-        android:text="Location:"
+        android:text="What:"
         android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -28,27 +28,46 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/urlTag"
+        android:id="@+id/locationTag"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
         android:layout_marginTop="30dp"
-        android:text="URL:"
+        android:text="Where:"
         android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameTV" />
 
     <TextView
-        android:id="@+id/urlTV"
+        android:id="@+id/locationTV"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
         android:layout_marginTop="30dp"
         android:textSize="18sp"
-        android:autoLink="all"
-        android:textColorLink="#576586"
-        app:layout_constraintLeft_toRightOf="@+id/urlTag"
+        app:layout_constraintLeft_toRightOf="@+id/locationTag"
         app:layout_constraintTop_toBottomOf="@+id/nameTV" />
+
+    <TextView
+        android:id="@+id/timeTag"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="30dp"
+        android:text="When:"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/locationTV" />
+
+    <TextView
+        android:id="@+id/timeTV"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="30dp"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toRightOf="@+id/timeTag"
+        app:layout_constraintTop_toBottomOf="@+id/locationTV" />
 
     <TextView
         android:id="@+id/descriptionTag"
@@ -59,7 +78,7 @@
         android:text="Description:"
         android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/urlTV" />
+        app:layout_constraintTop_toBottomOf="@+id/timeTV" />
 
     <TextView
         android:id="@+id/descriptionTV"
@@ -71,6 +90,6 @@
         android:textColorLink="#576586"
         android:textSize="18sp"
         app:layout_constraintLeft_toRightOf="@+id/descriptionTag"
-        app:layout_constraintTop_toBottomOf="@+id/urlTV" />
+        app:layout_constraintTop_toBottomOf="@+id/timeTV" />
 
 </android.support.constraint.ConstraintLayout>
