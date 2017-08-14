@@ -259,7 +259,6 @@ def upload_events_file():
             with io.open(file.filename, newline='') as csvfile:
                 reader = csv.reader(csvfile)
                 for row in reader:
-                    print(row)
                     eventName = row[0]
                     startTime = row[1]
                     location = row[5]
@@ -275,14 +274,15 @@ def upload_events_file():
 
                     else:
                         print('new event')
-                        newEvent = Event(row[0], row[1], row[2], row[3], row[4], row[5])
-                        newLocation.add(newLocation)
+                        newEvent = CurrentEvent(row[0], row[1], row[2], row[3], row[4], row[5])
+                        newEvent.add(newEvent)
 
             
             os.remove(file.filename)
             return 'Event file uploaded successfully'
 
         return 'not a csv file'
+
 
     return '''
     <!doctype html>

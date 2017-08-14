@@ -67,7 +67,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 mAutocompleteTV.setText(mTagSearchString);
                 mMap.clear();
                 mLocationListToShow = ApplicationStore.getLocationListContaining(mTagSearchString);
-                showMarkersOnMap();
+                showMarkersOnMap(true);
             }
         });
 
@@ -100,7 +100,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 mMap.clear();
                 initBoundsForAllLocations();
                 mLocationListToShow = mLocationListAll;
-                showMarkersOnMap();
+                showMarkersOnMap(false);
             }
         });
 
@@ -134,11 +134,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             String locationToShow = bundle.getString(ApplicationStore.SPECIFIC_LOCATION_STRING);
             mAutocompleteTV.setText(locationToShow);
             mLocationListToShow = ApplicationStore.getLocationListContaining(locationToShow);
-            showMarkersOnMap();
+            showMarkersOnMap(true);
         }
         else {
             mLocationListToShow = mLocationListAll;
-            showMarkersOnMap();
+            showMarkersOnMap(false);
         }
 
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
@@ -169,7 +169,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         }
     }
 
-    public void showMarkersOnMap() {
+    public void showMarkersOnMap(boolean bShowInfoWindow) {
         mMarkerMap.clear();
         String snippetMsg = getString(R.string.click_me_for_details);
         for (Location currentLocation : mLocationListToShow) {
@@ -181,6 +181,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                     .snippet(snippetMsg)
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
             mMarkerMap.put(locationMarker, currentLocation);
+            if (bShowInfoWindow) {
+                locationMarker.showInfoWindow();
+            }
         }
     }
 

@@ -46,7 +46,7 @@
         android:layout_marginTop="30dp"
         android:textSize="18sp"
         android:autoLink="all"
-        android:textColorLink="#576586"
+        android:textColorLink="#0000FF"
         app:layout_constraintLeft_toRightOf="@+id/urlTag"
         app:layout_constraintTop_toBottomOf="@+id/nameTV" />
 

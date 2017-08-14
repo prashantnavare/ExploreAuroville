@@ -147,6 +147,10 @@ public class CurrentEventsActivity extends AppCompatActivity {
         tomorrowCalendar.clear();
         tomorrowCalendar.set(year, month, day+1);
 
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        mFromDateET.setText(dateFormat.format(todayCalendar.getTime()));
+        mToDateET.setText(dateFormat.format(tomorrowCalendar.getTime()));
+
         getCurrentEvents(todayCalendar.getTimeInMillis(), tomorrowCalendar.getTimeInMillis(), true);
     }
 
@@ -176,7 +180,10 @@ public class CurrentEventsActivity extends AppCompatActivity {
                         mAdapter = new CurrentEventListAdapter(mMyActivity, mEventList);
                         mListView.setAdapter(mAdapter);
                         if (mEventList.isEmpty()) {
-                            Toast.makeText(mMyActivity, getResources().getString(R.string.no_events_scheduled),Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mMyActivity, getResources().getString(R.string.no_events_scheduled),Toast.LENGTH_LONG).show();
+                        }
+                        else {
+                            Toast.makeText(mMyActivity, getResources().getString(R.string.click_on_event_for_details),Toast.LENGTH_LONG).show();
                         }
                         // Show the number of events in the title
                         String newTitle = mMyActivity.getTitle() + " (" + String.valueOf(mEventList.size()) + ")";

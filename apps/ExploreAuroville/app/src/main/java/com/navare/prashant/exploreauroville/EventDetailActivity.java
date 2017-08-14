@@ -1,6 +1,7 @@
 package com.navare.prashant.exploreauroville;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
@@ -43,6 +44,8 @@ public class EventDetailActivity extends AppCompatActivity {
         ssb.append(mEvent.getLocation());
         ssb.setSpan(new URLSpan("#"), 0, ssb.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         mLocationTV.setText(ssb, TextView.BufferType.SPANNABLE);
+        mLocationTV.setClickable(true);
+        mLocationTV.setLinkTextColor(Color.BLUE);
 
         mLocationTV.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -52,11 +52,11 @@ class Location(db.Model, CRUD):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text)
-    latitude = db.Column(db.String(60))
-    longitude = db.Column(db.String(60))
-    website = db.Column(db.String(60))
-    description = db.Column(db.String(300))
-    tags = db.Column(db.String(300))
+    latitude = db.Column(db.String(30))
+    longitude = db.Column(db.String(30))
+    website = db.Column(db.Text)
+    description = db.Column(db.Text)
+    tags = db.Column(db.Text)
 
     def __repr__(self):
         return '<Location: {}>'.format(self.name)

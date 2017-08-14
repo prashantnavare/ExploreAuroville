@@ -16,7 +16,6 @@
         android:hint="@string/search_current_events"
         >
 
-        <requestFocus />
     </EditText>
 
 
