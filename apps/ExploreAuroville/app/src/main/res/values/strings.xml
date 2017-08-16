@@ -4,7 +4,7 @@
     <string name="events_today">Today\'s Events</string>
     <string name="map">Map</string>
     <string name="profile">Profile</string>
-    <string name="feedback">Feedback</string>
+    <string name="feedback">Please enter your feedback ...</string>
     <string name="title_activity_map">Map</string>
     <string name="unable_to_get_location_list">Unable to get the list of locations.</string>
     <string name="auroville">Auroville</string>

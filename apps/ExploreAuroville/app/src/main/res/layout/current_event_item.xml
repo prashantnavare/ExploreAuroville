@@ -10,7 +10,7 @@
     app:cardCornerRadius="6dp"
     android:layout_marginTop="24dp"
     android:layout_marginBottom="16dp"
-    app:cardBackgroundColor="@color/colorPrimaryLight"
+    app:cardBackgroundColor="@color/colorPrimary"
     >
     <RelativeLayout
         android:id="@+id/rl"
