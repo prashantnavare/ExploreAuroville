@@ -170,6 +170,7 @@ class PurgeEventAPI(Resource):
         cutoffTime = request.args.get('cutofftime', 0)
         try:
             numEvents = CurrentEvent.query.filter(CurrentEvent.from_date < cutoffTime).delete(synchronize_session='fetch')
+            db.session.commit()
             print('Events Deleted = ', numEvents)
             return "success"
         except SQLAlchemyError as e:
