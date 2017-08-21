@@ -29,7 +29,8 @@ import java.util.TreeSet;
  */
 
 public class ApplicationStore extends Application {
-    public static final String BASE_URL = "http://10.0.2.2:5678";
+    public static final String BASE_URL = "http://explorex.texity.com";
+    // public static final String BASE_URL = "http://10.0.2.2:5678";
 
     // API URLs
     public static final String LOCATION_URL = BASE_URL + "/api/explorex/v1/admin/location";
