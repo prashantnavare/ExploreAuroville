@@ -171,7 +171,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
     public void showMarkersOnMap(boolean bShowInfoWindow) {
         mMarkerMap.clear();
-        String snippetMsg = getString(R.string.click_me_for_details);
+        String snippetMsg = getString(R.string.click_here_for_details);
         for (Location currentLocation : mLocationListToShow) {
             LatLng locationLatLng = new LatLng(Double.valueOf(currentLocation.getLatitude()), Double.valueOf(currentLocation.getLongitude()));
             Marker locationMarker = mMap.addMarker(new MarkerOptions()

@@ -31,6 +31,6 @@
     <string name="ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
     <string name="title_activity_location_detail">Location Details</string>
     <string name="title_activity_event_detail">Event Details</string>
-    <string name="click_me_for_details">Click me for more details...</string>
+    <string name="click_here_for_details">Click here for more details...</string>
     <string name="click_on_event_for_details">Click on any event to see event details...</string>
 </resources>
