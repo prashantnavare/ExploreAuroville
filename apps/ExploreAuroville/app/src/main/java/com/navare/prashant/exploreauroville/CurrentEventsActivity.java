@@ -120,10 +120,18 @@ public class CurrentEventsActivity extends AppCompatActivity {
                     Toast.makeText(mMyActivity, getResources().getString(R.string.invalid_calendar_filter),Toast.LENGTH_SHORT).show();
                     return;
                 }
+                Calendar endOfToDateCalendar = (Calendar) mToCalendar.clone();
+                endOfToDateCalendar.set(Calendar.HOUR, 23);
+                endOfToDateCalendar.set(Calendar.MINUTE, 59);
+
+                if (endOfToDateCalendar.getTimeInMillis() <= mFromCalendar.getTimeInMillis()) {
+                    Toast.makeText(mMyActivity, getResources().getString(R.string.to_date_before_from_date),Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 mEventList.clear();
                 mAdapter = new CurrentEventListAdapter(mMyActivity, mEventList);
                 mListView.setAdapter(mAdapter);
-                getCurrentEvents(mFromCalendar.getTimeInMillis(), mToCalendar.getTimeInMillis(), false);
+                getCurrentEvents(mFromCalendar.getTimeInMillis(), endOfToDateCalendar.getTimeInMillis(), false);
             }
         });
 
@@ -149,8 +157,13 @@ public class CurrentEventsActivity extends AppCompatActivity {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         mFromDateET.setText(dateFormat.format(todayCalendar.getTime()));
-        mToDateET.setText(dateFormat.format(tomorrowCalendar.getTime()));
+        mToDateET.setText(dateFormat.format(todayCalendar.getTime()));
 
+        // Initialize the member calendars
+        mFromCalendar = (Calendar) todayCalendar.clone();
+        mToCalendar = (Calendar) todayCalendar.clone();
+
+        // Get today's events (from 00:00 am to 24:00
         getCurrentEvents(todayCalendar.getTimeInMillis(), tomorrowCalendar.getTimeInMillis(), true);
     }
 

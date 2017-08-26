@@ -33,4 +33,5 @@
     <string name="title_activity_event_detail">Event Details</string>
     <string name="click_here_for_details">Click here for more details...</string>
     <string name="click_on_event_for_details">Click on any event to see event details...</string>
+    <string name="to_date_before_from_date">The To Date must be later than the From Date.</string>
 </resources>

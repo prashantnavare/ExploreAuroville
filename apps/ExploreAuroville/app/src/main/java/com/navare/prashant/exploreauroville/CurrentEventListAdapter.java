@@ -98,6 +98,9 @@ public class CurrentEventListAdapter extends BaseAdapter {
         if (currentEvent.getFrom_date() < Calendar.getInstance().getTimeInMillis()) {
             viewHolder.rl.setBackgroundColor(ContextCompat.getColor(mActivity, R.color.colorExpired));
         }
+        else {
+            viewHolder.rl.setBackgroundColor(ContextCompat.getColor(mActivity, R.color.windowBackground));
+        }
 
         // Listen for ListView Item Click
         view.setOnClickListener(new View.OnClickListener() {
