@@ -67,7 +67,12 @@ public class EventDetailActivity extends AppCompatActivity {
         String timingString = sdfDay.format(fromCal.getTime());
         SimpleDateFormat sdfTime = new SimpleDateFormat("hh:mm a");
         timingString += " (" + sdfTime.format(fromCal.getTime());
-        timingString += " -- " + sdfTime.format(toCal.getTime()) + ")";
+        if (mEvent.getTo_date() == 0) {
+            timingString +=  " onwards)";
+        }
+        else {
+            timingString += " -- " + sdfTime.format(toCal.getTime()) + ")";
+        }
         mTimeTV.setText(timingString);
 
         mDescriptionTV.setText(mEvent.getDescription());

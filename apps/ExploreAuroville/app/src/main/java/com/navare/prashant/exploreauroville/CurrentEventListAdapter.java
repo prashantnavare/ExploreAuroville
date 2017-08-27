@@ -88,7 +88,12 @@ public class CurrentEventListAdapter extends BaseAdapter {
         String timingString = sdfDay.format(fromCal.getTime());
         SimpleDateFormat sdfTime = new SimpleDateFormat("hh:mm a");
         timingString += " (" + sdfTime.format(fromCal.getTime());
-        timingString += " -- " + sdfTime.format(toCal.getTime()) + ")";
+        if (currentEvent.getTo_date() == 0) {
+            timingString +=  " onwards)";
+        }
+        else {
+            timingString += " -- " + sdfTime.format(toCal.getTime()) + ")";
+        }
         viewHolder.timing.setText(timingString);
 
         viewHolder.location.setText(currentEvent.getLocation());
