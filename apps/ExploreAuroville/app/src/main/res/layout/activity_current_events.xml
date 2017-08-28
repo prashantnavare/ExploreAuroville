@@ -11,18 +11,6 @@
     android:focusableInTouchMode="true"
     >
 
-    <EditText
-        android:id="@+id/search_events"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/search_current_events"
-        >
-
-    </EditText>
-
-
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/datepicker_ll"
         android:layout_width="match_parent"
@@ -30,7 +18,6 @@
         android:layout_marginTop="4dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_below="@+id/search_events"
         android:orientation="horizontal">
 
         <EditText
@@ -68,16 +55,28 @@
 
     </LinearLayout>
 
+    <EditText
+        android:id="@+id/search_events"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/search_current_events"
+        android:layout_below="@+id/datepicker_ll"
+        >
+
+    </EditText>
+
     <ListView
         android:id="@+id/listview_events"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@+id/datepicker_ll"
+        android:divider="@null"
+        android:layout_weight="1"
+        android:layout_below="@+id/search_events"
         android:layout_marginTop="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:divider="@null"
-        android:layout_weight="1"
         />
 
     <com.google.android.gms.ads.AdView

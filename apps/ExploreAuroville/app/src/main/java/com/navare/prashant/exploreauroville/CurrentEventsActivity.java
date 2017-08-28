@@ -194,9 +194,11 @@ public class CurrentEventsActivity extends AppCompatActivity {
                         mListView.setAdapter(mAdapter);
                         if (mEventList.isEmpty()) {
                             Toast.makeText(mMyActivity, getResources().getString(R.string.no_events_scheduled),Toast.LENGTH_LONG).show();
+                            mSearchET.setVisibility(View.GONE);
                         }
                         else {
                             Toast.makeText(mMyActivity, getResources().getString(R.string.click_on_event_for_details),Toast.LENGTH_LONG).show();
+                            mSearchET.setVisibility(View.VISIBLE);
                         }
                         // Show the number of events in the title
                         String newTitle = mMyActivity.getTitle() + " (" + String.valueOf(mEventList.size()) + ")";
