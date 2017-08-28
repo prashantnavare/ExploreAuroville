@@ -8,7 +8,7 @@
     <string name="title_activity_map">Map</string>
     <string name="unable_to_get_location_list">Unable to get the list of locations.</string>
     <string name="auroville">Auroville</string>
-    <string name="search_input_hint">Search locations by name or topic (e.g. food)</string>
+    <string name="search_input_hint">Search locations by name or topic</string>
     <string name="search_remove_button_txt">Clear</string>
     <string name="search_current_events">Search by topic, location or event name</string>
     <string name="from">  From</string>
@@ -28,7 +28,7 @@
     <string name="feedback_successful">Thanks for your feedback.</string>
     <string name="enter_feedback">Please enter your feedback</string>
     <string name="ads_turned_off">Thank you. Your ads have been turned off.</string>
-    <string name="ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="ad_unit_id">ca-app-pub-1181736027907915/4203468895</string>
     <string name="title_activity_location_detail">Location Details</string>
     <string name="title_activity_event_detail">Event Details</string>
     <string name="click_here_for_details">Click here for more details...</string>
