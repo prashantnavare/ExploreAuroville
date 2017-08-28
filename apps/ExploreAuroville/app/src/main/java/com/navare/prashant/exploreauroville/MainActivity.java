@@ -47,6 +47,9 @@ public class MainActivity extends AppCompatActivity implements ApplicationStore.
 
         mMyActivity = this;
 
+        // Show EULA
+        new SimpleEula(this).show();
+
         // Check for a newer version
         ApplicationStore.doVersionCheck(mMyActivity);
 
