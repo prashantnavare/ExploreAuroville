@@ -132,7 +132,19 @@ public class CurrentEventListAdapter extends BaseAdapter {
         {
             for (CurrentEvent event : mEventListAll)
             {
-                if (event.getName().toLowerCase(Locale.getDefault()).contains(charText) || event.getTags().toLowerCase(Locale.getDefault()).contains(charText) || event.getDescription().toLowerCase(Locale.getDefault()).contains(charText) || event.getLocation().toLowerCase(Locale.getDefault()).contains(charText))
+                if (event.getName().toLowerCase(Locale.getDefault()).contains(charText))
+                {
+                    mEventListToShow.add(event);
+                }
+                else if (event.getTags() != null && event.getTags().toLowerCase(Locale.getDefault()).contains(charText))
+                {
+                    mEventListToShow.add(event);
+                }
+                else if (event.getDescription() != null && event.getDescription().toLowerCase(Locale.getDefault()).contains(charText))
+                {
+                    mEventListToShow.add(event);
+                }
+                else if (event.getLocation() != null && event.getLocation().toLowerCase(Locale.getDefault()).contains(charText))
                 {
                     mEventListToShow.add(event);
                 }
