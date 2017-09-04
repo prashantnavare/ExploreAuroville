@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">ExploreXLocationAdmin</string>
+    <string name="unable_to_get_location_list">Network Error: Unable to get the list of locations.</string>
+</resources>
