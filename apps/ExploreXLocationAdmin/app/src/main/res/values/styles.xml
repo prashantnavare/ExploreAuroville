@@ -8,6 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:dropDownListViewStyle">@style/mySpinnerStyle</item>
         <item name="colorControlActivated">@color/colorPrimary</item>
+        <item name="windowActionBar">true</item>
     </style>
 
     <style name="mySpinnerStyle" parent="android:Widget.ListView.DropDown">

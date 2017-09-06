@@ -1,4 +1,31 @@
 <resources>
-    <string name="app_name">ExploreXLocationAdmin</string>
+    <string name="app_name">Explore Auroville Events Editor</string>
     <string name="unable_to_get_location_list">Network Error: Unable to get the list of locations.</string>
+    <string name="title_activity_event_list">Events</string>
+    <string name="events_for_location">Events for Location</string>
+    <string name="delete">Delete</string>
+    <string name="network_error">Network error : Please make sure you have Internet connectivity.</string>
+    <string name="title_activity_event_details">Event Details</string>
+    <string name="event_name">Event Name</string>
+    <string name="date">Date</string>
+    <string name="from">From</string>
+    <string name="To">To</string>
+    <string name="start_time">Start Time</string>
+    <string name="end_time">End Time</string>
+    <string name="event_location">Event Location</string>
+    <string name="event_description">Event description</string>
+    <string name="event_tag_description">Search tags for this event...</string>
+    <string name="timePickerTitle">Select Time</string>
+    <string name="modify_event">Modify Event</string>
+    <string name="new_event">New Event</string>
+    <string name="event_name_missing">Event name must be specified.</string>
+    <string name="event_date_missing">Event date must be specified.</string>
+    <string name="event_start_time_missing">Event start time must be specified.</string>
+    <string name="event_end_time_missing">Event end time must be specified.</string>
+    <string name="unable_to_save_event_info">Failed to save event information.</string>
+    <string name="event_info_saved">Event information saved.</string>
+    <string name="event_deleted">Event deleted.</string>
+    <string name="event_delete_failed">Network error: Unable to delete event.</string>
+    <string name="delete_event">Delete Event</string>
+    <string name="delete_event_confirmation">Are you sure you want to delete the event</string>
 </resources>

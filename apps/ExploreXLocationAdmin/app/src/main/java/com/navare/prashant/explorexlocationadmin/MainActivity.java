@@ -1,11 +1,14 @@
 package com.navare.prashant.explorexlocationadmin;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -25,6 +28,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private Spinner mLocationSpinner;
+    private Button mNextButton;
     private Activity mMyActivity;
     private List<Location> mLocationList = new ArrayList<>();
 
@@ -34,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mMyActivity = this;
-        mLocationSpinner = (Spinner) findViewById(R.id.location_spinner);
+        mLocationSpinner = (Spinner) findViewById(R.id.locationSpinner);
         mLocationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 Location location = (Location) mLocationSpinner.getSelectedItem();
@@ -46,7 +50,18 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
         });
+        mLocationSpinner.getBackground().setColorFilter(getResources().getColor(R.color.colorPrimaryDark), PorterDuff.Mode.SRC_ATOP);
 
+        mNextButton = (Button) findViewById(R.id.nextButton) ;
+        mNextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Location location = (Location) mLocationSpinner.getSelectedItem();
+                ApplicationStore.setCurrentLocation(location);
+                Intent eventListIntent = new Intent(mMyActivity, EventListActivity.class);
+                startActivity(eventListIntent);
+            }
+        });
         getLocationListFromServer();
     }
 
@@ -65,10 +80,18 @@ public class MainActivity extends AppCompatActivity {
                             locationDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                             mLocationSpinner.setAdapter(locationDataAdapter);
 
-                            if (ApplicationStore.getLastSelectedLocationString().isEmpty() == false) {
+                            String locationName = ApplicationStore.getLastSelectedLocationString();
+                            if (locationName.isEmpty() == false) {
+                                Location chosenLocation = null;
+                                for (Location currentLocation : mLocationList) {
+                                    if (currentLocation.getName().equalsIgnoreCase(locationName)) {
+                                        chosenLocation = currentLocation;
+                                    }
+                                }
+                                if (chosenLocation != null) {
+                                    mLocationSpinner.setSelection(locationDataAdapter.getPosition(chosenLocation));
+                                }
                             }
-
-
                         }
                     }
                 },
