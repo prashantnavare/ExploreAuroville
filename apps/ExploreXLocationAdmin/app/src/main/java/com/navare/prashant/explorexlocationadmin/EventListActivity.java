@@ -124,6 +124,7 @@ public class EventListActivity extends AppCompatActivity {
                     }
                 }){};
 
+        getEventsRequest.setShouldCache(false);
         RequestQueue requestQueue = VolleyProvider.getQueue(mMyActivity);
         requestQueue.add(getEventsRequest);
     }
