@@ -47,7 +47,7 @@ public class CurrentEventsActivity extends AppCompatActivity {
     public final static String      toPickerTag = "toDatePicker";
     private ImageButton             mDateFilterButton;
 
-    private boolean                 mbToday = true;
+    private boolean                 mbOneWeek = true;
     private CurrentEventsActivity   mMyActivity;
 
     private AdView mAdView;
@@ -143,37 +143,39 @@ public class CurrentEventsActivity extends AppCompatActivity {
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
-        // Start with today's events
+        // Start with 1 week's events
         Calendar nowCalendar = Calendar.getInstance();
         int year = nowCalendar.get(Calendar.YEAR);
         int month = nowCalendar.get(Calendar.MONTH);
         int day = nowCalendar.get(Calendar.DAY_OF_MONTH);
+
         Calendar todayCalendar = Calendar.getInstance();
-        Calendar tomorrowCalendar = Calendar.getInstance();
         todayCalendar.clear();
         todayCalendar.set(year, month, day);
-        tomorrowCalendar.clear();
-        tomorrowCalendar.set(year, month, day+1);
+
+        Calendar oneWeekCalendar = Calendar.getInstance();
+        oneWeekCalendar.clear();
+        oneWeekCalendar.set(year, month, day+7);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         mFromDateET.setText(dateFormat.format(todayCalendar.getTime()));
-        mToDateET.setText(dateFormat.format(todayCalendar.getTime()));
+        mToDateET.setText(dateFormat.format(oneWeekCalendar.getTime()));
 
         // Initialize the member calendars
         mFromCalendar = (Calendar) todayCalendar.clone();
-        mToCalendar = (Calendar) todayCalendar.clone();
+        mToCalendar = (Calendar) oneWeekCalendar.clone();
 
-        // Get today's events (from 00:00 am to 24:00
-        getCurrentEvents(todayCalendar.getTimeInMillis(), tomorrowCalendar.getTimeInMillis(), true);
+        // Get 1 week's events
+        getCurrentEvents(todayCalendar.getTimeInMillis(), oneWeekCalendar.getTimeInMillis(), true);
     }
 
-    private void getCurrentEvents(long fromDate, long toDate, boolean bToday) {
-        mbToday = bToday;
+    private void getCurrentEvents(long fromDate, long toDate, boolean bOneWeek) {
+        mbOneWeek = bOneWeek;
         final ProgressDialog progressDialog = new ProgressDialog(mMyActivity);
         progressDialog.setTitle("Retrieving Events");
-        if (bToday) {
-            setTitle(getString(R.string.events_today));
-            progressDialog.setMessage("Please wait while we retrieve today's events...");
+        if (bOneWeek) {
+            setTitle(getString(R.string.events_one_week));
+            progressDialog.setMessage("Please wait while we retrieve this week's events...");
         }
         else {
             mMyActivity.setTitle(getString(R.string.events));
@@ -192,9 +194,11 @@ public class CurrentEventsActivity extends AppCompatActivity {
                         mEventList.addAll(Arrays.asList(gson.fromJson(response, CurrentEvent[].class)));
                         mAdapter = new CurrentEventListAdapter(mMyActivity, mEventList);
                         mListView.setAdapter(mAdapter);
-                        if (mEventList.isEmpty()) {
-                            Toast.makeText(mMyActivity, getResources().getString(R.string.no_events_scheduled),Toast.LENGTH_LONG).show();
+                        if (mEventList.size() <= 3) {
                             mSearchET.setVisibility(View.GONE);
+                            if (mEventList.isEmpty()) {
+                                Toast.makeText(mMyActivity, getResources().getString(R.string.no_events_scheduled),Toast.LENGTH_LONG).show();
+                            }
                         }
                         else {
                             Toast.makeText(mMyActivity, getResources().getString(R.string.click_on_event_for_details),Toast.LENGTH_LONG).show();
@@ -241,8 +245,8 @@ public class CurrentEventsActivity extends AppCompatActivity {
     }
 
     public void showNewCount(int newCount) {
-        if (mbToday) {
-            String newTitle = getString(R.string.events_today) + " (" + String.valueOf(newCount) + ")";
+        if (mbOneWeek) {
+            String newTitle = getString(R.string.events_one_week) + " (" + String.valueOf(newCount) + ")";
             mMyActivity.setTitle(newTitle);
         }
         else {

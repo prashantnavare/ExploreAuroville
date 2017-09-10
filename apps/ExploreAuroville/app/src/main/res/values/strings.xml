@@ -2,6 +2,7 @@
     <string name="app_name">Explore Auroville</string>
     <string name="events">Events</string>
     <string name="events_today">Today\'s Events</string>
+    <string name="events_one_week">Events This Week</string>
     <string name="map">Map</string>
     <string name="profile">Profile</string>
     <string name="feedback">Please enter your feedback ...</string>
@@ -20,7 +21,7 @@
     <string name="register_for_events">Register For Events</string>
     <string name="empty_phone_no">Phone Number cannot be empty</string>
     <string name="less_digits_phone_no">Phone Number should have 10 digits.</string>
-    <string name="no_events_scheduled">There are no events scheduled.</string>
+    <string name="no_events_scheduled">There are no events scheduled for this period.</string>
     <string name="places">Places To Visit</string>
     <string name="menu_feedback">Feedback</string>
     <string name="title_activity_feedback">Feedback</string>

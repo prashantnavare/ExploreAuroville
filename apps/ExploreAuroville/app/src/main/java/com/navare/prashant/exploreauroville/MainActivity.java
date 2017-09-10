@@ -77,27 +77,6 @@ public class MainActivity extends AppCompatActivity implements ApplicationStore.
                         startActivity(eventIntent);
                         break;
                 }
-                        /*
-                switch(position){
-                    case 0:
-                        Intent routeIntent = new Intent(mMyActivity, MapActivity.class);
-                        startActivity(routeIntent);
-                        break;
-                    case 1:
-                        Intent activationIntent = new Intent(mMyActivity, CurrentEventsActivity.class);
-                        startActivity(activationIntent);
-                        break;
-                    case 2:
-                        Intent profileIntent = new Intent(mMyActivity, ProfileActivity.class);
-                        startActivity(profileIntent);
-                        break;
-                    case 3:
-                        Intent feedbackIntent = new Intent(mMyActivity, FeedbackActivity.class);
-                        startActivity(feedbackIntent);
-                        break;
-                }
-                        */
-
             }
         });
 
