@@ -45,6 +45,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     private GoogleSignInOptions mGSO;
     private GoogleApiClient mGAC;
+    private String mDomainName = "futureschool.org.in";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +81,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         mGuestRadioButton.setOnClickListener(new RadioGroup.OnClickListener() {
             public void onClick(View v){
                 mGuestLL.setVisibility(View.VISIBLE);
+                mGuestPhoneNumberET.requestFocus();
                 mAurovilianLL.setVisibility(View.GONE);
                 mVisitorLL.setVisibility(View.GONE);
                 mGuestExpiredLL.setVisibility(View.GONE);
@@ -99,7 +101,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         mGSO = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .requestScopes(new Scope(Scopes.EMAIL))
-                .setHostedDomain("futureschool.org.in")
+                .setHostedDomain(mDomainName)
                 .build();
 
         mGAC = new GoogleApiClient.Builder(this)
@@ -110,36 +112,23 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         mAurovilianSignInButton.setOnClickListener(this);
 
-        // TODO: Remove this
-        ApplicationStore.setUserLevel(ApplicationStore.VISITOR);
+        // Guest Sign-in related
+        mGuestSignInButton.setOnClickListener(this);
+
+        // Visitor Sign-in related
+        mVisitorNextButton.setOnClickListener(this);
+
+        mRadioButtonsLL.setVisibility(View.VISIBLE);
 
         if (ApplicationStore.getUserLevel() == ApplicationStore.AUROVILIAN) {
-            // Go straight to MainActivity
-            launchMainActivity();
+            mAurovilianRadioButton.performClick();
         }
         else if (ApplicationStore.getUserLevel() == ApplicationStore.GUEST) {
-            Calendar todayCalendar = Calendar.getInstance();
-            if (todayCalendar.getTimeInMillis() > ApplicationStore.getGuestValidity()) {
-                ApplicationStore.setUserLevel(ApplicationStore.VISITOR);
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-                alertDialog.setTitle("Guest Access");
-                alertDialog.setIcon(R.drawable.ic_error);
-                alertDialog.setMessage("Your Explore Auroville guest access has expired.");
-                alertDialog.setNeutralButton("OK", null);
-                alertDialog.create().show();
-            }
-            else {
-                // Go straight to MainActivity
-                launchMainActivity();
-            }
+            mGuestRadioButton.performClick();
         }
-        mRadioButtonsLL.setVisibility(View.VISIBLE);
-        mVisitorRadioButton.setChecked(true);
-        mVisitorLL.setVisibility(View.VISIBLE);
-        mGuestLL.setVisibility(View.GONE);
-        mAurovilianLL.setVisibility(View.GONE);
-        mGuestExpiredLL.setVisibility(View.GONE);
-
+        else {
+            mVisitorRadioButton.performClick();
+        }
     }
 
     @Override
@@ -147,6 +136,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         switch (v.getId()) {
             case R.id.aurovilianSignInbutton:
                 aurovilianSignIn();
+                break;
+            case R.id.guestSignInbutton:
+                guestSignIn();
+                break;
+            case R.id.visitorNextbutton:
+                visitorSignIn();
                 break;
         }
     }
@@ -174,7 +169,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
             String emailID = acct.getEmail();
-            if (emailID.toLowerCase().contains("auroville.org.in")) {
+            if (emailID.toLowerCase().contains(mDomainName)) {
                 // Aurovilian fully authenticated. Set up the Aurovilian profile
                 ApplicationStore.createAurovilianProfile(emailID);
                 launchMainActivity();
@@ -207,4 +202,38 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
     }
+
+    private void guestSignIn() {
+        if (mGuestPhoneNumberET.getText().toString().isEmpty()) {
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+            alertDialog.setTitle("Phone Number Required");
+            alertDialog.setIcon(R.drawable.ic_error);
+            alertDialog.setMessage("Please enter your phone number to sign in.");
+            alertDialog.setNeutralButton("OK", null);
+            alertDialog.create().show();
+        }
+    }
+
+    private void visitorSignIn() {
+        ApplicationStore.setUserLevel(ApplicationStore.VISITOR);
+        launchMainActivity();
+    }
+
+
+    /* Code for guest login - to be used later
+    Calendar todayCalendar = Calendar.getInstance();
+            if (todayCalendar.getTimeInMillis() > ApplicationStore.getGuestValidity()) {
+        ApplicationStore.setUserLevel(ApplicationStore.VISITOR);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setTitle("Guest Access");
+        alertDialog.setIcon(R.drawable.ic_error);
+        alertDialog.setMessage("Your Explore Auroville guest access has expired.");
+        alertDialog.setNeutralButton("OK", null);
+        alertDialog.create().show();
+    }
+            else {
+        // Go straight to MainActivity
+        launchMainActivity();
+    }
+    */
 }

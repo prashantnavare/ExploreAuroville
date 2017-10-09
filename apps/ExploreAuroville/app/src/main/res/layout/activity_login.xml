@@ -101,6 +101,7 @@
             android:id="@+id/guestPhoneNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="phone"
             android:layout_marginRight="20dp"
             />
         <Button
