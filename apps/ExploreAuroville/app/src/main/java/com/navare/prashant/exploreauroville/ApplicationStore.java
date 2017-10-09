@@ -47,7 +47,14 @@ public class ApplicationStore extends Application {
     private static TreeSet<String>      mTagSet = new TreeSet<>();
 
     private static final String LOCATION_STRING = "LocationString";
-    private static final String AUROVILLIAN_STRING = "Aurovillian";
+    private static final String AUROVILLIAN_EMAIL_STRING = "AurovilianEmail";
+    private static final String GUEST_PHONE_NUMBER_STRING = "GuestPhoneNumber";
+    private static final String GUEST_PASS_VALIDITY = "GuestPassValidity";
+    private static final String USER_LEVEL = "UserLevel";
+
+    public static int AUROVILIAN = 3;
+    public static int GUEST = 2;
+    public static int VISITOR = 1;
 
     public static final String SPECIFIC_LOCATION_STRING = "SpecificLocation";
 
@@ -89,13 +96,34 @@ public class ApplicationStore extends Application {
         mCurrentEvent = event;
     }
 
-    public static boolean isAurovillian() {
-        return mPreferences.getBoolean(AUROVILLIAN_STRING, false);
+    public static int getUserLevel() {
+        return mPreferences.getInt(USER_LEVEL, VISITOR);
     }
 
-    public static void setAurovillian(boolean isAurovillian) {
-        mEditor.putBoolean(AUROVILLIAN_STRING, isAurovillian);
+    public static void setUserLevel(int userLevel) {
+        mEditor.putInt(USER_LEVEL, userLevel);
         mEditor.commit();
+    }
+
+    public static long getGuestValidity() {
+        return mPreferences.getLong(GUEST_PASS_VALIDITY, 0);
+    }
+
+    public static void createAurovilianProfile(String emailAddress) {
+        setUserLevel(AUROVILIAN);
+        mEditor.putString(AUROVILLIAN_EMAIL_STRING, emailAddress);
+        mEditor.commit();
+    }
+
+    public static void createGuestProfile(String guestPhoneNumber, long validTill) {
+        setUserLevel(GUEST);
+        mEditor.putString(GUEST_PHONE_NUMBER_STRING, guestPhoneNumber);
+        mEditor.putLong(GUEST_PASS_VALIDITY, validTill);
+        mEditor.commit();
+    }
+
+    public static void createVisitorProfile() {
+        setUserLevel(VISITOR);
     }
 
     public static List<Location> getLocationList(Activity callingActivity) {

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1001768606829",
+    "project_id": "explore-aurovill-1484746764516"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1001768606829:android:e66e34809b11b47c",
+        "android_client_info": {
+          "package_name": "com.navare.prashant.exploreauroville"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1001768606829-3b1di1d7j4o1kouc1p3a5pocoqhbtnu9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.navare.prashant.exploreauroville",
+            "certificate_hash": "529edcd14d41fc12e9ff565c8ba6f2271ebcb7da"
+          }
+        },
+        {
+          "client_id": "1001768606829-397tt3801telcqhqkvs99o4tanqv877d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvzN9i1NiJWJyFC92BbMzZ6x85LWWRtEg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

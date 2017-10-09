@@ -25,7 +25,6 @@ import java.net.URLEncoder;
 public class FeedbackActivity extends AppCompatActivity {
 
     private EditText mFeedbackET;
-    private String magicPhrase = "iamaurovillian";
 
     private CustomRequest mFeedbackRequest;
 
@@ -52,13 +51,6 @@ public class FeedbackActivity extends AppCompatActivity {
             return;
         }
         String feedBackString = mFeedbackET.getText().toString();
-        String feedBackStringTrimmed = feedBackString.replaceAll("\\s","");
-        if (feedBackStringTrimmed.equalsIgnoreCase(magicPhrase)) {
-            // Turn off the ads and return.
-            ApplicationStore.setAurovillian(true);
-            Toast.makeText(FeedbackActivity.this, getString(R.string.ads_turned_off), Toast.LENGTH_LONG).show();
-            return;
-        }
         Feedback feedback = new Feedback();
         feedback.setFeedback(feedBackString);
         Gson gson = new Gson();
