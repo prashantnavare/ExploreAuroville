@@ -3,7 +3,7 @@ import csv
 import os
 import io
 from flask_restful import Api, Resource
-from exploreXServer.models import db, CurrentEvent, Location, Feedback
+from exploreXServer.models import db, CurrentEvent, Location, Feedback, Guest
 from sqlalchemy.exc import SQLAlchemyError
 from marshmallow import ValidationError
 from exploreXServer import app
@@ -36,7 +36,8 @@ class CurrentEventAPI(Resource):
                 "to_date" : currentEvent.to_date,
                 "description" : currentEvent.description,
                 "tags" : currentEvent.tags,
-                "location" : currentEvent.location
+                "location" : currentEvent.location,
+                "accessLevel" : currentEvent.accessLevel
                             }
             jsonResults.append(currentEventData)
         return jsonResults
@@ -44,7 +45,7 @@ class CurrentEventAPI(Resource):
     def post(self):
         requestDict = request.get_json(force = True)
         try:
-            newCurrentEvent = CurrentEvent(requestDict['name'], requestDict['from_date'], requestDict['to_date'], requestDict['description'], requestDict['tags'], requestDict['location'] )
+            newCurrentEvent = CurrentEvent(requestDict['name'], requestDict['from_date'], requestDict['to_date'], requestDict['description'], requestDict['tags'], requestDict['location'], requestDict['accessLevel']  )
             newCurrentEvent.add(newCurrentEvent)
             return newCurrentEvent.id, 201
         except SQLAlchemyError as e:
@@ -93,7 +94,8 @@ class LocationAPI(Resource):
                 "longitude" : location.longitude,
                 "website" : location.website,
                 "description" : location.description,
-                "tags" : location.tags
+                "tags" : location.tags,
+                "accessLevel" : location.accessLevel
                             }
             jsonResults.append(locationData)
         return jsonResults
@@ -101,7 +103,7 @@ class LocationAPI(Resource):
     def post(self):
         requestDict = request.get_json(force = True)
         try:
-            newLocation = Location(requestDict['name'], requestDict['latitude'], requestDict['longitude'], requestDict['website'], requestDict['description'], requestDict['tags'] )
+            newLocation = Location(requestDict['name'], requestDict['latitude'], requestDict['longitude'], requestDict['website'], requestDict['description'], requestDict['tags'], requestDict['accessLevel'] )
             newLocation.add(newLocation)
             return newLocation.id, 201
         except SQLAlchemyError as e:
@@ -137,6 +139,62 @@ class LocationAPI(Resource):
             respData.status_code = 403
             return respData
 
+
+class GuestAPI(Resource):
+
+    def get(self):
+        phone = request.args.get('phone')
+        guest = Guest.query.filter(Guest.phone == phone).one()
+        guestData = {
+            "id" : guest.id,
+            "name" : guest.name,
+            "phone" : guest.phone,
+            "from_date" : guest.from_date,
+            "to_date" : guest.to_date,
+            "sponsor" : guest.sponsor,
+            "relationship" : guest.relationship,
+            "location" : guest.location
+                        }
+        return guestData
+
+    def post(self):
+        requestDict = request.get_json(force = True)
+        try:
+            newGuest = Guest(requestDict['name'], requestDict['phone'], requestDict['from_date'], requestDict['to_date'], requestDict['sponsor'], requestDict['relationship'], requestDict['location'])
+            newGuest.add(newGuest)
+            return newGuest.id, 201
+        except SQLAlchemyError as e:
+            db.session.rollback()
+            respData = jsonify({"error": str(e)})
+            respData.status_code = 403
+            return respData
+
+    def put(self):
+        requestDict = request.get_json(force = True)
+        try:
+            guestID = requestDict['id']
+            guestToBeUpdated = Guest.query.get_or_404(guestID)
+            for key, value in requestDict.items():
+                setattr(guestToBeUpdated, key, value)
+            guestToBeUpdated.update()
+            return  "success"
+        except SQLAlchemyError as e:
+            db.session.rollback()
+            respData = jsonify({"error": str(e)})
+            respData.status_code = 403
+            return respData
+
+    def delete(self):
+        guestID = request.args.get('guestid')
+        try:
+            guestToBeDeleted = Guest.query.get_or_404(guestID)
+            guestToBeDeleted.delete(guestToBeDeleted)
+            return "success"
+        except SQLAlchemyError as e:
+            db.session.rollback()
+            respData = jsonify({"error": str(e)})
+            respData.status_code = 403
+            return respData
 
 
 class FeedbackAPI(Resource):

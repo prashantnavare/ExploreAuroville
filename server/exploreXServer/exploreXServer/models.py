@@ -31,17 +31,19 @@ class CurrentEvent(db.Model, CRUD):
     description = db.Column(db.Text)
     tags = db.Column(db.Text)
     location = db.Column(db.Text)
+    accessLevel = db.Column(db.Integer, default=3)
 
     def __repr__(self):
         return '<CurrentEvent: {}>'.format(self.name)
 
-    def __init__(self, name, from_date, to_date, description, tags, location):
+    def __init__(self, name, from_date, to_date, description, tags, location, accessLevel):
         self.name = name
         self.from_date = from_date
         self.to_date = to_date
         self.description = description
         self.tags = tags
         self.location = location
+        self.accessLevel = accessLevel
 
 class Location(db.Model, CRUD):
     """
@@ -57,17 +59,48 @@ class Location(db.Model, CRUD):
     website = db.Column(db.Text)
     description = db.Column(db.Text)
     tags = db.Column(db.Text)
+    accessLevel = db.Column(db.Integer, default=3)
 
     def __repr__(self):
         return '<Location: {}>'.format(self.name)
 
-    def __init__(self, name, latitude, longitude, website, description, tags):
+    def __init__(self, name, latitude, longitude, website, description, tags, accessLevel):
         self.name = name
         self.latitude = latitude
         self.longitude = longitude
         self.website = website
         self.description = description
         self.tags = tags
+        self.accessLevel = accessLevel
+
+
+class Guest(db.Model, CRUD):
+    """
+    Create a Guests table
+    """
+
+    __tablename__ = 'guests'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.Text)
+    phone = db.Column(db.Text, unique=True)
+    from_date = db.Column(db.BigInteger)
+    to_date = db.Column(db.BigInteger)
+    sponsor = db.Column(db.Text)
+    relationship = db.Column(db.Text)
+    location = db.Column(db.Text)
+
+    def __repr__(self):
+        return '<Guest: {}>'.format(self.name)
+
+    def __init__(self, name, phone, from_date, to_date, sponsor, relationship, location):
+        self.name = name
+        self.phone = phone
+        self.from_date = from_date
+        self.to_date = to_date
+        self.sponsor = sponsor
+        self.relationship = relationship
+        self.location = location
 
 class Feedback(db.Model, CRUD):
     """

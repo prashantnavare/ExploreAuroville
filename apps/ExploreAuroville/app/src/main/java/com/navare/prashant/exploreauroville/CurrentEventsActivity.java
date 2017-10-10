@@ -191,7 +191,13 @@ public class CurrentEventsActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         Gson gson = new Gson();
-                        mEventList.addAll(Arrays.asList(gson.fromJson(response, CurrentEvent[].class)));
+                        List<CurrentEvent> eventListFromServer = Arrays.asList(gson.fromJson(response, CurrentEvent[].class));
+                        mEventList.clear();
+                        for (CurrentEvent event : eventListFromServer) {
+                            if (ApplicationStore.getUserLevel() >= event.getAccessLevel()) {
+                                mEventList.add(event);
+                            }
+                        }
                         mAdapter = new CurrentEventListAdapter(mMyActivity, mEventList);
                         mListView.setAdapter(mAdapter);
                         if (mEventList.size() <= 3) {

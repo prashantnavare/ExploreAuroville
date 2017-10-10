@@ -29,8 +29,8 @@ import java.util.TreeSet;
  */
 
 public class ApplicationStore extends Application {
-    public static final String BASE_URL = "http://explorex.texity.com";
-    // public static final String BASE_URL = "http://10.0.2.2:5678";
+    // public static final String BASE_URL = "http://explorex.texity.com";
+    public static final String BASE_URL = "http://10.0.2.2:5678";
 
     // API URLs
     public static final String LOCATION_URL = BASE_URL + "/api/explorex/v1/admin/location";
@@ -43,10 +43,9 @@ public class ApplicationStore extends Application {
     private static Context                  mAppContext;
 
     private static List<Location> mLocationList = new ArrayList<>();
-    private static boolean mbLocationListUpdated = false;
     private static TreeSet<String>      mTagSet = new TreeSet<>();
 
-    private static final String LOCATION_STRING = "LocationString";
+    private static final String AUROVILLIAN_NAME_STRING = "AurovilianName";
     private static final String AUROVILLIAN_EMAIL_STRING = "AurovilianEmail";
     private static final String GUEST_PHONE_NUMBER_STRING = "GuestPhoneNumber";
     private static final String GUEST_PASS_VALIDITY = "GuestPassValidity";
@@ -69,15 +68,6 @@ public class ApplicationStore extends Application {
         mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mEditor = mPreferences.edit();
         mAppContext = getApplicationContext();
-    }
-
-    public static String getLocationString() {
-        return mPreferences.getString(LOCATION_STRING, "");
-    }
-
-    public static void setLocationString(String locationString) {
-        mEditor.putString(LOCATION_STRING, locationString);
-        mEditor.commit();
     }
 
     public static Location getCurrentLocation() {
@@ -109,8 +99,9 @@ public class ApplicationStore extends Application {
         return mPreferences.getLong(GUEST_PASS_VALIDITY, 0);
     }
 
-    public static void createAurovilianProfile(String emailAddress) {
+    public static void createAurovilianProfile(String userName, String emailAddress) {
         setUserLevel(AUROVILIAN);
+        mEditor.putString(AUROVILLIAN_NAME_STRING, userName);
         mEditor.putString(AUROVILLIAN_EMAIL_STRING, emailAddress);
         mEditor.commit();
     }
@@ -127,15 +118,6 @@ public class ApplicationStore extends Application {
     }
 
     public static List<Location> getLocationList(Activity callingActivity) {
-        // If cache exists, use it right away and update it in the background.
-        if (mLocationList.size() == 0) {
-            String locationString = getLocationString();
-            if (locationString.isEmpty() == false) {
-                Gson gson = new Gson();
-                mLocationList.addAll(Arrays.asList(gson.fromJson(locationString, Location[].class)));
-                createLocationTagSet();
-            }
-        }
         getLocationListFromServer(callingActivity);
         return mLocationList;
     }
@@ -185,9 +167,6 @@ public class ApplicationStore extends Application {
     }
 
     private static void getLocationListFromServer(final Activity callingActivity) {
-        if (mbLocationListUpdated) {
-            return;
-        }
         final LocationListCallback locationListCallback = (LocationListCallback) callingActivity;
         CustomRequest citiesRequest = new CustomRequest(Request.Method.GET, ApplicationStore.LOCATION_URL, "",
                 new Response.Listener<String>() {
@@ -198,14 +177,14 @@ public class ApplicationStore extends Application {
                         List<Location> locationListFromServer = Arrays.asList(gson.fromJson(response, Location[].class));
                         if (locationListFromServer.size() > 0) {
                             mLocationList.clear();
-                            mLocationList.addAll(Arrays.asList(gson.fromJson(response, Location[].class)));
+                            for (Location location : locationListFromServer) {
+                                if (ApplicationStore.getUserLevel() >= location.getAccessLevel()) {
+                                    mLocationList.add(location);
+                                }
+                            }
                         }
-                        locationListCallback.locationListUpdated();
-                        // Also cache it away.
-                        String locationString = gson.toJson(mLocationList);
-                        setLocationString(locationString);
                         createLocationTagSet();
-                        mbLocationListUpdated = true;
+                        locationListCallback.locationListUpdated();
                     }
                 },
                 new Response.ErrorListener() {

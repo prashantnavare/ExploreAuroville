@@ -169,9 +169,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
             String emailID = acct.getEmail();
+            String userName = acct.getDisplayName();
             if (emailID.toLowerCase().contains(mDomainName)) {
                 // Aurovilian fully authenticated. Set up the Aurovilian profile
-                ApplicationStore.createAurovilianProfile(emailID);
+                ApplicationStore.createAurovilianProfile(userName, emailID);
                 launchMainActivity();
             }
             else {
@@ -211,6 +212,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             alertDialog.setMessage("Please enter your phone number to sign in.");
             alertDialog.setNeutralButton("OK", null);
             alertDialog.create().show();
+        }
+        else {
+            // For now
+            ApplicationStore.setUserLevel(ApplicationStore.GUEST);
+            launchMainActivity();
         }
     }
 

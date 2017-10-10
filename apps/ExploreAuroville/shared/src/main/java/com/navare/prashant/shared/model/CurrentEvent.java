@@ -12,6 +12,7 @@ public class CurrentEvent {
     private String description;
     private String tags;
     private String location;
+    private int accessLevel;
 
     public int getId() {
         return id;
@@ -39,6 +40,10 @@ public class CurrentEvent {
 
     public String getTags() {
         return tags;
+    }
+
+    public int getAccessLevel() {
+        return accessLevel;
     }
 
     public void setId(int id) {

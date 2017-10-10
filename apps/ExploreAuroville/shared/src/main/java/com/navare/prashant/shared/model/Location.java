@@ -12,6 +12,7 @@ public class Location {
     private String  website;
     private String  description;
     private String  tags;
+    private int     accessLevel;
 
     public int getId() {
         return id;
@@ -39,6 +40,10 @@ public class Location {
 
     public String getTags() {
         return tags;
+    }
+
+    public int getAccessLevel() {
+        return accessLevel;
     }
 
     public void setId(int id) {
