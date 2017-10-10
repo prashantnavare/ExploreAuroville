@@ -144,18 +144,39 @@ class GuestAPI(Resource):
 
     def get(self):
         phone = request.args.get('phone')
-        guest = Guest.query.filter(Guest.phone == phone).one()
-        guestData = {
-            "id" : guest.id,
-            "name" : guest.name,
-            "phone" : guest.phone,
-            "from_date" : guest.from_date,
-            "to_date" : guest.to_date,
-            "sponsor" : guest.sponsor,
-            "relationship" : guest.relationship,
-            "location" : guest.location
-                        }
-        return guestData
+        if phone is not None:
+            guest = Guest.query.filter(Guest.phone == phone).one()
+            if guest is not None:
+                guestData = {
+                    "id" : guest.id,
+                    "name" : guest.name,
+                    "phone" : guest.phone,
+                    "from_date" : guest.from_date,
+                    "to_date" : guest.to_date,
+                    "sponsor" : guest.sponsor,
+                    "relationship" : guest.relationship,
+                    "location" : guest.location
+                }
+                return guestData
+        sponsor = request.args.get('sponsor')
+        if sponsor is not None:
+            guestList = Guest.query.filter(Guest.sponsor == sponsor).order_by(Guest.from_date).all()
+            jsonResults = []
+            for guest in guestList:
+                guestData = {
+                    "id" : guest.id,
+                    "name" : guest.name,
+                    "phone" : guest.phone,
+                    "from_date" : guest.from_date,
+                    "to_date" : guest.to_date,
+                    "sponsor" : guest.sponsor,
+                    "relationship" : guest.relationship,
+                    "location" : guest.location
+                }
+                jsonResults.append(guest)
+            return jsonResults
+
+        
 
     def post(self):
         requestDict = request.get_json(force = True)
