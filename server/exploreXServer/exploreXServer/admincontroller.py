@@ -170,7 +170,7 @@ class GuestAPI(Resource):
                         "location" : guest.location
                     }
                     purgeExpiredGuests()
-                    return guestData
+                    return guestData, 200
             except SQLAlchemyError as e:
                 respData = jsonify({"error": str(e)})
                 respData.status_code = 403
@@ -194,7 +194,7 @@ class GuestAPI(Resource):
                     "location" : guest.location
                 }
                 jsonResults.append(guestData)
-            return jsonResults
+            return jsonResults, 200
 
         
 
