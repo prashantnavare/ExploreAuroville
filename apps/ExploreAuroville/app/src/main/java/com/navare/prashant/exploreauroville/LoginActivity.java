@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,9 +15,12 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -264,12 +267,22 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         progressDialog.cancel();
-                        AlertDialog.Builder alertDialog = new AlertDialog.Builder(mMyActivity);
-                        alertDialog.setTitle("Guest Access");
-                        alertDialog.setIcon(R.drawable.ic_error);
-                        alertDialog.setMessage("You do not have Auroville guest access.");
-                        alertDialog.setNeutralButton("OK", null);
-                        alertDialog.create().show();
+                        if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                            Toast.makeText(mMyActivity, getString(R.string.network_error),
+                                    Toast.LENGTH_LONG).show();
+                        }
+                        else if (error instanceof AuthFailureError){
+                            AlertDialog.Builder alertDialog = new AlertDialog.Builder(mMyActivity);
+                            alertDialog.setTitle("Guest Access");
+                            alertDialog.setIcon(R.drawable.ic_error);
+                            alertDialog.setMessage("You do not have Auroville guest access.");
+                            alertDialog.setNeutralButton("OK", null);
+                            alertDialog.create().show();
+                        }
+                        else {
+                            Toast.makeText(mMyActivity, getString(R.string.network_error),
+                                    Toast.LENGTH_LONG).show();
+                        }
                     }
                 }){};
 
@@ -281,22 +294,4 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         ApplicationStore.setUserLevel(ApplicationStore.VISITOR);
         launchMainActivity();
     }
-
-
-    /* Code for guest login - to be used later
-    Calendar todayCalendar = Calendar.getInstance();
-            if (todayCalendar.getTimeInMillis() > ApplicationStore.getGuestValidity()) {
-        ApplicationStore.setUserLevel(ApplicationStore.VISITOR);
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setTitle("Guest Access");
-        alertDialog.setIcon(R.drawable.ic_error);
-        alertDialog.setMessage("Your Explore Auroville guest access has expired.");
-        alertDialog.setNeutralButton("OK", null);
-        alertDialog.create().show();
-    }
-            else {
-        // Go straight to MainActivity
-        launchMainActivity();
-    }
-    */
 }

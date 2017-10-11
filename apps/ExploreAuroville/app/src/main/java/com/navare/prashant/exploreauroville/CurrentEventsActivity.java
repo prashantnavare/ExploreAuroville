@@ -50,8 +50,6 @@ public class CurrentEventsActivity extends AppCompatActivity {
     private boolean                 mbOneWeek = true;
     private CurrentEventsActivity   mMyActivity;
 
-    private AdView mAdView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,14 +132,6 @@ public class CurrentEventsActivity extends AppCompatActivity {
                 getCurrentEvents(mFromCalendar.getTimeInMillis(), endOfToDateCalendar.getTimeInMillis(), false);
             }
         });
-
-        // Ads initialization
-        MobileAds.initialize(this, "ca-app-pub-1181736027907915~9786968065");
-        mAdView = (AdView) findViewById(R.id.adView);
-        mAdView.setVisibility(View.VISIBLE);
-        mAdView.setBackgroundColor(0xff330000);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
 
         // Start with 1 week's events
         Calendar nowCalendar = Calendar.getInstance();

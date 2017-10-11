@@ -27,7 +27,6 @@ public class EventDetailActivity extends AppCompatActivity {
     private TextView mTimeTV;
     private TextView mDescriptionTV;
     private CurrentEvent mEvent;
-    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,14 +75,6 @@ public class EventDetailActivity extends AppCompatActivity {
         mTimeTV.setText(timingString);
 
         mDescriptionTV.setText(mEvent.getDescription());
-
-        // Ads initialization
-        MobileAds.initialize(this, "ca-app-pub-1181736027907915~9786968065");
-        mAdView = (AdView) findViewById(R.id.adView);
-        mAdView.setVisibility(View.VISIBLE);
-        mAdView.setBackgroundColor(0xff330000);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
     }
 
     @Override

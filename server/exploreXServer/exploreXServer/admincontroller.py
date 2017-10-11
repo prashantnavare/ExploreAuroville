@@ -154,6 +154,7 @@ def purgeExpiredGuests():
 class GuestAPI(Resource):
 
     def get(self):
+        purgeExpiredGuests()
         phone = request.args.get('phone')
         if phone is not None:
             try:
@@ -169,17 +170,23 @@ class GuestAPI(Resource):
                         "relationship" : guest.relationship,
                         "location" : guest.location
                     }
-                    purgeExpiredGuests()
                     return guestData, 200
-            except SQLAlchemyError as e:
+            except NoResultFound as e:
                 respData = jsonify({"error": str(e)})
                 respData.status_code = 403
+                return respData
+            except MultipleResultsFound as e:
+                respData = jsonify({"error": str(e)})
+                respData.status_code = 403
+                return respData
+            except SQLAlchemyError as e:
+                respData = jsonify({"error": str(e)})
+                respData.status_code = 404
                 return respData
 
 
         sponsor = request.args.get('sponsor')
         if sponsor is not None:
-            purgeExpiredGuests()
             guestList = Guest.query.filter(Guest.sponsor == sponsor).order_by(Guest.from_date).all()
             jsonResults = []
             for guest in guestList:

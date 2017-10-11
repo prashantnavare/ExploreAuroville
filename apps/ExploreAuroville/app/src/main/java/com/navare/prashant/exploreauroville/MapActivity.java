@@ -31,7 +31,6 @@ import java.util.Map;
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback, ApplicationStore.LocationListCallback {
 
     private GoogleMap   mMap;
-    private AdView      mAdView;
     private LatLngBounds mBoundsForAllLocations;
     private static List<Location> mLocationListToShow = new ArrayList<>();
     private static List<Location> mLocationListAll = new ArrayList<>();
@@ -103,15 +102,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 showMarkersOnMap(false);
             }
         });
-
-        // Ads initialization
-        MobileAds.initialize(this, "ca-app-pub-1181736027907915~9786968065");
-        mAdView = (AdView) findViewById(R.id.adView);
-        mAdView.setVisibility(View.VISIBLE);
-        mAdView.setBackgroundColor(0xff330000);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
-
     }
 
 

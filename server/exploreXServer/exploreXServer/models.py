@@ -111,7 +111,7 @@ class GuestHistory(db.Model, CRUD):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text)
-    phone = db.Column(db.String(32), unique=True)
+    phone = db.Column(db.String(32))
     from_date = db.Column(db.BigInteger)
     to_date = db.Column(db.BigInteger)
     sponsor = db.Column(db.Text)

@@ -17,7 +17,6 @@ public class LocationDetailActivity extends AppCompatActivity {
     private TextView mDescriptionTV;
     private TextView mURLTV;
     private Location mLocation;
-    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,14 +31,6 @@ public class LocationDetailActivity extends AppCompatActivity {
         mDescriptionTV.setText(mLocation.getDescription());
         if (mLocation.getWebsite() != null)
             mURLTV.setText(mLocation.getWebsite());
-
-        // Ads initialization
-        MobileAds.initialize(this, "ca-app-pub-1181736027907915~9786968065");
-        mAdView = (AdView) findViewById(R.id.adView);
-        mAdView.setVisibility(View.VISIBLE);
-        mAdView.setBackgroundColor(0xff330000);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
     }
 
     @Override

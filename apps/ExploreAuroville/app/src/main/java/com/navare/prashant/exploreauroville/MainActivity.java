@@ -1,13 +1,9 @@
 package com.navare.prashant.exploreauroville;
 
 import android.app.Activity;
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.NavUtils;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.SearchView;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -23,18 +19,14 @@ import com.android.volley.VolleyError;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
-import com.google.gson.Gson;
-import com.navare.prashant.shared.model.CurrentEvent;
 import com.navare.prashant.shared.util.CustomRequest;
 import com.navare.prashant.shared.util.VolleyProvider;
 
-import java.util.Arrays;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity implements ApplicationStore.LocationListCallback {
 
     private GridView    mGridView;
-    private AdView      mAdView;
 
     String[]    mTileText = new String[2];
     int[]       mTileImage = {R.drawable.map_72px, R.drawable.current_events_72px};
@@ -76,14 +68,6 @@ public class MainActivity extends AppCompatActivity implements ApplicationStore.
                 }
             }
         });
-
-        // Ads initialization
-        MobileAds.initialize(this, "ca-app-pub-1181736027907915~9786968065");
-        mAdView = (AdView) findViewById(R.id.adView);
-        mAdView.setVisibility(View.VISIBLE);
-        mAdView.setBackgroundColor(0xff330000);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
 
         // purge older events in the background
         purgeOldEvents();

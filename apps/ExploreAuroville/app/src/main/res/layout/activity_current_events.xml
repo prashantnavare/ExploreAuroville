@@ -75,22 +75,9 @@
         android:divider="@null"
         android:layout_weight="1"
         android:layout_below="@+id/search_events"
-        android:layout_above="@+id/adView"
         android:layout_marginTop="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         />
-
-    <com.google.android.gms.ads.AdView
-        xmlns:ads="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/adView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        ads:adSize="SMART_BANNER"
-        ads:adUnitId="@string/ad_unit_id"
-        >
-    </com.google.android.gms.ads.AdView>
 
 </RelativeLayout>
