@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     private GoogleSignInOptions mGSO;
     private GoogleApiClient mGAC;
-    private String mDomainName = "futureschool.org.in";
+    private String mDomainName = "auroville.org.in";
 
     private Activity mMyActivity;
 
@@ -122,7 +122,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         mGAC = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, mGSO)
-                .addApi(Auth.CREDENTIALS_API)
                 .build();
 
         mAurovilianSignInButton.setOnClickListener(this);
@@ -191,6 +190,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 launchMainActivity();
             }
             else {
+                Auth.GoogleSignInApi.signOut(mGAC);
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
                 alertDialog.setTitle("Wrong email ID");
                 alertDialog.setIcon(R.drawable.ic_error);
