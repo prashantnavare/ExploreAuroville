@@ -102,6 +102,34 @@ class Guest(db.Model, CRUD):
         self.relationship = relationship
         self.location = location
 
+class GuestHistory(db.Model, CRUD):
+    """
+    Create a GuestHistory table
+    """
+
+    __tablename__ = 'guesthistory'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.Text)
+    phone = db.Column(db.String(32), unique=True)
+    from_date = db.Column(db.BigInteger)
+    to_date = db.Column(db.BigInteger)
+    sponsor = db.Column(db.Text)
+    relationship = db.Column(db.Text)
+    location = db.Column(db.Text)
+
+    def __repr__(self):
+        return '<Guest: {}>'.format(self.name)
+
+    def __init__(self, name, phone, from_date, to_date, sponsor, relationship, location):
+        self.name = name
+        self.phone = phone
+        self.from_date = from_date
+        self.to_date = to_date
+        self.sponsor = sponsor
+        self.relationship = relationship
+        self.location = location
+
 class Feedback(db.Model, CRUD):
     """
     Create a feedback table

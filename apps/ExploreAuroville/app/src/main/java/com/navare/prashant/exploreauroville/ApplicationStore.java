@@ -13,6 +13,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.navare.prashant.shared.model.CurrentEvent;
+import com.navare.prashant.shared.model.Guest;
 import com.navare.prashant.shared.model.Location;
 import com.navare.prashant.shared.util.CustomRequest;
 import com.navare.prashant.shared.util.VolleyProvider;
@@ -35,6 +36,7 @@ public class ApplicationStore extends Application {
     // API URLs
     public static final String LOCATION_URL = BASE_URL + "/api/explorex/v1/admin/location";
     public static final String GET_CURRENT_EVENTS_URL = BASE_URL + "/api/explorex/v1/admin/event";
+    public static final String GET_GUEST_INFO_URL = BASE_URL + "/api/explorex/v1/admin/guest";
     public static final String FEEDBACK_URL = BASE_URL + "/api/explorex/v1/admin/feedback";
     public static final String PURGE_EVENTS_URL = BASE_URL + "/api/explorex/v1/admin/purgeEvents";
 
@@ -61,6 +63,8 @@ public class ApplicationStore extends Application {
 
     private static Location mCurrentLocation;
     private static CurrentEvent mCurrentEvent;
+
+    private static Guest mGuest;
 
     @Override
     public void onCreate() {
@@ -99,18 +103,16 @@ public class ApplicationStore extends Application {
         return mPreferences.getLong(GUEST_PASS_VALIDITY, 0);
     }
 
-    public static void createAurovilianProfile(String userName, String emailAddress) {
+    public static void setAurovilianProfile(String userName, String emailAddress) {
         setUserLevel(AUROVILIAN);
         mEditor.putString(AUROVILLIAN_NAME_STRING, userName);
         mEditor.putString(AUROVILLIAN_EMAIL_STRING, emailAddress);
         mEditor.commit();
     }
 
-    public static void createGuestProfile(String guestPhoneNumber, long validTill) {
+    public static void setGuestProfile(Guest guest) {
         setUserLevel(GUEST);
-        mEditor.putString(GUEST_PHONE_NUMBER_STRING, guestPhoneNumber);
-        mEditor.putLong(GUEST_PASS_VALIDITY, validTill);
-        mEditor.commit();
+        mGuest = guest;
     }
 
     public static void createVisitorProfile() {

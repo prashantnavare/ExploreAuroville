@@ -1,29 +1,37 @@
 package com.navare.prashant.exploreauroville;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.android.gms.auth.api.signin.GoogleSignInStatusCodes;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.SignInButton;
-import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Scope;
+import com.google.gson.Gson;
+import com.navare.prashant.shared.model.Guest;
+import com.navare.prashant.shared.util.CustomRequest;
+import com.navare.prashant.shared.util.VolleyProvider;
 
 import java.util.Calendar;
 
@@ -47,10 +55,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private GoogleApiClient mGAC;
     private String mDomainName = "futureschool.org.in";
 
+    private Activity mMyActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        mMyActivity = this;
 
         // Show EULA
         new SimpleEula(this).show();
@@ -172,7 +184,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             String userName = acct.getDisplayName();
             if (emailID.toLowerCase().contains(mDomainName)) {
                 // Aurovilian fully authenticated. Set up the Aurovilian profile
-                ApplicationStore.createAurovilianProfile(userName, emailID);
+                ApplicationStore.setAurovilianProfile(userName, emailID);
                 launchMainActivity();
             }
             else {
@@ -214,10 +226,55 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             alertDialog.create().show();
         }
         else {
-            // For now
-            ApplicationStore.setUserLevel(ApplicationStore.GUEST);
-            launchMainActivity();
+            handleGuestSignIn();
         }
+    }
+
+    private void handleGuestSignIn() {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Retrieving Your Guest Credentials");
+        progressDialog.setMessage("Please wait while we retrieve your credentials...");
+        progressDialog.show();
+
+        String getGuestInfoURL = ApplicationStore.GET_GUEST_INFO_URL;
+        getGuestInfoURL += "?phone=" + mGuestPhoneNumberET.getText();
+        CustomRequest getGuestInfoRequest = new CustomRequest(Request.Method.GET, getGuestInfoURL, "",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        progressDialog.cancel();
+                        Gson gson = new Gson();
+                        Guest guest = gson.fromJson(response, Guest.class);
+                        Calendar todayCalendar = Calendar.getInstance();
+                        if (todayCalendar.getTimeInMillis() > guest.getTo_date()) {
+                            AlertDialog.Builder alertDialog = new AlertDialog.Builder(mMyActivity);
+                            alertDialog.setTitle("Guest Access");
+                            alertDialog.setIcon(R.drawable.ic_error);
+                            alertDialog.setMessage("Your Explore Auroville guest access has expired.");
+                            alertDialog.setNeutralButton("OK", null);
+                            alertDialog.create().show();
+                        }
+                        else {
+                            ApplicationStore.setGuestProfile(guest);
+                            launchMainActivity();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        progressDialog.cancel();
+                        AlertDialog.Builder alertDialog = new AlertDialog.Builder(mMyActivity);
+                        alertDialog.setTitle("Guest Access");
+                        alertDialog.setIcon(R.drawable.ic_error);
+                        alertDialog.setMessage("You do not have Auroville guest access.");
+                        alertDialog.setNeutralButton("OK", null);
+                        alertDialog.create().show();
+                    }
+                }){};
+
+        RequestQueue requestQueue = VolleyProvider.getQueue(getApplicationContext());
+        requestQueue.add(getGuestInfoRequest);
     }
 
     private void visitorSignIn() {

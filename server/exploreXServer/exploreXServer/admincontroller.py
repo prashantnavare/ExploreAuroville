@@ -1,10 +1,13 @@
 from flask import Flask, Blueprint, request, jsonify, make_response, render_template
 import csv
+import time
 import os
 import io
 from flask_restful import Api, Resource
-from exploreXServer.models import db, CurrentEvent, Location, Feedback, Guest
+from exploreXServer.models import db, CurrentEvent, Location, Feedback, Guest, GuestHistory
 from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy.orm.exc import MultipleResultsFound
 from marshmallow import ValidationError
 from exploreXServer import app
 
@@ -140,26 +143,43 @@ class LocationAPI(Resource):
             return respData
 
 
+def purgeExpiredGuests():
+    currentTime = int(round(time.time() * 1000))
+    expiredGuestList = Guest.query.filter(Guest.to_date < currentTime).all()
+    for expiredGuest in expiredGuestList:
+        newGuestHistory = GuestHistory(expiredGuest.name, expiredGuest.phone, expiredGuest.from_date, expiredGuest.to_date, expiredGuest.sponsor, expiredGuest.relationship, expiredGuest.location)
+        newGuestHistory.add(newGuestHistory)
+        expiredGuest.delete(expiredGuest)
+
 class GuestAPI(Resource):
 
     def get(self):
         phone = request.args.get('phone')
         if phone is not None:
-            guest = Guest.query.filter(Guest.phone == phone).one()
-            if guest is not None:
-                guestData = {
-                    "id" : guest.id,
-                    "name" : guest.name,
-                    "phone" : guest.phone,
-                    "from_date" : guest.from_date,
-                    "to_date" : guest.to_date,
-                    "sponsor" : guest.sponsor,
-                    "relationship" : guest.relationship,
-                    "location" : guest.location
-                }
-                return guestData
+            try:
+                guest = Guest.query.filter(Guest.phone == phone).one()
+                if guest is not None:
+                    guestData = {
+                        "id" : guest.id,
+                        "name" : guest.name,
+                        "phone" : guest.phone,
+                        "from_date" : guest.from_date,
+                        "to_date" : guest.to_date,
+                        "sponsor" : guest.sponsor,
+                        "relationship" : guest.relationship,
+                        "location" : guest.location
+                    }
+                    purgeExpiredGuests()
+                    return guestData
+            except SQLAlchemyError as e:
+                respData = jsonify({"error": str(e)})
+                respData.status_code = 403
+                return respData
+
+
         sponsor = request.args.get('sponsor')
         if sponsor is not None:
+            purgeExpiredGuests()
             guestList = Guest.query.filter(Guest.sponsor == sponsor).order_by(Guest.from_date).all()
             jsonResults = []
             for guest in guestList:
@@ -173,7 +193,7 @@ class GuestAPI(Resource):
                     "relationship" : guest.relationship,
                     "location" : guest.location
                 }
-                jsonResults.append(guest)
+                jsonResults.append(guestData)
             return jsonResults
 
         
@@ -260,6 +280,7 @@ class PurgeEventAPI(Resource):
 
 adminApi.add_resource(CurrentEventAPI, '/event')
 adminApi.add_resource(LocationAPI, '/location')
+adminApi.add_resource(GuestAPI, '/guest')
 adminApi.add_resource(FeedbackAPI, '/feedback')
 adminApi.add_resource(PurgeEventAPI, '/purgeEvents')
 
