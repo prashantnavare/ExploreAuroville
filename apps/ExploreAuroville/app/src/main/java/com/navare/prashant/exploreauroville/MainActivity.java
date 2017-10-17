@@ -89,6 +89,9 @@ public class MainActivity extends AppCompatActivity implements ApplicationStore.
             case R.id.menu_feedback:
                 onFeedback();
                 return super.onOptionsItemSelected(item);
+            case R.id.menu_settings:
+                onSettings();
+                return super.onOptionsItemSelected(item);
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -97,6 +100,11 @@ public class MainActivity extends AppCompatActivity implements ApplicationStore.
     private void onFeedback() {
         Intent feedbackIntent = new Intent(mMyActivity, FeedbackActivity.class);
         startActivity(feedbackIntent);
+    }
+
+    private void onSettings() {
+        Intent settingsIntent = new Intent(mMyActivity, SettingsActivity.class);
+        startActivity(settingsIntent);
     }
 
     @Override

@@ -1,0 +1,416 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <!-- Aurovilian Layout -->
+                <LinearLayout
+                    android:id="@+id/aurovilianLL"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="20dp"
+                    android:padding="10dp"
+                    android:layout_gravity="bottom"
+                    android:elevation="6dp"
+                    android:background="@drawable/raised_background"
+                    android:orientation="vertical"
+                    android:textAlignment="center"
+                    >
+
+                    <!-- Status -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="bottom"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"
+                        >
+
+                        <TextView
+                            android:layout_weight="3"
+                            android:textSize="12sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Status"
+                            android:padding="5dp"
+                            />
+
+                        <TextView
+                            android:id="@+id/textAurovilianStatus"
+                            android:layout_weight="1"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:inputType="textCapWords|textMultiLine"
+                            android:layout_marginRight="5dp"
+                            />
+
+                    </LinearLayout>
+
+                    <!-- Name -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="bottom"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"
+                        >
+
+                        <TextView
+                            android:layout_weight="3"
+                            android:textSize="12sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Name"
+                            android:padding="5dp"
+                            />
+
+                        <TextView
+                            android:id="@+id/textAurovilianName"
+                            android:layout_weight="1"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:inputType="textCapWords|textMultiLine"
+                            android:layout_marginRight="5dp"
+                            />
+
+                    </LinearLayout>
+
+                    <!-- E-mail -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="bottom"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"
+                        >
+
+                        <TextView
+                            android:layout_weight="3"
+                            android:textSize="12sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="E-mail"
+                            android:padding="5dp"
+                            />
+
+                        <TextView
+                            android:id="@+id/textAurovilianEmail"
+                            android:layout_weight="1"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:inputType="textCapWords|textMultiLine"
+                            android:layout_marginRight="5dp"
+                            />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!-- Guest Layout -->
+                <LinearLayout
+                    android:id="@+id/guestLL"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="20dp"
+                    android:padding="10dp"
+                    android:layout_gravity="bottom"
+                    android:elevation="6dp"
+                    android:background="@drawable/raised_background"
+                    android:orientation="vertical"
+                    android:textAlignment="center"
+                    >
+
+                    <!-- Status -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="bottom"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"
+                        >
+
+                        <TextView
+                            android:layout_weight="3"
+                            android:textSize="12sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Status"
+                            android:padding="5dp"
+                            />
+
+                        <TextView
+                            android:id="@+id/textGuestStatus"
+                            android:layout_weight="1"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:inputType="textCapWords|textMultiLine"
+                            android:layout_marginRight="5dp"
+                            />
+
+                    </LinearLayout>
+
+                    <!-- Name -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="bottom"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"
+                        >
+
+                        <TextView
+                            android:layout_weight="3"
+                            android:textSize="12sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Name"
+                            android:padding="5dp"
+                            />
+
+                        <TextView
+                            android:id="@+id/textGuestName"
+                            android:layout_weight="1"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:inputType="textCapWords|textMultiLine"
+                            android:layout_marginRight="5dp"
+                            />
+
+                    </LinearLayout>
+
+                    <!-- Phone -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="bottom"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"
+                        >
+
+                        <TextView
+                            android:layout_weight="3"
+                            android:textSize="12sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Phone"
+                            android:padding="5dp"
+                            />
+
+                        <TextView
+                            android:id="@+id/textGuestPhone"
+                            android:layout_weight="1"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:inputType="textCapWords|textMultiLine"
+                            android:layout_marginRight="5dp"
+                            />
+
+                    </LinearLayout>
+
+                    <!-- Sponsor -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="bottom"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"
+                        >
+
+                        <TextView
+                            android:layout_weight="3"
+                            android:textSize="12sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Sponsor"
+                            android:padding="5dp"
+                            />
+
+                        <TextView
+                            android:id="@+id/textGuestSponsor"
+                            android:layout_weight="1"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:inputType="textCapWords|textMultiLine"
+                            android:layout_marginRight="5dp"
+                            />
+
+                    </LinearLayout>
+
+                    <!-- Location -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="bottom"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"
+                        >
+
+                        <TextView
+                            android:layout_weight="3"
+                            android:textSize="12sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Location"
+                            android:padding="5dp"
+                            />
+
+                        <TextView
+                            android:id="@+id/textGuestLocation"
+                            android:layout_weight="1"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:inputType="textCapWords|textMultiLine"
+                            android:layout_marginRight="5dp"
+                            />
+
+                    </LinearLayout>
+
+                    <!-- Guest Access Validity -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="bottom"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"
+                        >
+
+                        <TextView
+                            android:layout_weight="3"
+                            android:textSize="12sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Valid Till"
+                            android:padding="5dp"
+                            />
+
+                        <TextView
+                            android:id="@+id/textGuestValidity"
+                            android:layout_weight="1"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:inputType="textCapWords|textMultiLine"
+                            android:layout_marginRight="5dp"
+                            />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!-- Visitor Layout -->
+                <LinearLayout
+                    android:id="@+id/visitorLL"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="20dp"
+                    android:padding="10dp"
+                    android:layout_gravity="bottom"
+                    android:elevation="6dp"
+                    android:background="@drawable/raised_background"
+                    android:orientation="vertical"
+                    android:textAlignment="center"
+                    >
+
+                    <!-- Status -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="bottom"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"
+                        >
+
+                        <TextView
+                            android:layout_weight="3"
+                            android:textSize="12sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Status"
+                            android:padding="5dp"
+                            />
+
+                        <TextView
+                            android:id="@+id/textVisitorStatus"
+                            android:layout_weight="1"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:inputType="textCapWords|textMultiLine"
+                            android:layout_marginRight="5dp"
+                            />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>
