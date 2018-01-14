@@ -8,7 +8,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:1001768606829:android:e66e34809b11b47c",
         "android_client_info": {
-          "package_name": "com.navare.prashant.exploreauroville"
+          "package_name": "com.navare.prashant.experienceauroville"
         }
       },
       "oauth_client": [
@@ -16,7 +16,7 @@
           "client_id": "1001768606829-3b1di1d7j4o1kouc1p3a5pocoqhbtnu9.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.navare.prashant.exploreauroville",
+            "package_name": "com.navare.prashant.experienceauroville",
             "certificate_hash": "529edcd14d41fc12e9ff565c8ba6f2271ebcb7da"
           }
         },

@@ -1,4 +1,4 @@
-package com.navare.prashant.exploreauroville;
+package com.navare.prashant.experienceauroville;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;

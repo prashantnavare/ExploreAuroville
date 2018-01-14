@@ -1,4 +1,4 @@
-package com.navare.prashant.exploreauroville;
+package com.navare.prashant.experienceauroville;
 
 /**
  * Created by prashant on 8/28/2017.
@@ -14,7 +14,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.preference.PreferenceManager;
 
-import com.navare.prashant.exploreauroville.R;
+import com.navare.prashant.experienceauroville.R;
 
 import java.io.BufferedReader;
 import java.io.IOException;

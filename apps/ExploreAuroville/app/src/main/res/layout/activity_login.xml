@@ -128,7 +128,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Your Explore Auroville guest access has expired."
+            android:text="Your Experience Auroville guest access has expired."
             />
 
         <Button

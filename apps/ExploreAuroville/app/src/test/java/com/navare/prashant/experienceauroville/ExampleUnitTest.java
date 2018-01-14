@@ -1,4 +1,4 @@
-package com.navare.prashant.exploreauroville;
+package com.navare.prashant.experienceauroville;
 
 import org.junit.Test;
 

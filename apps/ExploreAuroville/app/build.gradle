@@ -3,19 +3,19 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         config {
-            keyAlias 'PNAndroidKey'
+            keyAlias 'AurovilleUploadKey'
             keyPassword 'mohana123!!'
-            storeFile file('C:/Android/keystore/uploadkey.jks')
+            storeFile file('C:/Android/keystore/uploadkey_auroville.jks')
             storePassword 'mohana123!!'
         }
     }
     compileSdkVersion 26
-    buildToolsVersion '25.0.0'
+    buildToolsVersion '26.0.2'
     defaultConfig {
-        applicationId "com.navare.prashant.exploreauroville"
+        applicationId "com.navare.prashant.experienceauroville"
         minSdkVersion 17
         targetSdkVersion 23
-        versionCode 4
+        versionCode 5
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }

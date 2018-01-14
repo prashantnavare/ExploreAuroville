@@ -1,4 +1,4 @@
-package com.navare.prashant.exploreauroville;
+package com.navare.prashant.experienceauroville;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     private GoogleSignInOptions mGSO;
     private GoogleApiClient mGAC;
-    private String mDomainName = "auroville.org.in";
+    private String mDomainName = "futureschool.org.in";
 
     private Activity mMyActivity;
 
@@ -253,7 +253,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             AlertDialog.Builder alertDialog = new AlertDialog.Builder(mMyActivity);
                             alertDialog.setTitle("Guest Access");
                             alertDialog.setIcon(R.drawable.ic_error);
-                            alertDialog.setMessage("Your Explore Auroville guest access has expired.");
+                            alertDialog.setMessage("Your Experience Auroville guest access has expired.");
                             alertDialog.setNeutralButton("OK", null);
                             alertDialog.create().show();
                         }
@@ -275,7 +275,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             AlertDialog.Builder alertDialog = new AlertDialog.Builder(mMyActivity);
                             alertDialog.setTitle("Guest Access");
                             alertDialog.setIcon(R.drawable.ic_error);
-                            alertDialog.setMessage("You do not have Auroville guest access.");
+                            alertDialog.setMessage("You need to be staying in Auroville to be a guest. \n\n If you are already staying in Auroville, please contact your host to register as a guest.");
                             alertDialog.setNeutralButton("OK", null);
                             alertDialog.create().show();
                         }

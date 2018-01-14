@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Explore Auroville</string>
+    <string name="app_name">Experience Auroville</string>
     <string name="events">Events</string>
     <string name="events_today">Today\'s Events</string>
     <string name="events_one_week">Events This Week</string>
@@ -25,7 +25,7 @@
     <string name="places">Places</string>
     <string name="menu_feedback">Feedback</string>
     <string name="title_activity_feedback">Feedback</string>
-    <string name="to_exploreavteam">To: The Explore Auroville Team</string>
+    <string name="to_exploreavteam">To: The Experience Auroville Team</string>
     <string name="feedback_successful">Thanks for your feedback.</string>
     <string name="enter_feedback">Please enter your feedback</string>
     <string name="ads_turned_off">Thank you. Your ads have been turned off.</string>

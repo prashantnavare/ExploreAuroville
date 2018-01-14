@@ -103,39 +103,6 @@
 
                     </LinearLayout>
 
-                    <!-- E-mail -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_gravity="bottom"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="10dp"
-                        >
-
-                        <TextView
-                            android:layout_weight="3"
-                            android:textSize="12sp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="E-mail"
-                            android:padding="5dp"
-                            />
-
-                        <TextView
-                            android:id="@+id/textAurovilianEmail"
-                            android:layout_weight="1"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="5dp"
-                            android:inputType="textCapWords|textMultiLine"
-                            android:layout_marginRight="5dp"
-                            />
-
-                    </LinearLayout>
-
                 </LinearLayout>
 
                 <!-- Guest Layout -->
@@ -269,7 +236,7 @@
                             android:textSize="12sp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Sponsor"
+                            android:text="Host"
                             android:padding="5dp"
                             />
 

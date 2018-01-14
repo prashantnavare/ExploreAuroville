@@ -9,7 +9,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     android:background="@color/windowBackground"
-    tools:context="com.navare.prashant.exploreauroville.FeedbackActivity">
+    tools:context="com.navare.prashant.experienceauroville.FeedbackActivity">
 
     <TextView
         android:id="@+id/feedback_tv"

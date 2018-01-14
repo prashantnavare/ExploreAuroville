@@ -14,7 +14,7 @@
         android:elevation="6dp"
         >
 
-        <com.navare.prashant.exploreauroville.DelayAutoCompleteTextView
+        <com.navare.prashant.experienceauroville.DelayAutoCompleteTextView
             android:id="@+id/autocomplete"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
@@ -51,7 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        tools:context="com.navare.prashant.exploreauroville.MapActivity"
+        tools:context="com.navare.prashant.experienceauroville.MapActivity"
         />
 
 </LinearLayout>

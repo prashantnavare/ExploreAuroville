@@ -1,10 +1,14 @@
-package com.navare.prashant.exploreauroville;
+package com.navare.prashant.experienceauroville;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.navare.prashant.shared.model.Aurovilian;
+import com.navare.prashant.shared.model.Guest;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -35,7 +39,6 @@ public class SettingsActivity extends AppCompatActivity {
         mAurovilianLL = (LinearLayout) findViewById(R.id.aurovilianLL);
         mAurovilianStatusTV = (TextView) findViewById(R.id.textAurovilianStatus);
         mAurovilianNameTV = (TextView) findViewById(R.id.textAurovilianName);
-        mAurovilianEmailTV = (TextView) findViewById(R.id.textAurovilianEmail);
 
         mGuestLL = (LinearLayout) findViewById(R.id.guestLL);
         mGuestStatusTV = (TextView) findViewById(R.id.textGuestStatus);
@@ -48,9 +51,38 @@ public class SettingsActivity extends AppCompatActivity {
         mVisitorLL = (LinearLayout) findViewById(R.id.visitorLL);
         mVisitorStatusTV = (TextView) findViewById(R.id.textVisitorStatus);
 
-        mAurovilianStatusTV.setText("Aurovilian");
-        mAurovilianNameTV.setText("Prashant Navare");
-        mAurovilianEmailTV.setText("prashant.navare@futureschool.org.in");
+        if (ApplicationStore.getUserLevel() == ApplicationStore.AUROVILIAN) {
+            Aurovilian aurovilian = ApplicationStore.getAurovilianProfile();
+
+            mAurovilianLL.setVisibility(View.VISIBLE);
+            mGuestLL.setVisibility(View.GONE);
+            mVisitorLL.setVisibility(View.GONE);
+
+            mAurovilianStatusTV.setText("Aurovilian");
+            mAurovilianNameTV.setText(aurovilian.getName());
+        }
+        else if (ApplicationStore.getUserLevel() == ApplicationStore.GUEST) {
+            Guest guest = ApplicationStore.getGuestProfile();
+
+            mGuestLL.setVisibility(View.VISIBLE);
+            mAurovilianLL.setVisibility(View.GONE);
+            mVisitorLL.setVisibility(View.GONE);
+
+            mGuestStatusTV.setText("Auroville Guest");
+
+            mGuestNameTV.setText(guest.getName());
+            mGuestPhoneTV.setText(guest.getPhone());
+            mGuestSponsorTV.setText(guest.getSponsor());
+            mGuestLocationTV.setText(guest.getLocation());
+            mGuestValidityTV.setText(guest.getValidTill());
+        }
+        else if (ApplicationStore.getUserLevel() == ApplicationStore.VISITOR) {
+            mVisitorLL.setVisibility(View.VISIBLE);
+            mAurovilianLL.setVisibility(View.GONE);
+            mGuestLL.setVisibility(View.GONE);
+
+            mVisitorStatusTV.setText("Visitor");
+        }
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.navare.prashant.exploreauroville;
+package com.navare.prashant.experienceauroville;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -36,6 +36,12 @@ public class MainActivity extends AppCompatActivity implements ApplicationStore.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // TODO: For now, evebrybody is treated as Aurovilian. This needs to change once the Login scheme is implemented.
+        ApplicationStore.setUserLevel(ApplicationStore.AUROVILIAN);
+
+        // Show EULA
+        new SimpleEula(this).show();
 
         mMyActivity = this;
 
@@ -89,9 +95,11 @@ public class MainActivity extends AppCompatActivity implements ApplicationStore.
             case R.id.menu_feedback:
                 onFeedback();
                 return super.onOptionsItemSelected(item);
+            /*
             case R.id.menu_settings:
                 onSettings();
                 return super.onOptionsItemSelected(item);
+            */
             default:
                 return super.onOptionsItemSelected(item);
         }

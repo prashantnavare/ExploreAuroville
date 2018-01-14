@@ -1,4 +1,4 @@
-package com.navare.prashant.exploreauroville;
+package com.navare.prashant.experienceauroville;
 
 import android.app.Activity;
 import android.app.Application;
@@ -12,6 +12,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
+import com.navare.prashant.shared.model.Aurovilian;
 import com.navare.prashant.shared.model.CurrentEvent;
 import com.navare.prashant.shared.model.Guest;
 import com.navare.prashant.shared.model.Location;
@@ -30,8 +31,8 @@ import java.util.TreeSet;
  */
 
 public class ApplicationStore extends Application {
-    // public static final String BASE_URL = "http://explorex.texity.com";
-    public static final String BASE_URL = "http://10.0.2.2:5678";
+    public static final String BASE_URL = "http://explorex.texity.com";
+    // public static final String BASE_URL = "http://10.0.2.2:5678";
 
     // API URLs
     public static final String LOCATION_URL = BASE_URL + "/api/explorex/v1/admin/location";
@@ -40,22 +41,15 @@ public class ApplicationStore extends Application {
     public static final String FEEDBACK_URL = BASE_URL + "/api/explorex/v1/admin/feedback";
     public static final String PURGE_EVENTS_URL = BASE_URL + "/api/explorex/v1/admin/purgeEvents";
 
-    private static SharedPreferences        mPreferences;
-    private static SharedPreferences.Editor mEditor;
     private static Context                  mAppContext;
 
     private static List<Location> mLocationList = new ArrayList<>();
     private static TreeSet<String>      mTagSet = new TreeSet<>();
 
-    private static final String AUROVILLIAN_NAME_STRING = "AurovilianName";
-    private static final String AUROVILLIAN_EMAIL_STRING = "AurovilianEmail";
-    private static final String GUEST_PHONE_NUMBER_STRING = "GuestPhoneNumber";
-    private static final String GUEST_PASS_VALIDITY = "GuestPassValidity";
-    private static final String USER_LEVEL = "UserLevel";
-
     public static int AUROVILIAN = 3;
     public static int GUEST = 2;
     public static int VISITOR = 1;
+    public static int NONE = 0;
 
     public static final String SPECIFIC_LOCATION_STRING = "SpecificLocation";
 
@@ -64,13 +58,14 @@ public class ApplicationStore extends Application {
     private static Location mCurrentLocation;
     private static CurrentEvent mCurrentEvent;
 
+    private static Aurovilian mAurovilian;
     private static Guest mGuest;
+
+    private static int mUserLevel = NONE;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        mEditor = mPreferences.edit();
         mAppContext = getApplicationContext();
     }
 
@@ -91,23 +86,26 @@ public class ApplicationStore extends Application {
     }
 
     public static int getUserLevel() {
-        return mPreferences.getInt(USER_LEVEL, VISITOR);
+        return mUserLevel;
     }
 
     public static void setUserLevel(int userLevel) {
-        mEditor.putInt(USER_LEVEL, userLevel);
-        mEditor.commit();
-    }
-
-    public static long getGuestValidity() {
-        return mPreferences.getLong(GUEST_PASS_VALIDITY, 0);
+        mUserLevel = userLevel;
     }
 
     public static void setAurovilianProfile(String userName, String emailAddress) {
         setUserLevel(AUROVILIAN);
-        mEditor.putString(AUROVILLIAN_NAME_STRING, userName);
-        mEditor.putString(AUROVILLIAN_EMAIL_STRING, emailAddress);
-        mEditor.commit();
+        mAurovilian = new Aurovilian();
+        mAurovilian.setName(userName);
+        mAurovilian.setEmail(emailAddress);
+    }
+
+    public static Aurovilian getAurovilianProfile() {
+        return mAurovilian;
+    }
+
+    public static Guest getGuestProfile() {
+        return mGuest;
     }
 
     public static void setGuestProfile(Guest guest) {
@@ -115,7 +113,7 @@ public class ApplicationStore extends Application {
         mGuest = guest;
     }
 
-    public static void createVisitorProfile() {
+    public static void setVisitorProfile() {
         setUserLevel(VISITOR);
     }
 

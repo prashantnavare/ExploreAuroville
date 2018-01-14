@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.navare.prashant.exploreauroville"
+    package="com.navare.prashant.experienceauroville"
     android:versionCode="4"
     android:versionName="1.0">
 
@@ -20,7 +20,13 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -46,7 +52,7 @@
             android:parentActivityName=".MapActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.navare.prashant.exploreauroville.MapActivity" />
+                android:value="com.navare.prashant.experienceauroville.MapActivity" />
         </activity>
         <activity
             android:name=".EventDetailActivity"
@@ -54,14 +60,9 @@
             android:parentActivityName=".CurrentEventsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.navare.prashant.exploreauroville.CurrentEventsActivity" />
+                android:value="com.navare.prashant.experienceauroville.CurrentEventsActivity" />
         </activity>
         <activity android:name=".LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".SettingsActivity"></activity>
     </application>

@@ -1,4 +1,4 @@
-package com.navare.prashant.exploreauroville;
+package com.navare.prashant.experienceauroville;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
