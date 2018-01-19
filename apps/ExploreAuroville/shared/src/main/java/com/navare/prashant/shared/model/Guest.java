@@ -1,5 +1,8 @@
 package com.navare.prashant.shared.model;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 /**
  * Created by prashant on 10/11/2017.
  */
@@ -32,6 +35,13 @@ public class Guest {
 
     public long getTo_date() {
         return to_date;
+    }
+
+    public String getValidTill() {
+        Calendar validityDate = Calendar.getInstance();
+        validityDate.setTimeInMillis(to_date);
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("dd MMM yyyy");
+        return dateFormatter.format(validityDate.getTime());
     }
 
     public String getSponsor() {
