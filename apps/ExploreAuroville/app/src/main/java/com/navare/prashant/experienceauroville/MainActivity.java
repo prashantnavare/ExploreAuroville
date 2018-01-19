@@ -26,10 +26,6 @@ import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity implements ApplicationStore.LocationListCallback {
 
-    private GridView    mGridView;
-
-    String[]    mTileText = new String[2];
-    int[]       mTileImage = {R.drawable.map_72px, R.drawable.current_events_72px};
     Activity    mMyActivity;
 
     @Override
@@ -51,13 +47,44 @@ public class MainActivity extends AppCompatActivity implements ApplicationStore.
         // Build the Location List for this location
         ApplicationStore.getLocationList(this);
 
-        mTileText[0]=getString(R.string.places);
-        mTileText[1]=getString(R.string.events);
+        setupNavigationGrid();
 
-        NavigationGridAdapter adapter = new NavigationGridAdapter(this, mTileText, mTileImage);
-        mGridView =(GridView)findViewById(R.id.grid);
-        mGridView.setAdapter(adapter);
-        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        // purge older events in the background
+        purgeOldEvents();
+    }
+
+    private void setupNavigationGrid() {
+        String[]    tileText;
+        int[]       tileImage;
+        GridView    gridView;
+
+
+        if (ApplicationStore.getUserLevel() == ApplicationStore.AUROVILIAN) {
+            tileText = new String[3];
+            tileImage = new int[3];
+
+            tileText[0]=getString(R.string.places);
+            tileText[1]=getString(R.string.events);
+            tileText[2]=getString(R.string.guest_access);
+
+            tileImage[0] = R.drawable.map_72px;
+            tileImage[1] = R.drawable.current_events_72px;
+            tileImage[2] = R.drawable.map_72px;
+        }
+        else {
+            tileText = new String[2];
+            tileImage = new int[2];
+
+            tileText[0]=getString(R.string.places);
+            tileText[1]=getString(R.string.events);
+
+            tileImage[0] = R.drawable.map_72px;
+            tileImage[1] = R.drawable.current_events_72px;
+        }
+        NavigationGridAdapter adapter = new NavigationGridAdapter(this, tileText, tileImage);
+        gridView =(GridView)findViewById(R.id.grid);
+        gridView.setAdapter(adapter);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
@@ -71,12 +98,14 @@ public class MainActivity extends AppCompatActivity implements ApplicationStore.
                         Intent eventIntent = new Intent(mMyActivity, CurrentEventsActivity.class);
                         startActivity(eventIntent);
                         break;
+                    case 2:
+                        Intent guestAccessIntent = new Intent(mMyActivity, GuestAccessActivity.class);
+                        startActivity(guestAccessIntent);
+                        break;
                 }
             }
         });
 
-        // purge older events in the background
-        purgeOldEvents();
     }
 
     @Override

@@ -62,9 +62,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.navare.prashant.experienceauroville.CurrentEventsActivity" />
         </activity>
-        <activity android:name=".LoginActivity">
-        </activity>
-        <activity android:name=".SettingsActivity"></activity>
+        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".GuestAccessActivity"></activity>
     </application>
 
 </manifest>
