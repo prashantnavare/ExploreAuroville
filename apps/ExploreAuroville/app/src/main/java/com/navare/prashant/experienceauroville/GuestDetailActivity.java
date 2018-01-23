@@ -1,9 +1,14 @@
 package com.navare.prashant.experienceauroville;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -32,6 +37,7 @@ public class GuestDetailActivity extends AppCompatActivity {
     private static EditText mToDateET;
     private DialogFragment  mDateFragment;
     private ImageButton     mSaveButton;
+    private MenuItem        deleteMenuItem = null;
 
     private Activity    mMyActivity;
     private boolean     mbExistingGuest = false;
@@ -99,6 +105,43 @@ public class GuestDetailActivity extends AppCompatActivity {
         });
 
         updateUI();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.guest_detail_actions, menu);
+        deleteMenuItem = menu.getItem(0);
+
+        if (mbExistingGuest == false) {
+            deleteMenuItem.setEnabled(false);
+            deleteMenuItem.setVisible(false);
+        }
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // This ID represents the Home or Up button. In the case of this
+                // activity, the Up button is shown. Use NavUtils to allow users
+                // to navigate up one level in the application structure. For
+                // more details, see the Navigation pattern on Android Design:
+                //
+                // http://developer.android.com/design/patterns/navigation.html#up-vs-back
+                //
+                onBackPressed();
+                return true;
+            case R.id.menu_delete:
+                deleteGuest();
+                return super.onOptionsItemSelected(item);
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     public static void setDateFieldText(){
@@ -219,6 +262,30 @@ public class GuestDetailActivity extends AppCompatActivity {
 
         RequestQueue requestQueue = VolleyProvider.getQueue(mMyActivity);
         requestQueue.add(guestRequest);
+    }
+
+    private void deleteGuest() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setTitle("Delete Guest");
+        alertDialog.setMessage("Are you sure you want to delete this guest?");
+        alertDialog.setIcon(R.drawable.ic_menu_delete_white);
+        alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog,int which) {
+                deleteGuestInternal();
+            }
+        });
+
+        alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        alertDialog.show();
+    }
+
+    private void deleteGuestInternal() {
+
     }
 
     @Override
