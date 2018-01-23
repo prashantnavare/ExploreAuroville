@@ -14,8 +14,6 @@ import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.preference.PreferenceManager;
 
-import com.navare.prashant.experienceauroville.R;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;

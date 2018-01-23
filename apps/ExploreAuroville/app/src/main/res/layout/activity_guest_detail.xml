@@ -25,7 +25,8 @@
             android:layout_marginLeft="4dp"
             android:layout_marginTop="10dp"
             android:gravity="left"
-            android:textSize="12dp"
+            android:textSize="14dp"
+            android:inputType="textCapWords"
             android:textColor="@color/colorPrimaryText"
             />
 
@@ -47,7 +48,8 @@
             android:layout_marginLeft="4dp"
             android:layout_marginTop="10dp"
             android:gravity="left"
-            android:textSize="12dp"
+            android:textSize="14dp"
+            android:inputType="phone"
             android:textColor="@color/colorPrimaryText"
             />
 
@@ -69,7 +71,8 @@
             android:layout_marginLeft="4dp"
             android:layout_marginTop="10dp"
             android:gravity="left"
-            android:textSize="12dp"
+            android:textSize="14dp"
+            android:inputType="textCapWords"
             android:textColor="@color/colorPrimaryText"
             />
 
@@ -111,7 +114,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:textSize="12dp"
+                android:textSize="14dp"
                 android:hint="@string/date"
                 android:drawableLeft="@drawable/ic_date_range_black_18dp"
                 android:focusableInTouchMode="false"
@@ -139,14 +142,19 @@
                 android:textSize="12dp"
                 />
 
+            <Space
+                android:id="@+id/valid_till_space"
+                android:layout_toRightOf="@+id/valid_till_tv"
+                android:layout_width="10dp"
+                android:layout_height="12dp" />
             <EditText
                 android:id="@+id/guest_to_date_et"
-                android:layout_toRightOf="@+id/valid_till_tv"
+                android:layout_toRightOf="@+id/valid_till_space"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:textSize="12dp"
+                android:textSize="14dp"
                 android:hint="@string/date"
                 android:drawableLeft="@drawable/ic_date_range_black_18dp"
                 android:focusableInTouchMode="false"

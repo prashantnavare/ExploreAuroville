@@ -1,14 +1,9 @@
 package com.navare.prashant.experienceauroville;
 
 import android.os.Bundle;
-import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.TextView;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 import com.navare.prashant.shared.model.Location;
 
 public class LocationDetailActivity extends AppCompatActivity {

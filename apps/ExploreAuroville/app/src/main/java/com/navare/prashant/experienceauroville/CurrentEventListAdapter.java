@@ -10,7 +10,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.navare.prashant.shared.model.CurrentEvent;
-import com.navare.prashant.shared.model.Location;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

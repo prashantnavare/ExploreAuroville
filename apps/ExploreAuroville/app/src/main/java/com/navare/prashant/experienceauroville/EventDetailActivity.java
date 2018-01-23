@@ -3,7 +3,6 @@ package com.navare.prashant.experienceauroville;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -11,11 +10,7 @@ import android.text.style.URLSpan;
 import android.view.View;
 import android.widget.TextView;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 import com.navare.prashant.shared.model.CurrentEvent;
-import com.navare.prashant.shared.model.Location;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
