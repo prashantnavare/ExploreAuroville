@@ -87,19 +87,17 @@ class Guest(db.Model, CRUD):
     from_date = db.Column(db.BigInteger)
     to_date = db.Column(db.BigInteger)
     sponsor = db.Column(db.Text)
-    relationship = db.Column(db.Text)
     location = db.Column(db.Text)
 
     def __repr__(self):
         return '<Guest: {}>'.format(self.name)
 
-    def __init__(self, name, phone, from_date, to_date, sponsor, relationship, location):
+    def __init__(self, name, phone, from_date, to_date, sponsor, location):
         self.name = name
         self.phone = phone
         self.from_date = from_date
         self.to_date = to_date
         self.sponsor = sponsor
-        self.relationship = relationship
         self.location = location
 
 class GuestHistory(db.Model, CRUD):
@@ -115,19 +113,17 @@ class GuestHistory(db.Model, CRUD):
     from_date = db.Column(db.BigInteger)
     to_date = db.Column(db.BigInteger)
     sponsor = db.Column(db.Text)
-    relationship = db.Column(db.Text)
     location = db.Column(db.Text)
 
     def __repr__(self):
         return '<Guest: {}>'.format(self.name)
 
-    def __init__(self, name, phone, from_date, to_date, sponsor, relationship, location):
+    def __init__(self, name, phone, from_date, to_date, sponsor, location):
         self.name = name
         self.phone = phone
         self.from_date = from_date
         self.to_date = to_date
         self.sponsor = sponsor
-        self.relationship = relationship
         self.location = location
 
 class Feedback(db.Model, CRUD):

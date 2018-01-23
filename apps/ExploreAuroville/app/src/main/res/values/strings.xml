@@ -51,4 +51,19 @@
     </string>
     <string name="settings">Settings</string>
     <string name="guest_access">Guest Access</string>
+    <string name="guest_name">Guest Name</string>
+    <string name="phone">Phone</string>
+    <string name="location">Location</string>
+    <string name="valid_from">Valid From</string>
+    <string name="date">Date</string>
+    <string name="valid_till">Valid Till</string>
+    <string name="staying_at">Staying At</string>
+    <string name="guest_details">Guest Details</string>
+    <string name="guest_name_missing">Guest name must be specified.</string>
+    <string name="guest_phone_missing">Guest phone must be specified.</string>
+    <string name="guest_location_missing">Guest location must be specified.</string>
+    <string name="from_date_missing">Valid From date must be specified.</string>
+    <string name="to_date_missing">Valid Till date must be specified.</string>
+    <string name="guest_info_saved">Guest information has been saved.</string>
+    <string name="unable_to_save_guest_info">Failed to save guest information.</string>
 </resources>

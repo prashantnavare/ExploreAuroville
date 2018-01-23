@@ -147,7 +147,7 @@ def purgeExpiredGuests():
     currentTime = int(round(time.time() * 1000))
     expiredGuestList = Guest.query.filter(Guest.to_date < currentTime).all()
     for expiredGuest in expiredGuestList:
-        newGuestHistory = GuestHistory(expiredGuest.name, expiredGuest.phone, expiredGuest.from_date, expiredGuest.to_date, expiredGuest.sponsor, expiredGuest.relationship, expiredGuest.location)
+        newGuestHistory = GuestHistory(expiredGuest.name, expiredGuest.phone, expiredGuest.from_date, expiredGuest.to_date, expiredGuest.sponsor, expiredGuest.location)
         newGuestHistory.add(newGuestHistory)
         expiredGuest.delete(expiredGuest)
 
@@ -167,7 +167,6 @@ class GuestAPI(Resource):
                         "from_date" : guest.from_date,
                         "to_date" : guest.to_date,
                         "sponsor" : guest.sponsor,
-                        "relationship" : guest.relationship,
                         "location" : guest.location
                     }
                     return guestData, 200
@@ -187,7 +186,7 @@ class GuestAPI(Resource):
 
         sponsor = request.args.get('sponsor')
         if sponsor is not None:
-            guestList = Guest.query.filter(Guest.sponsor == sponsor).order_by(Guest.from_date).all()
+            guestList = Guest.query.filter(Guest.sponsor == sponsor).order_by(Guest.name).all()
             jsonResults = []
             for guest in guestList:
                 guestData = {
@@ -197,7 +196,6 @@ class GuestAPI(Resource):
                     "from_date" : guest.from_date,
                     "to_date" : guest.to_date,
                     "sponsor" : guest.sponsor,
-                    "relationship" : guest.relationship,
                     "location" : guest.location
                 }
                 jsonResults.append(guestData)
@@ -208,7 +206,7 @@ class GuestAPI(Resource):
     def post(self):
         requestDict = request.get_json(force = True)
         try:
-            newGuest = Guest(requestDict['name'], requestDict['phone'], requestDict['from_date'], requestDict['to_date'], requestDict['sponsor'], requestDict['relationship'], requestDict['location'])
+            newGuest = Guest(requestDict['name'], requestDict['phone'], requestDict['from_date'], requestDict['to_date'], requestDict['sponsor'], requestDict['location'])
             newGuest.add(newGuest)
             return newGuest.id, 201
         except SQLAlchemyError as e:

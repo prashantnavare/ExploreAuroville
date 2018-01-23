@@ -239,7 +239,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         progressDialog.setMessage("Please wait while we retrieve your credentials...");
         progressDialog.show();
 
-        String getGuestInfoURL = ApplicationStore.GET_GUEST_INFO_URL;
+        String getGuestInfoURL = ApplicationStore.GUEST_URL;
         getGuestInfoURL += "?phone=" + mGuestPhoneNumberET.getText();
         CustomRequest getGuestInfoRequest = new CustomRequest(Request.Method.GET, getGuestInfoURL, "",
                 new Response.Listener<String>() {

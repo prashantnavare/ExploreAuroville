@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements ApplicationStore.
 
         // TODO: For now, evebrybody is treated as Aurovilian. This needs to change once the Login scheme is implemented.
         ApplicationStore.setUserLevel(ApplicationStore.AUROVILIAN);
+        ApplicationStore.setAurovilianProfile("Prashant Navare", "pnavare@auroville.org.in");
 
         // Show EULA
         new SimpleEula(this).show();
@@ -69,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements ApplicationStore.
 
             tileImage[0] = R.drawable.map_72px;
             tileImage[1] = R.drawable.current_events_72px;
-            tileImage[2] = R.drawable.map_72px;
+            tileImage[2] = R.drawable.ic_guest_access;
         }
         else {
             tileText = new String[2];

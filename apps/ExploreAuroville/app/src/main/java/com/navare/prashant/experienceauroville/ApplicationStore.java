@@ -31,13 +31,13 @@ import java.util.TreeSet;
  */
 
 public class ApplicationStore extends Application {
-    public static final String BASE_URL = "http://explorex.texity.com";
-    // public static final String BASE_URL = "http://10.0.2.2:5678";
+    // public static final String BASE_URL = "http://explorex.texity.com";
+    public static final String BASE_URL = "http://10.0.2.2:5678";
 
     // API URLs
     public static final String LOCATION_URL = BASE_URL + "/api/explorex/v1/admin/location";
     public static final String GET_CURRENT_EVENTS_URL = BASE_URL + "/api/explorex/v1/admin/event";
-    public static final String GET_GUEST_INFO_URL = BASE_URL + "/api/explorex/v1/admin/guest";
+    public static final String GUEST_URL = BASE_URL + "/api/explorex/v1/admin/guest";
     public static final String FEEDBACK_URL = BASE_URL + "/api/explorex/v1/admin/feedback";
     public static final String PURGE_EVENTS_URL = BASE_URL + "/api/explorex/v1/admin/purgeEvents";
 
@@ -52,11 +52,13 @@ public class ApplicationStore extends Application {
     public static int NONE = 0;
 
     public static final String SPECIFIC_LOCATION_STRING = "SpecificLocation";
+    public static final String EXISTING_GUEST_STRING = "ExistingGuestString";
 
     public static int activeDatePicker = 0;
 
-    private static Location mCurrentLocation;
+    private static Location     mCurrentLocation;
     private static CurrentEvent mCurrentEvent;
+    private static Guest        mCurrentGuest;
 
     private static Aurovilian mAurovilian;
     private static Guest mGuest;
@@ -83,6 +85,14 @@ public class ApplicationStore extends Application {
 
     public static void setCurrentEvent(CurrentEvent event) {
         mCurrentEvent = event;
+    }
+
+    public static Guest getCurrentGuest() {
+        return mCurrentGuest;
+    }
+
+    public static void setCurrentGuest(Guest guest) {
+        mCurrentGuest = guest;
     }
 
     public static int getUserLevel() {

@@ -14,7 +14,6 @@ public class Guest {
     private long from_date;
     private long to_date;
     private String sponsor;
-    private String relationship;
     private String location;
 
     public int getId() {
@@ -37,6 +36,13 @@ public class Guest {
         return to_date;
     }
 
+    public String getValidFrom() {
+        Calendar validityDate = Calendar.getInstance();
+        validityDate.setTimeInMillis(from_date);
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("dd MMM yyyy");
+        return dateFormatter.format(validityDate.getTime());
+    }
+
     public String getValidTill() {
         Calendar validityDate = Calendar.getInstance();
         validityDate.setTimeInMillis(to_date);
@@ -46,10 +52,6 @@ public class Guest {
 
     public String getSponsor() {
         return sponsor;
-    }
-
-    public String getRelationship() {
-        return relationship;
     }
 
     public String getLocation() {
@@ -78,10 +80,6 @@ public class Guest {
 
     public void setSponsor(String sponsor) {
         this.sponsor = sponsor;
-    }
-
-    public void setRelationship(String relationship) {
-        this.relationship = relationship;
     }
 
     public void setLocation(String location) {

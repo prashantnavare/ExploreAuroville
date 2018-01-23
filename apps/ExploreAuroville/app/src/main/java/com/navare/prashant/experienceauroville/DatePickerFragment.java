@@ -47,5 +47,21 @@ public class DatePickerFragment extends DialogFragment implements
             CurrentEventsActivity.setDateFieldText();
             ApplicationStore.activeDatePicker = 0;
         }
+        else if (ApplicationStore.activeDatePicker == R.id.guest_from_date_et) {
+            GuestDetailActivity.mFromCalendar.clear();
+            GuestDetailActivity.mFromCalendar.set(Calendar.YEAR, year);
+            GuestDetailActivity.mFromCalendar.set(Calendar.MONTH, month);
+            GuestDetailActivity.mFromCalendar.set(Calendar.DAY_OF_MONTH, day);
+            GuestDetailActivity.setDateFieldText();
+            ApplicationStore.activeDatePicker = 0;
+        }
+        else if (ApplicationStore.activeDatePicker == R.id.guest_to_date_et) {
+            GuestDetailActivity.mToCalendar.clear();
+            GuestDetailActivity.mToCalendar.set(Calendar.YEAR, year);
+            GuestDetailActivity.mToCalendar.set(Calendar.MONTH, month);
+            GuestDetailActivity.mToCalendar.set(Calendar.DAY_OF_MONTH, day);
+            GuestDetailActivity.setDateFieldText();
+            ApplicationStore.activeDatePicker = 0;
+        }
     }
 }
