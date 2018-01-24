@@ -285,7 +285,30 @@ public class GuestDetailActivity extends AppCompatActivity {
     }
 
     private void deleteGuestInternal() {
+        String deleteGuestsURL = ApplicationStore.GUEST_URL;
+        deleteGuestsURL += "?guestid=" + mGuest.getId();
+        CustomRequest deleteGuestsRequest = new CustomRequest(Request.Method.DELETE, deleteGuestsURL, "",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(mMyActivity, "Guest deleted successfully.", Toast.LENGTH_LONG).show();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        String errorMsg = getString(R.string.network_error);
+                        if (error.networkResponse != null) {
+                            int statusCode = error.networkResponse.statusCode;
+                            if (error.networkResponse.data != null)
+                                errorMsg = new String(error.networkResponse.data);
+                        }
+                        Toast.makeText(mMyActivity, errorMsg, Toast.LENGTH_LONG).show();
+                    }
+                }){};
 
+        RequestQueue requestQueue = VolleyProvider.getQueue(getApplicationContext());
+        requestQueue.add(deleteGuestsRequest);
     }
 
     @Override
