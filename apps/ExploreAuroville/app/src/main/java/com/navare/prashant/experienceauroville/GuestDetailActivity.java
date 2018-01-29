@@ -202,6 +202,7 @@ public class GuestDetailActivity extends AppCompatActivity {
         mGuest.setName(mGuestNameET.getText().toString());
         mGuest.setPhone(mGuestPhoneET.getText().toString());
         mGuest.setLocation(mGuestLocationET.getText().toString());
+        mGuest.setSponsor(ApplicationStore.getAurovilianProfile().getEmail());
 
         Date fromDate = new Date();
         try {
@@ -292,6 +293,7 @@ public class GuestDetailActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         Toast.makeText(mMyActivity, "Guest deleted successfully.", Toast.LENGTH_LONG).show();
+                        finish();
                     }
                 },
                 new Response.ErrorListener() {
