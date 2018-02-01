@@ -67,8 +67,9 @@
             android:text="Please login with your Auroville email ID"
             />
 
-        <com.google.android.gms.common.SignInButton
+        <Button
             android:id="@+id/aurovilianSignInbutton"
+            android:text="Login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"

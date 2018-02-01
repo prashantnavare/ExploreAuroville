@@ -45,7 +45,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private RadioButton mGuestRadioButton;
     private RadioButton mVisitorRadioButton;
     private LinearLayout mAurovilianLL;
-    private SignInButton mAurovilianSignInButton;
+    private Button mAurovilianSignInButton;
     private LinearLayout mGuestLL;
     private EditText mGuestPhoneNumberET;
     private Button mGuestSignInButton;
@@ -53,10 +53,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private Button mGuestExpiredButton;
     private LinearLayout mVisitorLL;
     private Button mVisitorNextButton;
-
-    private GoogleSignInOptions mGSO;
-    private GoogleApiClient mGAC;
-    private String mDomainName = "futureschool.org.in";
 
     private Activity mMyActivity;
 
@@ -75,7 +71,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         mGuestRadioButton = (RadioButton) findViewById(R.id.guestRadioButton);
         mVisitorRadioButton = (RadioButton) findViewById(R.id.visitorRadioButton);
         mAurovilianLL = (LinearLayout) findViewById(R.id.aurovilianLL);
-        mAurovilianSignInButton = (SignInButton) findViewById(R.id.aurovilianSignInbutton);
+        mAurovilianSignInButton = (Button) findViewById(R.id.aurovilianSignInbutton);
         mGuestLL = (LinearLayout) findViewById(R.id.guestLL);
         mGuestPhoneNumberET = (EditText) findViewById(R.id.guestPhoneNumber);
         mGuestSignInButton = (Button) findViewById(R.id.guestSignInbutton);
@@ -111,18 +107,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 mGuestExpiredLL.setVisibility(View.GONE);
             }
         });
-
-        // Google Sign-in related
-        mGSO = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .requestScopes(new Scope(Scopes.EMAIL))
-                .setHostedDomain(mDomainName)
-                .build();
-
-        mGAC = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, mGSO)
-                .build();
 
         mAurovilianSignInButton.setOnClickListener(this);
 
@@ -160,53 +144,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         }
     }
 
-    private int RC_AUROVILIAN_SIGN_IN = 101;
-
     private void aurovilianSignIn() {
-        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGAC);
-        startActivityForResult(signInIntent, RC_AUROVILIAN_SIGN_IN);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-        if (requestCode == RC_AUROVILIAN_SIGN_IN) {
-            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            handleAurovilianSignInResult(result);
-        }
-    }
-
-    private void handleAurovilianSignInResult(GoogleSignInResult result) {
-        if (result.isSuccess()) {
-            // Signed in successfully, show authenticated UI.
-            GoogleSignInAccount acct = result.getSignInAccount();
-            String emailID = acct.getEmail();
-            String userName = acct.getDisplayName();
-            if (emailID.toLowerCase().contains(mDomainName)) {
-                // Aurovilian fully authenticated. Set up the Aurovilian profile
-                ApplicationStore.setAurovilianProfile(userName, emailID);
-                launchMainActivity();
-            }
-            else {
-                Auth.GoogleSignInApi.signOut(mGAC);
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-                alertDialog.setTitle("Wrong email ID");
-                alertDialog.setIcon(R.drawable.ic_error);
-                alertDialog.setMessage("Please use your auroville.org.in email ID.");
-                alertDialog.setNeutralButton("OK", null);
-                alertDialog.create().show();
-            }
-        }
-        else {
-            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-            alertDialog.setTitle("Sign In Failed");
-            alertDialog.setIcon(R.drawable.ic_error);
-            alertDialog.setMessage("Please use your auroville.org.in email ID to sign in.");
-            alertDialog.setNeutralButton("OK", null);
-            alertDialog.create().show();
-        }
+        Intent avLogInIntent = new Intent(this, AVLoginActivity.class);
+        startActivity(avLogInIntent);
     }
 
     private void launchMainActivity() {
