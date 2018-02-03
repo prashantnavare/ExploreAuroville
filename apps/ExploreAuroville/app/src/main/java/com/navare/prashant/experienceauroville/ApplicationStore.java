@@ -27,8 +27,8 @@ import java.util.TreeSet;
  */
 
 public class ApplicationStore extends Application {
-    // public static final String BASE_URL = "http://explorex.texity.com";
-    public static final String BASE_URL = "http://10.0.2.2:5678";
+    public static final String BASE_URL = "http://explorex.texity.com";
+    // public static final String BASE_URL = "http://10.0.2.2:5678";
 
     // API URLs
     public static final String LOCATION_URL = BASE_URL + "/api/explorex/v1/admin/location";
@@ -36,6 +36,8 @@ public class ApplicationStore extends Application {
     public static final String GUEST_URL = BASE_URL + "/api/explorex/v1/admin/guest";
     public static final String FEEDBACK_URL = BASE_URL + "/api/explorex/v1/admin/feedback";
     public static final String PURGE_EVENTS_URL = BASE_URL + "/api/explorex/v1/admin/purgeEvents";
+    public static final String AV_ACCESS_TOKEN_URL = "https://account.auroville.org.in/oauth/token?grant_type=password&client_id=25b3fc7bb7c45f91939531f1070664eb951e364ab4178cb3498b2040993b6dba&client_secret=830871ab86964fb56029cd8bb4870deb0c972659015e454644b822a415b22314";
+    public static final String AV_ACCESS_TOKEN_DETAILS_URL = "https://account.auroville.org.in/api/v1/me.json?access_token=";
 
     private static Context                  mAppContext;
 
@@ -48,7 +50,6 @@ public class ApplicationStore extends Application {
     public static int NONE = 0;
 
     public static final String SPECIFIC_LOCATION_STRING = "SpecificLocation";
-    public static final String EXISTING_GUEST_STRING = "ExistingGuestString";
 
     public static int activeDatePicker = 0;
 
@@ -99,10 +100,9 @@ public class ApplicationStore extends Application {
         mUserLevel = userLevel;
     }
 
-    public static void setAurovilianProfile(String userName, String emailAddress) {
+    public static void setAurovilianProfile(String emailAddress) {
         setUserLevel(AUROVILIAN);
         mAurovilian = new Aurovilian();
-        mAurovilian.setName(userName);
         mAurovilian.setEmail(emailAddress);
     }
 

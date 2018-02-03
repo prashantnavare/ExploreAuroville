@@ -45,6 +45,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private RadioButton mGuestRadioButton;
     private RadioButton mVisitorRadioButton;
     private LinearLayout mAurovilianLL;
+    private EditText mAVUserIDET;
+    private EditText mAVPasswordET;
     private Button mAurovilianSignInButton;
     private LinearLayout mGuestLL;
     private EditText mGuestPhoneNumberET;
@@ -70,19 +72,25 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         mAurovilianRadioButton = (RadioButton) findViewById(R.id.aurovilianRadioButton);
         mGuestRadioButton = (RadioButton) findViewById(R.id.guestRadioButton);
         mVisitorRadioButton = (RadioButton) findViewById(R.id.visitorRadioButton);
+
         mAurovilianLL = (LinearLayout) findViewById(R.id.aurovilianLL);
+        mAVUserIDET = (EditText) findViewById(R.id.avUserID);
+        mAVPasswordET = (EditText) findViewById(R.id.avPassword);
         mAurovilianSignInButton = (Button) findViewById(R.id.aurovilianSignInbutton);
+
         mGuestLL = (LinearLayout) findViewById(R.id.guestLL);
         mGuestPhoneNumberET = (EditText) findViewById(R.id.guestPhoneNumber);
         mGuestSignInButton = (Button) findViewById(R.id.guestSignInbutton);
         mGuestExpiredLL = (LinearLayout) findViewById(R.id.guestExpiredLL);
         mGuestExpiredButton = (Button) findViewById(R.id.guestExpiredbutton);
+
         mVisitorLL = (LinearLayout) findViewById(R.id.visitorLL);
         mVisitorNextButton = (Button) findViewById(R.id.visitorNextbutton);
 
         mAurovilianRadioButton.setOnClickListener(new RadioGroup.OnClickListener() {
             public void onClick(View v){
                 mAurovilianLL.setVisibility(View.VISIBLE);
+                mAVUserIDET.requestFocus();
                 mGuestLL.setVisibility(View.GONE);
                 mVisitorLL.setVisibility(View.GONE);
                 mGuestExpiredLL.setVisibility(View.GONE);
@@ -145,8 +153,119 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     private void aurovilianSignIn() {
-        Intent avLogInIntent = new Intent(this, AVLoginActivity.class);
-        startActivity(avLogInIntent);
+        if (mAVUserIDET.getText().toString().isEmpty()) {
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+            alertDialog.setTitle("User ID Required");
+            alertDialog.setIcon(R.drawable.ic_error);
+            alertDialog.setMessage("Please enter your auroville.org.in ID to sign in.");
+            alertDialog.setNeutralButton("OK", null);
+            alertDialog.create().show();
+            return;
+        }
+        else {
+            String avID = mAVUserIDET.getText().toString().toLowerCase();
+            if (avID.contains("@auroville.org.in") == false) {
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+                alertDialog.setTitle("auroville.org.in ID Required");
+                alertDialog.setIcon(R.drawable.ic_error);
+                alertDialog.setMessage("Please enter your auroville.org.in ID to sign in.");
+                alertDialog.setNeutralButton("OK", null);
+                alertDialog.create().show();
+                return;
+            }
+        }
+        if (mAVPasswordET.getText().toString().isEmpty()) {
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+            alertDialog.setTitle("Password Required");
+            alertDialog.setIcon(R.drawable.ic_error);
+            alertDialog.setMessage("Please enter your auroville.org.in password to sign in.");
+            alertDialog.setNeutralButton("OK", null);
+            alertDialog.create().show();
+            return;
+        }
+        else {
+            handleAVSignIn();
+        }
+    }
+
+    private void handleAVSignIn() {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Retrieving Your auroville.org.in Credentials");
+        progressDialog.setMessage("Please wait while we retrieve your credentials...");
+        progressDialog.show();
+
+        String atRequestURL = ApplicationStore.AV_ACCESS_TOKEN_URL;
+        atRequestURL += "&username=" + mAVUserIDET.getText().toString().toLowerCase();
+        atRequestURL += "&password=" + mAVPasswordET.getText().toString();
+
+        CustomRequest avAccessTokenRequest = new CustomRequest(Request.Method.POST, atRequestURL, "",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Gson gson = new Gson();
+                        AccessTokenResponse accessTokenResponse = gson.fromJson(response, AccessTokenResponse.class);
+                        getAccessTokenDetails(accessTokenResponse, progressDialog);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        progressDialog.cancel();
+                        if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                            Toast.makeText(mMyActivity, getString(R.string.network_error),
+                                    Toast.LENGTH_LONG).show();
+                        }
+                        else {
+                            AlertDialog.Builder alertDialog = new AlertDialog.Builder(mMyActivity);
+                            alertDialog.setTitle("Login failed");
+                            alertDialog.setIcon(R.drawable.ic_error);
+                            alertDialog.setMessage("Please check your auroville.org.in user id and password.");
+                            alertDialog.setNeutralButton("OK", null);
+                            alertDialog.create().show();
+                        }
+                    }
+                }){};
+
+        RequestQueue requestQueue = VolleyProvider.getQueue(getApplicationContext());
+        requestQueue.add(avAccessTokenRequest);
+
+    }
+
+    private void getAccessTokenDetails(AccessTokenResponse atResponse, final ProgressDialog progressDialog) {
+        String getAccessTokenDetailsURL = ApplicationStore.AV_ACCESS_TOKEN_DETAILS_URL;
+        getAccessTokenDetailsURL += atResponse.getAccess_token();
+        CustomRequest getAccessTokenDetailsRequest = new CustomRequest(Request.Method.GET, getAccessTokenDetailsURL, "",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        progressDialog.cancel();
+                        Gson gson = new Gson();
+                        AccssTokenDetails atDetails = gson.fromJson(response, AccssTokenDetails.class);
+                        ApplicationStore.setAurovilianProfile(atDetails.getEmail());
+                        launchMainActivity();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        progressDialog.cancel();
+                        if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                            Toast.makeText(mMyActivity, getString(R.string.network_error),
+                                    Toast.LENGTH_LONG).show();
+                        }
+                        else {
+                            AlertDialog.Builder alertDialog = new AlertDialog.Builder(mMyActivity);
+                            alertDialog.setTitle("Login failed");
+                            alertDialog.setIcon(R.drawable.ic_error);
+                            alertDialog.setMessage("Please check your auroville.org.in user id and password.");
+                            alertDialog.setNeutralButton("OK", null);
+                            alertDialog.create().show();
+                        }
+                    }
+                }){};
+
+        RequestQueue requestQueue = VolleyProvider.getQueue(getApplicationContext());
+        requestQueue.add(getAccessTokenDetailsRequest);
     }
 
     private void launchMainActivity() {

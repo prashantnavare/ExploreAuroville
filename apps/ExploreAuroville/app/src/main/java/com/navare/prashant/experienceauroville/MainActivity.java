@@ -30,13 +30,6 @@ public class MainActivity extends AppCompatActivity implements ApplicationStore.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // TODO: For now, evebrybody is treated as Aurovilian. This needs to change once the Login scheme is implemented.
-        ApplicationStore.setUserLevel(ApplicationStore.AUROVILIAN);
-        ApplicationStore.setAurovilianProfile("Prashant Navare", "pnavare@auroville.org.in");
-
-        // Show EULA
-        new SimpleEula(this).show();
-
         mMyActivity = this;
 
         // Check for a newer version
@@ -122,11 +115,9 @@ public class MainActivity extends AppCompatActivity implements ApplicationStore.
             case R.id.menu_feedback:
                 onFeedback();
                 return super.onOptionsItemSelected(item);
-            /*
             case R.id.menu_settings:
                 onSettings();
                 return super.onOptionsItemSelected(item);
-            */
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -58,7 +58,7 @@ public class SettingsActivity extends AppCompatActivity {
             mVisitorLL.setVisibility(View.GONE);
 
             mAurovilianStatusTV.setText("Aurovilian");
-            mAurovilianNameTV.setText(aurovilian.getName());
+            mAurovilianNameTV.setText(aurovilian.getEmail());
         }
         else if (ApplicationStore.getUserLevel() == ApplicationStore.GUEST) {
             Guest guest = ApplicationStore.getGuestProfile();
